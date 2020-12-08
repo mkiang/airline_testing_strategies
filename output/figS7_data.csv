@@ -1,0 +1,433 @@
+testing_type,testing_cat,prob_inf,prob_inf_cat,sens_type,symptom_screening,symptom_cat,risk_multiplier,risk_multi_cat,rapid_test_multiplier,rapid_test_cat,if_threshold,time_step,metric,n,mean,sd,median,p025,p100,p250,p750,p900,p975,min,max,n_missing,n_infinite,n_nan,n_total,relative_time,metric_cat
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,70,cume_n_infection_daily,1000,635.8495,123.27467601050711,613.5,475.5,504.95,537.875,707.75,814.5,915.0749999999999,371.5,1063,0,0,0,1000,0,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,71,cume_n_infection_daily,1000,720.9565,140.38416424697382,696.25,542.4,571.95,607.875,799.75,929.55,1038.8624999999997,424,1182,0,0,0,1000,1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,72,cume_n_infection_daily,1000,808.174,158.25431005394657,777.5,607.45,644,679.875,896.125,1042.1,1180.0625,475,1336.5,0,0,0,1000,2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,73,cume_n_infection_daily,1000,900.777,178.6200685810525,863.25,677.4875,717,756.875,1000,1164.05,1332,524.5,1512,0,0,0,1000,3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,74,cume_n_infection_daily,1000,1012.7105,203.6031426069584,971.5,757,797.9000000000001,848.5,1122.125,1308.6000000000001,1493.6,584,1701.5,0,0,0,1000,4,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,75,cume_n_infection_daily,1000,1026.926,206.69939928714274,983.5,768,810.75,860.5,1137.5,1329.65,1515.0500000000002,595.5,1724.5,0,0,0,1000,5,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,76,cume_n_infection_daily,1000,1042.7265,210.5946403646121,997.25,776,822.95,872.5,1154.625,1347.7,1535.25,605,1770.5,0,0,0,1000,6,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,77,cume_n_infection_daily,1000,1058.1935,214.8015631211032,1012.25,786.475,835,885.5,1171.875,1369.3500000000001,1554.4499999999996,611.5,1814.5,0,0,0,1000,7,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,78,cume_n_infection_daily,1000,1071.0385,219.5542241112092,1021.75,793.4875000000001,844.9499999999999,894.375,1187.375,1387.6,1578.1749999999997,611.5,1854.5,0,0,0,1000,8,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,79,cume_n_infection_daily,1000,1080.095,225.18851734345458,1028.75,802.45,849.5,899.5,1200.125,1403.7,1609.1749999999997,611.5,1893.5,0,0,0,1000,9,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,80,cume_n_infection_daily,1000,1085.375,230.56839366912186,1032.75,803.4250000000001,852,900.375,1204.625,1412,1626.05,611.5,1929,0,0,0,1000,10,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,81,cume_n_infection_daily,1000,1087.5995,234.2336563252717,1032.75,803.4250000000001,852,900.375,1209.25,1417.5,1628.3249999999998,611.5,1965.5,0,0,0,1000,11,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,82,cume_n_infection_daily,1000,1088.287,235.83875752418334,1032.75,803.4250000000001,852,900.375,1209.25,1418.3000000000002,1628.8124999999995,611.5,2003,0,0,0,1000,12,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,83,cume_n_infection_daily,1000,1088.388,236.19450310982958,1032.75,803.4250000000001,852,900.375,1209.25,1418.3000000000002,1628.8124999999995,611.5,2031,0,0,0,1000,13,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,84,cume_n_infection_daily,1000,1088.388,236.19450310982958,1032.75,803.4250000000001,852,900.375,1209.25,1418.3000000000002,1628.8124999999995,611.5,2031,0,0,0,1000,14,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,70,cume_n_infection_daily,1000,611.141,118.89790507334783,587.75,456.975,482.95000000000005,516,682,783.55,881.025,357.5,1031,0,0,0,1000,0,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,71,cume_n_infection_daily,1000,671.5995,131.52162288778615,649.75,505.95,531.95,566.375,748,866.6000000000001,974.5124999999999,387.5,1114.5,0,0,0,1000,1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,72,cume_n_infection_daily,1000,734.706,144.99568722314922,709,550.4875,581,617.5,814.75,949.05,1081.0249999999999,421,1201.5,0,0,0,1000,2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,73,cume_n_infection_daily,1000,804.4205,161.6485498958572,774.25,599.4875,636.45,673.875,892.125,1046.5500000000002,1185.5625,457.5,1335,0,0,0,1000,3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,74,cume_n_infection_daily,1000,896.596,184.31647470274285,857.25,661.9375,705.45,747.375,995.75,1165.0500000000002,1339.35,501,1518.5,0,0,0,1000,4,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,75,cume_n_infection_daily,1000,909.353,187.20938209326943,870.5,669.4625,714.85,757,1010.625,1183.75,1360.225,512,1544.5,0,0,0,1000,5,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,76,cume_n_infection_daily,1000,924.188,190.9487446386571,879.5,681.4875000000001,727.5,770,1029.625,1204.5,1380.2749999999996,521.5,1580,0,0,0,1000,6,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,77,cume_n_infection_daily,1000,939.0445,195.0679144836767,891.75,692.975,740,782,1046.5,1221.2000000000003,1402.125,529,1639,0,0,0,1000,7,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,78,cume_n_infection_daily,1000,951.6175,199.70914647791406,901.75,703.9875,748.5,791,1063.75,1236.6000000000001,1423.625,531.5,1693.5,0,0,0,1000,8,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,79,cume_n_infection_daily,1000,960.562,205.30654868984314,910.75,708.5,755,795.5,1079,1254.2,1440.1499999999999,531.5,1744.5,0,0,0,1000,9,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,80,cume_n_infection_daily,1000,965.764,210.66200603047713,911.25,708.5,755,796,1087,1268.3500000000001,1449.2999999999997,531.5,1793,0,0,0,1000,10,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,81,cume_n_infection_daily,1000,967.9665,214.29026913790835,911.25,708.5,755,796,1087.625,1280.8000000000002,1454.3249999999998,531.5,1835,0,0,0,1000,11,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,82,cume_n_infection_daily,1000,968.683,215.9400278007915,911.25,708.5,755,796,1087.625,1284.05,1464.0749999999998,531.5,1871.5,0,0,0,1000,12,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,83,cume_n_infection_daily,1000,968.7665,216.23636579827095,911.25,708.5,755,796,1087.625,1284.05,1464.0749999999998,531.5,1897.5,0,0,0,1000,13,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,84,cume_n_infection_daily,1000,968.7665,216.23636579827095,911.25,708.5,755,796,1087.625,1284.05,1464.0749999999998,531.5,1897.5,0,0,0,1000,14,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,67,cume_n_infection_daily,3000,183.54066666666668,36.32857830169929,176.5,135,145,155,205.5,236,265.01250000000005,68,332,0,0,0,3000,-3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,68,cume_n_infection_daily,3000,366.9175,72.3279663891545,351,271.5,290,309.5,410,471.54999999999995,532.5375000000001,147.5,668.5,0,0,0,3000,-2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,69,cume_n_infection_daily,3000,550.2201666666666,107.85393255182919,526.5,411.9875,437,464.375,612.5,708,796.5250000000001,235.5,1007,0,0,0,3000,-1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,70,cume_n_infection_daily,3000,585.3785,115.45703860601667,561,438,465,494,651.125,754.5,852.0625000000002,240.5,1077.5,0,0,0,3000,0,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,71,cume_n_infection_daily,3000,621.2116666666667,123.75482663824056,592.5,466.48749999999995,493,523.5,691,803,911.5250000000001,255.5,1151.5,0,0,0,3000,1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,72,cume_n_infection_daily,3000,660.4326666666667,133.31177921091975,629,493.4875,523,554.5,732.5,856,975.0375000000001,275.5,1229.5,0,0,0,3000,2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,73,cume_n_infection_daily,3000,707.555,146.86289596673913,669,528.5,559,591.5,783.625,925.5,1058.0125,291,1338.5,0,0,0,3000,3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,74,cume_n_infection_daily,3000,779.5821666666667,168.16820105652482,738.75,572.9749999999999,607.5,645.5,870.125,1022,1182.0375000000001,315.5,1488.5,0,0,0,3000,4,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,75,cume_n_infection_daily,3000,790.9108333333334,170.98276326699434,749.75,581.5,616.5,654.875,885,1037.05,1200.025,327,1516.5,0,0,0,3000,5,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,76,cume_n_infection_daily,3000,804.9175,174.44588817084963,759.25,591.5,627.45,666,901.125,1058.5,1221.5500000000002,337.5,1543.5,0,0,0,3000,6,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,77,cume_n_infection_daily,3000,819.186,178.3044065387347,769.25,604.9875,639.95,678.5,917,1077.6499999999999,1242.0500000000002,337.5,1569.5,0,0,0,3000,7,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,78,cume_n_infection_daily,3000,831.546,182.7337765576788,775.5,613.5,648.5,688,933,1096,1268.5375000000001,337.5,1594.5,0,0,0,3000,8,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,79,cume_n_infection_daily,3000,840.2983333333333,188.27287613776255,783.5,616.5,652.45,692.5,945.5,1112.55,1291.5625000000002,337.5,1619.5,0,0,0,3000,9,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,80,cume_n_infection_daily,3000,845.2476666666666,193.64729127728216,787.75,616.5,653,693,952.625,1123.05,1311.5,337.5,1643.5,0,0,0,3000,10,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,81,cume_n_infection_daily,3000,847.2661666666667,197.24624060240748,788,616.5,653,693,953.625,1128.05,1329.0125,337.5,1687,0,0,0,3000,11,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,82,cume_n_infection_daily,3000,847.882,198.78528224899583,788,616.5,653,693,954,1130.1999999999998,1333.6125000000004,337.5,1727,0,0,0,3000,12,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,83,cume_n_infection_daily,3000,847.9463333333333,198.99311304557438,788,616.5,653,693,954,1130.1999999999998,1338.1750000000006,337.5,1762,0,0,0,3000,13,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,84,cume_n_infection_daily,3000,847.9463333333333,198.99311304557438,788,616.5,653,693,954,1130.1999999999998,1338.1750000000006,337.5,1762,0,0,0,3000,14,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,70,cume_n_infection_daily,1000,569.679,111.17988768849528,548,423,450.35,481.5,635.625,731.5,822.5374999999999,327.5,961,0,0,0,1000,0,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,71,cume_n_infection_daily,1000,589.2015,116.32644578830619,565.5,437,465,496.5,657,759.5,857.1374999999998,337.5,982.5,0,0,0,1000,1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,72,cume_n_infection_daily,1000,612.1635,122.91376778889362,586.75,453.9875,483.5,514.5,681,792.1,897,344,1032.5,0,0,0,1000,2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,73,cume_n_infection_daily,1000,643.9845,133.92676875493987,616.5,474.9875,506,538.375,715.625,839.25,957.5375,354,1112,0,0,0,1000,3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,74,cume_n_infection_daily,1000,703.5695,153.8103167322767,669.25,510.97499999999997,542.5,579.375,791.75,918.5500000000001,1064.0749999999998,371.5,1262,0,0,0,1000,4,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,75,cume_n_infection_daily,1000,713.7025,156.33816029400535,678.5,518.9875,549.5,587.875,805.125,930.1500000000001,1082,372.5,1280,0,0,0,1000,5,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,76,cume_n_infection_daily,1000,726.9295,159.74361114314104,689.5,527,562,599.25,820.125,944.1,1104.5249999999999,379,1298,0,0,0,1000,6,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,77,cume_n_infection_daily,1000,741.1125,163.69651689450632,699.5,537.4875000000001,572.9499999999999,610.5,837.625,959,1135.5375,385.5,1342,0,0,0,1000,7,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,78,cume_n_infection_daily,1000,753.647,168.3110944516597,706.75,546.4625,583.4,621,853.625,981.65,1157.5,391,1398.5,0,0,0,1000,8,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,79,cume_n_infection_daily,1000,762.7375,174.03661133748793,714.75,549,586.85,625,867.5,1002.5500000000001,1179.1,391,1454.5,0,0,0,1000,9,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,80,cume_n_infection_daily,1000,768.0445,179.66818702034362,720.75,549,587.4499999999999,626.5,871.625,1012.5500000000001,1210.0874999999999,391,1506,0,0,0,1000,10,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,81,cume_n_infection_daily,1000,770.379,183.6797065372046,723.5,549,587.4499999999999,626.5,873.5,1019.75,1221.0375,391,1551,0,0,0,1000,11,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,82,cume_n_infection_daily,1000,771.1135,185.4206654905028,723.5,549,587.4499999999999,626.5,873.5,1024.7,1222.7499999999998,391,1588.5,0,0,0,1000,12,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,83,cume_n_infection_daily,1000,771.2075,185.76304962062383,723.5,549,587.4499999999999,626.5,873.5,1024.7,1222.7499999999998,391,1615.5,0,0,0,1000,13,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,84,cume_n_infection_daily,1000,771.2075,185.76304962062383,723.5,549,587.4499999999999,626.5,873.5,1024.7,1222.7499999999998,391,1615.5,0,0,0,1000,14,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,70,cume_n_infection_daily,1000,603.5105,116.86216198862083,581,455.47499999999997,479.40000000000003,509.875,672.5,771.5,870.0125,350,1015.5,0,0,0,1000,0,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,71,cume_n_infection_daily,1000,670.087,128.38178926473495,643.25,505.9875,535.5,565,746.25,853.5,971.3624999999997,393.5,1104,0,0,0,1000,1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,72,cume_n_infection_daily,1000,752.4005,141.49446113640732,721.5,573.4875,606.4,637,839.375,952.6500000000001,1091.025,444,1244,0,0,0,1000,2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,73,cume_n_infection_daily,1000,844.0705,161.12304743942178,808.75,646,677.45,713.375,939.5,1071.05,1230,487.5,1407.5,0,0,0,1000,3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,74,cume_n_infection_daily,1000,956.1045,187.27577939311132,915.25,721,761,804.5,1066.125,1217.65,1407.55,550.5,1603.5,0,0,0,1000,4,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,75,cume_n_infection_daily,1000,970.348,190.56838590308126,926.25,731.9875000000001,771.5,816.5,1080.625,1235.95,1430.125,564.5,1631,0,0,0,1000,5,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,76,cume_n_infection_daily,1000,986.153,194.74059666898165,942,743.5,783.5,828.5,1100.625,1261.55,1461.0499999999997,574,1673,0,0,0,1000,6,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,77,cume_n_infection_daily,1000,1001.5665,199.1867118407348,953.75,754.4625,797.95,842.5,1119.125,1278.15,1486.025,580,1721,0,0,0,1000,7,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,78,cume_n_infection_daily,1000,1014.3395,204.08124030001483,962.75,761.975,807,850.375,1134,1293.7,1507.075,580,1774,0,0,0,1000,8,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,79,cume_n_infection_daily,1000,1023.399,209.76472663329156,968.75,767.475,811.5,856.375,1147.125,1313.15,1527.6625,580,1823,0,0,0,1000,9,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,80,cume_n_infection_daily,1000,1028.618,215.11069403143742,975.25,767.475,812.9499999999999,858,1152.625,1325.85,1542.3999999999996,580,1867.5,0,0,0,1000,10,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,81,cume_n_infection_daily,1000,1030.843,218.86402814033605,975.25,767.475,812.9499999999999,858,1155.125,1343,1566.1874999999998,580,1907,0,0,0,1000,11,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,82,cume_n_infection_daily,1000,1031.527,220.49653737415923,975.25,767.475,812.9499999999999,858,1155.125,1345.2000000000003,1573.5125,580,1942.5,0,0,0,1000,12,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,83,cume_n_infection_daily,1000,1031.6295,220.87349565040805,975.25,767.475,812.9499999999999,858,1155.125,1345.2000000000003,1573.5125,580,1969,0,0,0,1000,13,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,84,cume_n_infection_daily,1000,1031.6295,220.87349565040805,975.25,767.475,812.9499999999999,858,1155.125,1345.2000000000003,1573.5125,580,1969,0,0,0,1000,14,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,70,cume_n_infection_daily,1000,588.057,113.97815918750298,566.75,441.97499999999997,466.5,496,656.125,752,843.55,343,989,0,0,0,1000,0,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,71,cume_n_infection_daily,1000,635.435,122.39680450384623,610.25,480,505.5,536.375,710,809.05,918.55,373.5,1045.5,0,0,0,1000,1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,72,cume_n_infection_daily,1000,695.074,132.4501229106982,665,525.9625,556.5,586.5,775.125,881.2,1001.0125,409,1143,0,0,0,1000,2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,73,cume_n_infection_daily,1000,764.157,148.65153423234364,731,578.9625,610.5,643,854.625,969.3500000000001,1116.5874999999999,446.5,1273.5,0,0,0,1000,3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,74,cume_n_infection_daily,1000,856.452,172.39766283262122,812.25,641.9875000000001,679.4499999999999,715.875,960.125,1093,1266.1499999999999,488.5,1446.5,0,0,0,1000,4,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,75,cume_n_infection_daily,1000,869.2725,175.41586507345755,824.25,652.4875,689.5,726,975.625,1110.3500000000001,1285.5375,499.5,1472,0,0,0,1000,5,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,76,cume_n_infection_daily,1000,884.2085,179.15374498483723,839,665.975,700.9499999999999,739,993.625,1128.6000000000001,1313.5375,509.5,1510.5,0,0,0,1000,6,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,77,cume_n_infection_daily,1000,899.236,183.38715372716857,855.5,675.4625,712.5,750.875,1009.375,1147.3500000000004,1335.5125,515.5,1573,0,0,0,1000,7,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,78,cume_n_infection_daily,1000,911.9655,188.24667957794665,864.25,685.9375,721.45,761.875,1024.625,1172.75,1359.675,515.5,1639.5,0,0,0,1000,8,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,79,cume_n_infection_daily,1000,921.0755,194.0498360953666,871.75,686.4875000000001,727.4499999999999,767,1036.625,1198.5500000000002,1391.0500000000002,515.5,1700.5,0,0,0,1000,9,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,80,cume_n_infection_daily,1000,926.345,199.62303431926594,880.25,687.9625,728.45,768,1042.625,1211.4000000000003,1408.1374999999998,515.5,1758,0,0,0,1000,10,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,81,cume_n_infection_daily,1000,928.6305,203.5086644254889,880.25,687.9625,728.45,768,1044.125,1220.05,1419.8624999999997,515.5,1806,0,0,0,1000,11,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,82,cume_n_infection_daily,1000,929.3375,205.1871111798798,880.25,687.9625,728.45,768,1044.125,1221.2000000000003,1434.0874999999999,515.5,1850.5,0,0,0,1000,12,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,83,cume_n_infection_daily,1000,929.4365,205.56850105591658,880.25,687.9625,728.45,768,1044.125,1221.2000000000003,1434.0874999999999,515.5,1887,0,0,0,1000,13,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,84,cume_n_infection_daily,1000,929.4365,205.56850105591658,880.25,687.9625,728.45,768,1044.125,1221.2000000000003,1434.0874999999999,515.5,1887,0,0,0,1000,14,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,67,cume_n_infection_daily,3000,183.54066666666668,36.32857830169929,176.5,135,145,155,205.5,236,265.01250000000005,68,332,0,0,0,3000,-3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,68,cume_n_infection_daily,3000,366.9175,72.3279663891545,351,271.5,290,309.5,410,471.54999999999995,532.5375000000001,147.5,668.5,0,0,0,3000,-2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,69,cume_n_infection_daily,3000,550.2201666666666,107.85393255182919,526.5,411.9875,437,464.375,612.5,708,796.5250000000001,235.5,1007,0,0,0,3000,-1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,70,cume_n_infection_daily,3000,571.8761666666667,112.27883710236424,547.5,429.98749999999995,454.5,482,637,735.55,831.0250000000001,245.5,1035.5,0,0,0,3000,0,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,71,cume_n_infection_daily,3000,599.9963333333334,117.76337598816649,571.75,452.9875,477.95000000000005,506,667.625,772.55,873.5250000000001,257.5,1072.5,0,0,0,3000,1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,72,cume_n_infection_daily,3000,636.977,124.98659936572001,608,482.48749999999995,508.5,537,707.5,818,931.5500000000002,273.5,1124,0,0,0,3000,2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,73,cume_n_infection_daily,3000,683.6136666666666,138.08004543091766,648.5,516,544.45,574,760.125,886,1017.0250000000001,292,1211.5,0,0,0,3000,3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,74,cume_n_infection_daily,3000,755.6835,159.83638238563847,716,563,593.45,628,848.125,987,1142.5,318,1383.5,0,0,0,3000,4,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,75,cume_n_infection_daily,3000,767.0406666666667,162.62160150068348,726.5,572.9875,601.5,637,861.5,1003.05,1161,327,1401.5,0,0,0,3000,5,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,76,cume_n_infection_daily,3000,780.9998333333333,166.1038282035873,738.5,582.9875,612.5,649.5,876.625,1017.5,1184.5,334.5,1421,0,0,0,3000,6,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,77,cume_n_infection_daily,3000,795.2248333333333,170.0414078788949,751,593,623,662,893.5,1034.6,1207.0375000000001,334.5,1452,0,0,0,3000,7,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,78,cume_n_infection_daily,3000,807.538,174.59016189601567,759.75,601.5,633,671.5,908.5,1056.05,1233.0125,334.5,1500.5,0,0,0,3000,8,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,79,cume_n_infection_daily,3000,816.2048333333333,180.15667931832712,765,602.9875000000001,638,676,919.625,1069.55,1256.5125,334.5,1562.5,0,0,0,3000,9,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,80,cume_n_infection_daily,3000,821.0596666666667,185.4713890386858,766.25,602.9875000000001,638.45,676.5,926.625,1080.5,1274.5125,334.5,1621.5,0,0,0,3000,10,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,81,cume_n_infection_daily,3000,823.0403333333334,189.04052382078743,766.75,602.9875000000001,638.45,676.5,929,1087.55,1290.525,334.5,1672,0,0,0,3000,11,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,82,cume_n_infection_daily,3000,823.666,190.62222296459208,766.75,602.9875000000001,638.45,676.5,929,1089.6499999999999,1300.5,334.5,1718,0,0,0,3000,12,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,83,cume_n_infection_daily,3000,823.7283333333334,190.8340756050298,766.75,602.9875000000001,638.45,676.5,929,1089.6499999999999,1300.5,334.5,1751.5,0,0,0,3000,13,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,84,cume_n_infection_daily,3000,823.7283333333334,190.8340756050298,766.75,602.9875000000001,638.45,676.5,929,1089.6499999999999,1300.5,334.5,1751.5,0,0,0,3000,14,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,70,cume_n_infection_daily,1000,562.159,109.31716682187643,542.75,419.4875,445,474.5,627.75,718.7,810.05,322.5,950.5,0,0,0,1000,0,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,71,cume_n_infection_daily,1000,577.591,113.04997795893865,557,431.4875,455.45000000000005,487.875,646.5,740.8000000000002,837.1374999999998,331,965.5,0,0,0,1000,1,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,72,cume_n_infection_daily,1000,599.6225,118.39690270577317,575,448.975,474.45,504.5,670.5,768.1,873.6624999999999,341,1000,0,0,0,1000,2,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,73,cume_n_infection_daily,1000,631.362,129.26348674318285,602,470,497,528,705.25,815.05,931.5125,354,1094.5,0,0,0,1000,3,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,74,cume_n_infection_daily,1000,691.1685,149.39443615913314,655.5,505.95,535.3000000000001,570.5,778.125,897.1,1050.6124999999997,370,1239.5,0,0,0,1000,4,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,75,cume_n_infection_daily,1000,701.4505,152.10383254745958,663.75,511.5,541.45,579,787.625,909.55,1069.55,383,1256.5,0,0,0,1000,5,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,76,cume_n_infection_daily,1000,714.7615,155.62019957018518,675.5,525.425,554,590.5,802.625,922.7500000000001,1094.5874999999999,395,1279,0,0,0,1000,6,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,77,cume_n_infection_daily,1000,728.955,159.6558203009084,685.5,532,565.9,603.375,821.5,942.45,1130.5249999999999,405,1329.5,0,0,0,1000,7,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,78,cume_n_infection_daily,1000,741.4525,164.39358638643722,694,539.4875,575.5,612.5,838.625,963.1,1151.025,407,1379,0,0,0,1000,8,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,79,cume_n_infection_daily,1000,750.4585,170.1619908524841,705.25,542.9625,579.4499999999999,618.375,849.625,976.8000000000002,1170.5749999999998,407,1428.5,0,0,0,1000,9,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,80,cume_n_infection_daily,1000,755.7,175.65142733244136,710.5,542.9625,581.45,618.5,854.625,1000.2,1190.5749999999998,407,1475,0,0,0,1000,10,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,81,cume_n_infection_daily,1000,757.888,179.4135772111121,710.75,542.9625,581.45,618.5,856.875,1006,1205.0874999999999,407,1516,0,0,0,1000,11,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,82,cume_n_infection_daily,1000,758.5915,181.09909099304863,710.75,542.9625,581.45,618.5,858.25,1012.8500000000001,1208.5,407,1550.5,0,0,0,1000,12,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,83,cume_n_infection_daily,1000,758.689,181.47630955562747,710.75,542.9625,581.45,618.5,858.25,1012.8500000000001,1208.5,407,1579.5,0,0,0,1000,13,Cumulative infectious days
+rapid_same_day_5_day_quarantine_pcr,"Same-day RT + 5-day
+quarantine + PCR",5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,84,cume_n_infection_daily,1000,758.689,181.47630955562747,710.75,542.9625,581.45,618.5,858.25,1012.8500000000001,1208.5,407,1579.5,0,0,0,1000,14,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,70,cume_n_infection_daily,1000,635.8495,123.27467601050711,613.5,475.5,504.95,537.875,707.75,814.5,915.0749999999999,371.5,1063,0,0,0,1000,0,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,71,cume_n_infection_daily,1000,720.9565,140.38416424697382,696.25,542.4,571.95,607.875,799.75,929.55,1038.8624999999997,424,1182,0,0,0,1000,1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,72,cume_n_infection_daily,1000,808.174,158.25431005394657,777.5,607.45,644,679.875,896.125,1042.1,1180.0625,475,1336.5,0,0,0,1000,2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,73,cume_n_infection_daily,1000,900.777,178.6200685810525,863.25,677.4875,717,756.875,1000,1164.05,1332,524.5,1512,0,0,0,1000,3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,74,cume_n_infection_daily,1000,1012.7105,203.6031426069584,971.5,757,797.9000000000001,848.5,1122.125,1308.6000000000001,1493.6,584,1701.5,0,0,0,1000,4,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,75,cume_n_infection_daily,1000,1160.7685,229.76853949026506,1115,865.975,914.4,975.875,1290.5,1501.7,1725.1,676,1916.5,0,0,0,1000,5,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,76,cume_n_infection_daily,1000,1339.8345,256.5155484299857,1289.25,1003.9250000000001,1064.95,1134,1484.875,1717.4500000000003,1974.6249999999998,790.5,2199,0,0,0,1000,6,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,77,cume_n_infection_daily,1000,1540.8835,282.8964529308044,1485.25,1173.4750000000001,1238,1314.5,1703.875,1948.25,2220.9999999999995,928,2498.5,0,0,0,1000,7,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,78,cume_n_infection_daily,1000,1745.873,311.99735049791326,1671.75,1354.9875,1425.4499999999998,1498,1929.75,2197.1000000000004,2474.6499999999996,1072,2818.5,0,0,0,1000,8,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,79,cume_n_infection_daily,1000,1923.4535,351.8628099483871,1873.25,1503.9,1572.3999999999999,1632.75,2128.875,2438.2,2734.5499999999997,1106.5,3153.5,0,0,0,1000,9,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,80,cume_n_infection_daily,1000,2056.567,398.517343517298,1982,1563.8874999999998,1647.5,1728.25,2294.875,2627,2960.2875,1106.5,3456,0,0,0,1000,10,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,81,cume_n_infection_daily,1000,2142.4715,443.93520349556945,2039.75,1573.4875,1671.9,1783,2422.625,2789.55,3121.1375,1106.5,3728.5,0,0,0,1000,11,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,82,cume_n_infection_daily,1000,2189.796,482.4561786819072,2074,1573.4875,1671.9,1791.875,2493.375,2899.75,3251.0125000000003,1106.5,3971,0,0,0,1000,12,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,83,cume_n_infection_daily,1000,2210.3935,508.1708906084761,2083.5,1573.4875,1671.9,1791.875,2532.75,2952.25,3337.0999999999995,1106.5,4168,0,0,0,1000,13,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.6,60%,0,84,cume_n_infection_daily,1000,2216.959,520.4291539905536,2083.5,1573.4875,1671.9,1791.875,2545.75,2980.6499999999996,3360.7875,1106.5,4283.5,0,0,0,1000,14,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,70,cume_n_infection_daily,1000,611.141,118.89790507334783,587.75,456.975,482.95000000000005,516,682,783.55,881.025,357.5,1031,0,0,0,1000,0,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,71,cume_n_infection_daily,1000,671.5995,131.52162288778615,649.75,505.95,531.95,566.375,748,866.6000000000001,974.5124999999999,387.5,1114.5,0,0,0,1000,1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,72,cume_n_infection_daily,1000,734.706,144.99568722314922,709,550.4875,581,617.5,814.75,949.05,1081.0249999999999,421,1201.5,0,0,0,1000,2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,73,cume_n_infection_daily,1000,804.4205,161.6485498958572,774.25,599.4875,636.45,673.875,892.125,1046.5500000000002,1185.5625,457.5,1335,0,0,0,1000,3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,74,cume_n_infection_daily,1000,896.596,184.31647470274285,857.25,661.9375,705.45,747.375,995.75,1165.0500000000002,1339.35,501,1518.5,0,0,0,1000,4,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,75,cume_n_infection_daily,1000,1030.043,208.6282480799206,990,758,804,861.375,1148.625,1330.5500000000002,1525.8749999999998,563.5,1732.5,0,0,0,1000,5,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,76,cume_n_infection_daily,1000,1199.4035,233.71263130558813,1158.25,892.4875,947.95,1010.875,1336,1535.55,1749.9124999999997,673.5,2007,0,0,0,1000,6,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,77,cume_n_infection_daily,1000,1395.4585,258.7237523068915,1345.75,1055.9875,1120.45,1182.5,1544.125,1766.5500000000002,2016.5625,801,2299.5,0,0,0,1000,7,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,78,cume_n_infection_daily,1000,1599.198,286.13358720312044,1530.25,1237.8875,1304.45,1370.5,1768.5,2015.45,2278.1375000000003,945,2572,0,0,0,1000,8,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,79,cume_n_infection_daily,1000,1776.537,324.9189498243446,1710.75,1378.9624999999999,1453.5,1510.75,1973.625,2256.5,2517.2124999999996,1030.5,2889.5,0,0,0,1000,9,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,80,cume_n_infection_daily,1000,1909.6505,371.15148662746293,1836.75,1447.4875,1529.3,1606.875,2141.375,2449.75,2766.5125,1030.5,3158,0,0,0,1000,10,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,81,cume_n_infection_daily,1000,1995.555,416.4116168043461,1900.75,1472.9125,1553.9499999999998,1658.75,2255.625,2599,2968.0375,1030.5,3427,0,0,0,1000,11,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,82,cume_n_infection_daily,1000,2042.8795,454.9989030003056,1933.75,1472.9125,1554.45,1667.625,2330.125,2707.45,3055.1,1030.5,3669.5,0,0,0,1000,12,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,83,cume_n_infection_daily,1000,2063.477,480.7522279466583,1950,1472.9125,1554.45,1667.625,2360.75,2768.05,3138.1624999999995,1030.5,3866.5,0,0,0,1000,13,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.75,75%,0,84,cume_n_infection_daily,1000,2070.0425,493.02828502387524,1950,1472.9125,1554.45,1667.625,2369.75,2798.0499999999997,3189.7875,1030.5,3982,0,0,0,1000,14,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,67,cume_n_infection_daily,3000,183.54066666666668,36.32857830169929,176.5,135,145,155,205.5,236,265.01250000000005,68,332,0,0,0,3000,-3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,68,cume_n_infection_daily,3000,366.9175,72.3279663891545,351,271.5,290,309.5,410,471.54999999999995,532.5375000000001,147.5,668.5,0,0,0,3000,-2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,69,cume_n_infection_daily,3000,550.2201666666666,107.85393255182919,526.5,411.9875,437,464.375,612.5,708,796.5250000000001,235.5,1007,0,0,0,3000,-1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,70,cume_n_infection_daily,3000,585.3785,115.45703860601667,561,438,465,494,651.125,754.5,852.0625000000002,240.5,1077.5,0,0,0,3000,0,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,71,cume_n_infection_daily,3000,621.2116666666667,123.75482663824056,592.5,466.48749999999995,493,523.5,691,803,911.5250000000001,255.5,1151.5,0,0,0,3000,1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,72,cume_n_infection_daily,3000,660.4326666666667,133.31177921091975,629,493.4875,523,554.5,732.5,856,975.0375000000001,275.5,1229.5,0,0,0,3000,2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,73,cume_n_infection_daily,3000,707.555,146.86289596673913,669,528.5,559,591.5,783.625,925.5,1058.0125,291,1338.5,0,0,0,3000,3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,74,cume_n_infection_daily,3000,779.5821666666667,168.16820105652482,738.75,572.9749999999999,607.5,645.5,870.125,1022,1182.0375000000001,315.5,1488.5,0,0,0,3000,4,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,75,cume_n_infection_daily,3000,899.3018333333333,191.98492575515218,860.75,658.5,698.9499999999999,744.375,1007.5,1176.5,1357.0125,404.5,1716,0,0,0,3000,5,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,76,cume_n_infection_daily,3000,1060.376,216.00319924643452,1017.25,788,835,887.5,1185.625,1369.55,1583.5125,519,1974,0,0,0,3000,6,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,77,cume_n_infection_daily,3000,1251.9586666666667,240.23751021019362,1202.25,948.475,1003.5,1058.875,1391.5,1596.5,1834,597,2260.5,0,0,0,3000,7,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,78,cume_n_infection_daily,3000,1455.7605,265.81031914695296,1373.75,1124.975,1192,1248.5,1614.5,1842.1499999999999,2094.0750000000003,664,2578.5,0,0,0,3000,8,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,79,cume_n_infection_daily,3000,1632.7095,303.1754967347407,1539.5,1274.9875,1335.45,1391,1814.125,2068.1499999999996,2350.5375000000004,695,2885,0,0,0,3000,9,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,80,cume_n_infection_daily,3000,1764.2128333333333,348.55783064757105,1668,1346.475,1415,1485.875,1984.875,2277.1,2578.1375000000007,695,3179,0,0,0,3000,10,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,81,cume_n_infection_daily,3000,1848.5911666666666,392.85189211926433,1741.75,1361,1447.5,1534,2094.625,2423.6000000000004,2770.737500000001,695,3435,0,0,0,3000,11,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,82,cume_n_infection_daily,3000,1894.1685,430.78434598067435,1783.5,1362.4625,1448,1542,2161.625,2522.05,2911.0875000000005,695,3642.5,0,0,0,3000,12,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,83,cume_n_infection_daily,3000,1913.382,455.6567296343674,1793.25,1362.4625,1448,1542,2197.125,2577.5,2996.05,695,3761,0,0,0,3000,13,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,0.9,90%,0,84,cume_n_infection_daily,3000,1919.3243333333332,467.31706283881357,1793.25,1362.4625,1448,1542,2201.125,2595.75,3040.0125,695,3841.5,0,0,0,3000,14,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,70,cume_n_infection_daily,1000,569.679,111.17988768849528,548,423,450.35,481.5,635.625,731.5,822.5374999999999,327.5,961,0,0,0,1000,0,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,71,cume_n_infection_daily,1000,589.2015,116.32644578830619,565.5,437,465,496.5,657,759.5,857.1374999999998,337.5,982.5,0,0,0,1000,1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,72,cume_n_infection_daily,1000,612.1635,122.91376778889362,586.75,453.9875,483.5,514.5,681,792.1,897,344,1032.5,0,0,0,1000,2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,73,cume_n_infection_daily,1000,643.9845,133.92676875493987,616.5,474.9875,506,538.375,715.625,839.25,957.5375,354,1112,0,0,0,1000,3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,74,cume_n_infection_daily,1000,703.5695,153.8103167322767,669.25,510.97499999999997,542.5,579.375,791.75,918.5500000000001,1064.0749999999998,371.5,1262,0,0,0,1000,4,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,75,cume_n_infection_daily,1000,812.975,176.55445576606343,779.75,586,622,669.5,914.75,1053.2000000000003,1239.5,397,1488,0,0,0,1000,5,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,76,cume_n_infection_daily,1000,966.6065,200.1919897011129,929.5,705.975,749.9000000000001,805,1084,1245.1000000000001,1460.1374999999998,489,1753,0,0,0,1000,6,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,77,cume_n_infection_daily,1000,1154.482,223.91534395225634,1111.5,860.9875000000001,916.5,972,1283.5,1464.1,1710.1749999999997,605,2048,0,0,0,1000,7,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,78,cume_n_infection_daily,1000,1356.2015,248.5972430196823,1281.75,1040.475,1104.45,1161.875,1502,1702.5,1967.6499999999999,749,2330,0,0,0,1000,8,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,79,cume_n_infection_daily,1000,1533.2105,285.13437630756187,1448.25,1197.4125,1250,1307.875,1700.875,1936.25,2216.1124999999997,856.5,2586.5,0,0,0,1000,9,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,80,cume_n_infection_daily,1000,1666.324,330.13619224409405,1578.25,1263.4375,1330.4,1403,1878.75,2145,2445.5125,931,2814,0,0,0,1000,10,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,81,cume_n_infection_daily,1000,1752.2285,374.9493399718091,1658,1286.9875,1356.4499999999998,1451.5,1990.625,2290.8,2621.5375,934,3066.5,0,0,0,1000,11,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,82,cume_n_infection_daily,1000,1799.553,413.4855680746379,1695.75,1286.9875,1357.4,1461.375,2057.625,2392.15,2742.5125,934,3279.5,0,0,0,1000,12,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,83,cume_n_infection_daily,1000,1820.1505,439.2739808251565,1709.5,1286.9875,1357.4,1461.375,2090.75,2454.1,2826.0874999999996,934,3457.5,0,0,0,1000,13,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,FALSE,No symptom screening,2,2x,1,100%,0,84,cume_n_infection_daily,1000,1826.716,451.6085263866318,1709.5,1286.9875,1357.4,1461.375,2092,2478.1,2869.0499999999997,934,3573,0,0,0,1000,14,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,70,cume_n_infection_daily,1000,603.5105,116.86216198862083,581,455.47499999999997,479.40000000000003,509.875,672.5,771.5,870.0125,350,1015.5,0,0,0,1000,0,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,71,cume_n_infection_daily,1000,670.087,128.38178926473495,643.25,505.9875,535.5,565,746.25,853.5,971.3624999999997,393.5,1104,0,0,0,1000,1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,72,cume_n_infection_daily,1000,752.4005,141.49446113640732,721.5,573.4875,606.4,637,839.375,952.6500000000001,1091.025,444,1244,0,0,0,1000,2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,73,cume_n_infection_daily,1000,844.0705,161.12304743942178,808.75,646,677.45,713.375,939.5,1071.05,1230,487.5,1407.5,0,0,0,1000,3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,74,cume_n_infection_daily,1000,956.1045,187.27577939311132,915.25,721,761,804.5,1066.125,1217.65,1407.55,550.5,1603.5,0,0,0,1000,4,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,75,cume_n_infection_daily,1000,1104.195,214.34089786015056,1054,829.4875,872.45,937,1229.625,1414.3000000000002,1614.1374999999998,665,1854,0,0,0,1000,5,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,76,cume_n_infection_daily,1000,1283.287,241.77994162289636,1227.25,972.9250000000001,1024.45,1095.375,1425.625,1638.6000000000001,1858.1874999999998,786,2143.5,0,0,0,1000,6,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,77,cume_n_infection_daily,1000,1484.524,268.7345105511407,1422,1140,1199.45,1273.875,1641.875,1876.15,2116.2999999999997,920.5,2455.5,0,0,0,1000,7,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,78,cume_n_infection_daily,1000,1689.8915,297.8857085748209,1612,1325.4624999999999,1388.5,1454.875,1868.375,2128.05,2388.525,1009,2769.5,0,0,0,1000,8,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,79,cume_n_infection_daily,1000,1867.767,337.3256198167948,1804.75,1466.3875,1529,1592.75,2077.125,2351.0499999999997,2650.0499999999997,1039.5,3073,0,0,0,1000,9,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,80,cume_n_infection_daily,1000,2001.0405,383.6403028772417,1922.25,1526.975,1601,1689.5,2235,2553.65,2870.6749999999997,1039.5,3382,0,0,0,1000,10,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,81,cume_n_infection_daily,1000,2087.1195,429.0188278203818,1980.75,1539.9375,1638.15,1738.125,2339.875,2697.05,3035.537499999999,1039.5,3661,0,0,0,1000,11,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,82,cume_n_infection_daily,1000,2134.5685,467.52855475067753,2023.25,1539.9375,1638.15,1758.25,2416.5,2810.3,3148.2999999999997,1039.5,3910,0,0,0,1000,12,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,83,cume_n_infection_daily,1000,2155.2,493.26288048997696,2032.5,1539.9375,1638.15,1758.25,2451.75,2875.15,3238.6499999999996,1039.5,4113.5,0,0,0,1000,13,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.6,60%,0,84,cume_n_infection_daily,1000,2161.7915,505.61373797571974,2032.5,1539.9375,1638.15,1758.25,2456,2888.25,3287.5625,1039.5,4233.5,0,0,0,1000,14,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,70,cume_n_infection_daily,1000,588.057,113.97815918750298,566.75,441.97499999999997,466.5,496,656.125,752,843.55,343,989,0,0,0,1000,0,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,71,cume_n_infection_daily,1000,635.435,122.39680450384623,610.25,480,505.5,536.375,710,809.05,918.55,373.5,1045.5,0,0,0,1000,1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,72,cume_n_infection_daily,1000,695.074,132.4501229106982,665,525.9625,556.5,586.5,775.125,881.2,1001.0125,409,1143,0,0,0,1000,2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,73,cume_n_infection_daily,1000,764.157,148.65153423234364,731,578.9625,610.5,643,854.625,969.3500000000001,1116.5874999999999,446.5,1273.5,0,0,0,1000,3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,74,cume_n_infection_daily,1000,856.452,172.39766283262122,812.25,641.9875000000001,679.4499999999999,715.875,960.125,1093,1266.1499999999999,488.5,1446.5,0,0,0,1000,4,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,75,cume_n_infection_daily,1000,989.9725,197.56817222525098,940.5,738.9875,780.85,831.5,1108,1272.6000000000001,1469.5125,572.5,1650.5,0,0,0,1000,5,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,76,cume_n_infection_daily,1000,1159.4955,223.31014116895565,1105.25,870.975,922.95,983.375,1298,1482.5,1703.675,686,1927,0,0,0,1000,6,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,77,cume_n_infection_daily,1000,1355.778,248.8822001782481,1294.75,1042.4375,1091.95,1157.875,1505.625,1717.7,1961.0874999999999,817.5,2225,0,0,0,1000,7,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,78,cume_n_infection_daily,1000,1559.8765,276.44537080730936,1481.75,1224,1280,1344.875,1727.5,1956.5500000000002,2210.5125,963.5,2507,0,0,0,1000,8,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,79,cume_n_infection_daily,1000,1737.502,314.9309654654636,1665.25,1361.4875,1426.4,1483.875,1934.125,2199.9,2478.0625,998.5,2826.5,0,0,0,1000,9,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,80,cume_n_infection_daily,1000,1870.7755,360.8950548155798,1784,1422.8625,1502.3500000000001,1577.625,2093.625,2402.1000000000004,2703.0125000000003,998.5,3107,0,0,0,1000,10,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,81,cume_n_infection_daily,1000,1956.8545,406.2012198538561,1850,1441.9375,1525.95,1629.75,2196.625,2546.5000000000005,2879.6874999999995,998.5,3386,0,0,0,1000,11,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,82,cume_n_infection_daily,1000,2004.3035,444.8213086559415,1885.75,1441.9375,1525.95,1642.25,2273.5,2651.0499999999997,2994.5499999999997,998.5,3635,0,0,0,1000,12,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,83,cume_n_infection_daily,1000,2024.935,470.6082919365525,1902,1441.9375,1525.95,1642.25,2307.875,2704.95,3071.1375,998.5,3838.5,0,0,0,1000,13,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.75,75%,0,84,cume_n_infection_daily,1000,2031.5265,482.99817264926844,1902,1441.9375,1525.95,1642.25,2312,2726.05,3119.8124999999995,998.5,3958.5,0,0,0,1000,14,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,67,cume_n_infection_daily,3000,183.54066666666668,36.32857830169929,176.5,135,145,155,205.5,236,265.01250000000005,68,332,0,0,0,3000,-3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,68,cume_n_infection_daily,3000,366.9175,72.3279663891545,351,271.5,290,309.5,410,471.54999999999995,532.5375000000001,147.5,668.5,0,0,0,3000,-2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,69,cume_n_infection_daily,3000,550.2201666666666,107.85393255182919,526.5,411.9875,437,464.375,612.5,708,796.5250000000001,235.5,1007,0,0,0,3000,-1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,70,cume_n_infection_daily,3000,571.8761666666667,112.27883710236424,547.5,429.98749999999995,454.5,482,637,735.55,831.0250000000001,245.5,1035.5,0,0,0,3000,0,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,71,cume_n_infection_daily,3000,599.9963333333334,117.76337598816649,571.75,452.9875,477.95000000000005,506,667.625,772.55,873.5250000000001,257.5,1072.5,0,0,0,3000,1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,72,cume_n_infection_daily,3000,636.977,124.98659936572001,608,482.48749999999995,508.5,537,707.5,818,931.5500000000002,273.5,1124,0,0,0,3000,2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,73,cume_n_infection_daily,3000,683.6136666666666,138.08004543091766,648.5,516,544.45,574,760.125,886,1017.0250000000001,292,1211.5,0,0,0,3000,3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,74,cume_n_infection_daily,3000,755.6835,159.83638238563847,716,563,593.45,628,848.125,987,1142.5,318,1383.5,0,0,0,3000,4,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,75,cume_n_infection_daily,3000,875.4881666666666,184.02319542779756,833,647.9875,686.5,727.875,983.125,1138.6499999999999,1326.0125,407,1590.5,0,0,0,3000,5,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,76,cume_n_infection_daily,3000,1036.7585,208.3215920709877,986.25,768.9875000000001,823.45,870,1157.5,1333.1,1543.525,527.5,1839,0,0,0,3000,6,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,77,cume_n_infection_daily,3000,1228.5983333333334,232.71466370240387,1172.25,932.5,990.5,1042.375,1366.125,1559.2499999999998,1791.0375000000001,606,2112,0,0,0,3000,7,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,78,cume_n_infection_daily,3000,1432.5213333333334,258.4414170243747,1348.75,1117.4750000000001,1175.45,1234.5,1590.625,1802.1499999999999,2052.1500000000005,670.5,2410.5,0,0,0,3000,8,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,79,cume_n_infection_daily,3000,1609.5823333333333,295.55041883111244,1518.75,1261.4875,1321.5,1375.5,1791.625,2040.55,2313.0625,703,2706,0,0,0,3000,9,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,80,cume_n_infection_daily,3000,1741.159,340.6508185993454,1638,1336.4750000000001,1400.5,1469,1958,2236.7999999999997,2541.55,703,2989.5,0,0,0,3000,10,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,81,cume_n_infection_daily,3000,1825.5935,384.8782555539904,1714.5,1352,1430.5,1519.25,2066.25,2385,2723.1625000000004,703,3235,0,0,0,3000,11,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,82,cume_n_infection_daily,3000,1871.2456666666667,422.77059043718,1760.5,1352,1431,1527,2139.625,2473.55,2865.025,703,3451,0,0,0,3000,12,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,83,cume_n_infection_daily,3000,1890.4983333333332,447.614640011405,1772.25,1352,1431,1527,2167.5,2530.25,2944.5750000000007,703,3654.5,0,0,0,3000,13,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,0.9,90%,0,84,cume_n_infection_daily,3000,1896.4445,459.25870997798927,1772.25,1352,1431,1527,2174.625,2558.05,2991.5125,703,3774.5,0,0,0,3000,14,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,67,cume_n_infection_daily,1000,183.4705,36.13881422575516,176.5,135,143.5,155,207,235.5,262.525,107,320.5,0,0,0,1000,-3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,68,cume_n_infection_daily,1000,366.8465,71.82459509256012,352.25,270.97499999999997,288.45,309.5,412,470.5,522.525,213.5,628,0,0,0,1000,-2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,69,cume_n_infection_daily,1000,550.757,106.69987729521911,531.5,409.48749999999995,435.95,465.5,614.5,705,789.5250000000001,316.5,934,0,0,0,1000,-1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,70,cume_n_infection_daily,1000,562.159,109.31716682187643,542.75,419.4875,445,474.5,627.75,718.7,810.05,322.5,950.5,0,0,0,1000,0,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,71,cume_n_infection_daily,1000,577.591,113.04997795893865,557,431.4875,455.45000000000005,487.875,646.5,740.8000000000002,837.1374999999998,331,965.5,0,0,0,1000,1,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,72,cume_n_infection_daily,1000,599.6225,118.39690270577317,575,448.975,474.45,504.5,670.5,768.1,873.6624999999999,341,1000,0,0,0,1000,2,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,73,cume_n_infection_daily,1000,631.362,129.26348674318285,602,470,497,528,705.25,815.05,931.5125,354,1094.5,0,0,0,1000,3,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,74,cume_n_infection_daily,1000,691.1685,149.39443615913314,655.5,505.95,535.3000000000001,570.5,778.125,897.1,1050.6124999999997,370,1239.5,0,0,0,1000,4,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,75,cume_n_infection_daily,1000,800.793,172.27205609823176,763.25,583,618.95,661.875,902.125,1036.1,1232.1499999999999,416,1414,0,0,0,1000,5,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,76,cume_n_infection_daily,1000,954.646,196.09783028642372,914.75,699.5,747.5,797.5,1065.625,1218.75,1432.4124999999997,510.5,1666,0,0,0,1000,6,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,77,cume_n_infection_daily,1000,1142.789,219.91015883073015,1097.25,857.4250000000001,910.95,966,1269.125,1442.6000000000001,1683.5875,629,1949.5,0,0,0,1000,7,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,78,cume_n_infection_daily,1000,1344.7045,244.69018721123138,1268.5,1039.9875,1098.4,1158.125,1492,1682.6000000000001,1950.0125,775,2222.5,0,0,0,1000,8,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,79,cume_n_infection_daily,1000,1521.9025,280.9585110450984,1440.75,1190.4875000000002,1244,1301.875,1697.25,1920.7500000000002,2199.2875,884.5,2494.5,0,0,0,1000,9,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,80,cume_n_infection_daily,1000,1655.176,325.7855164471354,1568.75,1264.4750000000001,1327.5,1397.5,1859.375,2117.95,2421.5249999999996,919,2792.5,0,0,0,1000,10,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,81,cume_n_infection_daily,1000,1741.255,370.64853204796225,1644,1278.4624999999999,1356.9,1445.375,1967.75,2278.6,2599.1375,919,3046.5,0,0,0,1000,11,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,82,cume_n_infection_daily,1000,1788.704,409.2302735634313,1682.75,1278.4624999999999,1357,1457.625,2031.625,2378.75,2707.5499999999997,919,3267,0,0,0,1000,12,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,83,cume_n_infection_daily,1000,1809.3355,435.0760552634603,1697.75,1278.4624999999999,1357,1457.625,2069.875,2433.05,2801.4749999999995,919,3470.5,0,0,0,1000,13,Cumulative infectious days
+rapid_test_same_day,Same-day RT,5e-4,"50 per 100,000",upper,TRUE,With symptom screening,2,2x,1,100%,0,84,cume_n_infection_daily,1000,1815.927,447.53348913226023,1697.75,1278.4624999999999,1357,1457.625,2073.125,2464.4,2853.9374999999995,919,3590.5,0,0,0,1000,14,Cumulative infectious days
