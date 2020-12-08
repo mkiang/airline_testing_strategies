@@ -1,0 +1,40 @@
+# Config file for airline_testing_strategies ----
+
+default:
+  ## Simulation settings 
+  ## We want 3000 simulations per parameter set, so we do 60 rounds with 50 
+  ## simulations per round (each round is stored as an intermediate 
+  ## file with 50 realizations). This is more than enough simulations to get
+  ## stable estimates -- reduce n_rounds_of_sims to 20 if you're in a hurry. 
+  n_reps_per_round: 50  # Number of replications per round of simulations
+  n_rounds_of_sims: 60  # Number of rounds of simulations per parameter setting
+  
+  ## Local settings
+  n_cores: null         # null will result in n/2 cores being used
+  
+  ## Transmission settings 
+  days_quarantine: 14         # Number of days people quarantine (days.quarantine) 
+  n_burnin_days: 67           # Fast forward simulation this many days
+  day_of_flight: 70           # Time 0 in the simulation
+  n_outcome_day: 14           # Time + x to count up infectious days
+  n_passengers: 100000        # Number of passengers per simulation 
+  subclin_infectious: .5      # Sub-clinical infectiousness is discounted (alpha.a)
+  prop_subclin: .4            # Proportion of infections that are subclinical (p.a)
+  prob_inf: [10, 50, 100, 200, 500, 1000, 1500, 2500] # Static daily risk of infection per 1M
+  primary_prob_inf: 500       # Which prob_inf to use for generating plots/tables
+  risk_multiplier: [2]        # Day-of-flight risk multiplier
+  sens_type:  "upper"         # Time-varying test sensitivity from He et al paper 
+  rt_sens_multiplier: [.9]    # Rapid test sensitivity reduction factor
+
+dev:
+  n_cores: 15
+
+## Sensitivity analysis around changing the risk multiplier
+sensitivity_risk_multiplier:
+  n_rounds_of_sims: 20
+  risk_multiplier: [1, 2, 4, 10] 
+
+## Sensitivity analysis around the rapid testing discount factor
+sensitivity_rt_multiplier:
+  n_rounds_of_sims: 20
+  rt_sens_multiplier: [.6, .75, .9, 1.0]
