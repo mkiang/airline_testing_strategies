@@ -50,3 +50,8 @@ Backup of *.doc*
 *.~vsd*
 Icon
 .ipynb_checkpoints
+code/old_code/**
+rmds/00_text_summary_of_results.Rmd
+rmds/00_text_summary_of_results.html
+rmds/99_walkthrough_single_simulation.html
+rmds/99_walkthrough_single_simulation.Rmd
