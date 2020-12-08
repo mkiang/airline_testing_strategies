@@ -1,0 +1,43 @@
+---
+title: "Table SX. Point prevalence at equilibrium"
+author: "Mathew Kiang"
+date: "12/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Setting up
+```{r error=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(tidyverse)
+library(here)
+library(DT)
+library(knitr)
+source(here("code", "utils.R"))
+```
+
+Below, we list mean (95% UI) of the daily prevalence of test-positive infections in our simulation at equilibrium. 
+
+```{r}
+results_df <- readRDS(here("data", "summarized_results.RDS")) %>% 
+    filter(testing_type == "no_testing",
+           !symptom_screening,
+           metric == "n_infected_all",
+           risk_multiplier == 2,
+           time_step == min(time_step))
+
+results_df %>% 
+    transmute(prob_inf_cat,
+                print_version = sprintf("%s (95%% UI: %i, %i)",
+                                      formatC(round(mean), big.mark = ","),
+                                      round(p025), 
+                                      round(p975)),
+              # mean = round(mean),
+              # median,
+              # p025,
+              # p975,
+            ) %>% 
+    knitr::kable()
+```
