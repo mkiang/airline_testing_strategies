@@ -55,3 +55,5 @@ rmds/00_text_summary_of_results.Rmd
 rmds/00_text_summary_of_results.html
 rmds/99_walkthrough_single_simulation.html
 rmds/99_walkthrough_single_simulation.Rmd
+plots/fig3_active_inf_day_of_travel_gsw.jpg
+plots/fig3_active_inf_day_of_travel_gsw.pdf
