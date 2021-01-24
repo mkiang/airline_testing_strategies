@@ -20,7 +20,7 @@ default:
   n_passengers: 100000        # Number of passengers per simulation 
   subclin_infectious: .5      # Sub-clinical infectiousness is discounted (alpha.a)
   prop_subclin: .3            # Proportion of infections that are subclinical (p.a)
-  prob_inf: [10, 50, 100, 200, 500, 1000, 1500, 2500] # Static daily risk of infection per 1M
+  prob_inf: [50, 100, 200, 500, 1000, 1500, 2500, 5000] # Static daily risk of infection per 1M
   primary_prob_inf: 1500       # Which prob_inf to use for generating plots/tables
   risk_multiplier: 2        # Day-of-flight risk multiplier
   sens_type:  "upper"         # Time-varying test sensitivity from He et al paper 
