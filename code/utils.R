@@ -14,7 +14,7 @@ options(dplyr.summarise.inform = FALSE)
 source(here::here("code", "testing_scenarios", "01_simulate_null_model.R"))
 source(here::here("code", "testing_scenarios", "02_simulate_rapid_test_same_day.R"))
 source(here::here("code", "testing_scenarios", "03_simulate_pcr_three_days_before.R"))
-source(here::here("code", "testing_scenarios", "04_simulate_pcr_three_days_after.R"))
+source(here::here("code", "testing_scenarios", "04_simulate_pcr_five_days_after.R"))
 source(here::here("code", "testing_scenarios", "05_simulate_rapid_antigen_same_day_5_day_quarantine_pcr.R"))
 source(here::here("code", "testing_scenarios", "06_simulate_pcr_3_days_before_5_day_quarantine_pcr.R"))
 source(here::here("code", "testing_scenarios", "99_simulate_perfect_daily_testing.R"))
@@ -133,6 +133,25 @@ run_and_save_simulation <- function(testing_type,
     
     if (testing_type == "pcr_three_days_after") {
         simulate_pcr_three_days_after(
+            testing_type,
+            prob_inf,
+            sens_type,
+            risk_multiplier,
+            rapid_test_multiplier,
+            symptom_screening,
+            round,
+            n_reps,
+            prop_subclin,
+            subclin_infectious,
+            n_burnin,
+            day_of_flight,
+            n_outcome_day,
+            days_quarantine
+        )
+    }
+    
+    if (testing_type == "pcr_five_days_after") {
+        simulate_pcr_five_days_after(
             testing_type,
             prob_inf,
             sens_type,
@@ -1129,31 +1148,35 @@ subset_to_inf_passengers <- function(sim_pop) {
 return_sim_file_name <- function(scenario_name,
                                  symptom_screening,
                                  prob_inf,
+                                 prop_subclin, 
                                  sens_type,
                                  risk_multiplier,
                                  rapid_test_multiplier,
                                  round) {
     sprintf(
-        "%s/%s/%03d-%s-prob_inf_%03d-sens_type_%s-risk_multi_%i-rt_multi_%i-results.RDS",
+        "%s/%s/%03d-%s-prob_inf_%03d-asx_%02d-sens_type_%s-risk_multi_%i-rt_multi_%i-results.RDS",
         dir_results(scenario_name),
         ifelse(symptom_screening, "with_screening", "no_screening"),
         round,
         scenario_name,
         prob_inf * 1000000,
+        prop_subclin * 100, 
         sens_type,
         risk_multiplier,
         rapid_test_multiplier * 100
     )
 }
 
-return_sim_state_file <- function(round, rep, prob_inf) {
+return_sim_state_file <- function(round, rep, prob_inf, prop_subclin, sens_type) {
     sprintf(
-        "%s/round_%02d/round_%02d-rep_%03d-prob_inf_%03d-post_burnin_simulation_state.RDS",
+        "%s/round_%02d/round_%02d-rep_%03d-prob_inf_%03d-asx_%02d-sens_type_%s-post_burnin_simulation_state.RDS",
         dir_results("simulation_states"),
         round,
         round,
         rep,
-        prob_inf * 1000000
+        prob_inf * 1000000,
+        prop_subclin * 100,
+        sens_type
     )
 }
 
@@ -1163,6 +1186,7 @@ print_sim_start <- function(scenario_name,
                             sens_type,
                             risk_multiplier,
                             rapid_test_multiplier,
+                            prop_subclin, 
                             round) {
     print(
         sprintf(
@@ -1173,6 +1197,7 @@ print_sim_start <- function(scenario_name,
                 "sens: %s, ",
                 "symptom_testing: %s, ",
                 "prob_inf: %s, ",
+                "prop_subclin: %s, ", 
                 "risk_multi: %s, ",
                 "rt_multi: %s"
             ),
@@ -1182,6 +1207,7 @@ print_sim_start <- function(scenario_name,
             sens_type,
             symptom_screening,
             prob_inf,
+            prop_subclin, 
             risk_multiplier,
             rapid_test_multiplier
         )
@@ -1191,15 +1217,17 @@ print_sim_start <- function(scenario_name,
 print_sim_rep <- function(rep,
                           days_incubation,
                           days_symptomatic,
-                          prob_inf) {
+                          prob_inf,
+                          prop_subclin) {
     print(
         sprintf(
-            "Rep %s (%s): days_inc: %s, days_sympt: %s, prob_inf: %s",
+            "Rep %s (%s): days_inc: %s, days_sympt: %s, prob_inf: %s, prop_subclin: %s",
             rep,
             Sys.time(),
             days_incubation,
             days_symptomatic,
-            prob_inf
+            prob_inf, 
+            prop_subclin
         )
     )
 }
