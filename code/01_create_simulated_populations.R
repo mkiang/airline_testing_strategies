@@ -59,8 +59,7 @@ param_grid <- bind_rows(
         sens_type = config::get(config = "sensitivity_test_sens")$sens_type,
         stringsAsFactors = FALSE
     )
-) %>% 
-    filter(round %% 2 == 0)
+)
 
 ## Remove files we've already created from the parameter grid
 param_grid <- param_grid[with(param_grid,
