@@ -1,26 +1,27 @@
-simulate_null_model <- function(testing_type,
-                                prob_inf,
-                                sens_type,
-                                risk_multiplier,
-                                rapid_test_multiplier,
-                                symptom_screening,
-                                round,
-                                n_reps,
-                                prop_subclin,
-                                subclin_infectious,
-                                n_burnin,
-                                day_of_flight,
-                                n_outcome_day,
-                                days_quarantine) {
+simulate_perfect_daily_testing <- function(testing_type,
+         prob_inf,
+         sens_type,
+         risk_multiplier,
+         rapid_test_multiplier,
+         symptom_screening,
+         round,
+         n_reps,
+         prop_subclin,
+         subclin_infectious,
+         n_burnin,
+         day_of_flight,
+         n_outcome_day,
+         days_quarantine) {
     ### Set file names ----
     sim_file <- return_sim_file_name(
-        testing_type,
-        symptom_screening,
-        prob_inf,
-        sens_type,
-        risk_multiplier,
-        rapid_test_multiplier,
-        round
+        scenario_name = testing_type,
+        symptom_screening = symptom_screening,
+        prob_inf = prob_inf,
+        prop_subclin = prop_subclin, 
+        risk_multiplier = risk_multiplier,
+        rapid_test_multiplier = rapid_test_multiplier,
+        sens_type = sens_type, 
+        round = round
     )
     
     ## Make sure there's a folder there
@@ -39,6 +40,7 @@ simulate_null_model <- function(testing_type,
             sens_type,
             risk_multiplier,
             rapid_test_multiplier,
+            prop_subclin, 
             round
         )
         
@@ -47,13 +49,26 @@ simulate_null_model <- function(testing_type,
         
         for (r in 1:n_reps) {
             ## 1. Create and burn-in simulation ----
-            unpack_simulation_state(return_sim_state_file(round, r, prob_inf))
+            unpack_simulation_state(return_sim_state_file(round, r, prob_inf, prop_subclin))
+            p_sens <- return_test_sensitivity(sens_type)
             
-            print_sim_rep(r, days_incubation, days_symptomatic, prob_inf)
+            print_sim_rep(r, days_incubation, days_symptomatic, prob_inf, prop_subclin)
             
             ## 2. Pre-flight iterations ----
             res <- tibble()
             for (k in n_burnin:(day_of_flight - 1)) {
+                ## Test with perfect tests every day
+                sim_pop <- pcr_test_subset_simpop(
+                    sim_pop,
+                    k,
+                    n_subsets = 1,
+                    subset_to_test = 1,
+                    p_sens = return_test_sensitivity("perfect"),
+                    p_spec = 1,
+                    days_incubation,
+                    days_symptomatic
+                )
+                
                 sim_pop <- increment_sim(
                     sim_pop = sim_pop,
                     t_step = k,
@@ -65,7 +80,11 @@ simulate_null_model <- function(testing_type,
                 res <- bind_rows(
                     res,
                     left_join(
-                        summarize_sim_state(sim_pop),
+                        summarize_sim_state(sim_pop) %>%
+                            mutate(
+                                n_test_false_pos = sum(sim_pop$sTested_fp, na.rm = TRUE),
+                                n_test_true_pos = sum(sim_pop$sTested_tp, na.rm = TRUE)
+                            ),
                         summarize_infectiousness(
                             sim_pop,
                             if_weights,
@@ -75,6 +94,8 @@ simulate_null_model <- function(testing_type,
                         by = "time_step"
                     )
                 )
+                
+                sim_pop <- clear_old_tests(sim_pop)
             }
             
             ## 3. Day of flight iteration ----
@@ -85,7 +106,19 @@ simulate_null_model <- function(testing_type,
                             State == 2, DayOfDetection := day_of_flight]
             }
             
-            ## Increment on the day of flight
+            ### Test with perfect tests every day ----
+            sim_pop <- pcr_test_subset_simpop(
+                sim_pop,
+                k,
+                n_subsets = 1,
+                subset_to_test = 1,
+                p_sens = return_test_sensitivity("perfect"),
+                p_spec = 1,
+                days_incubation,
+                days_symptomatic
+            )
+            
+            ### Increment on the day of flight ----
             ## Keep this separate because day-of-flight has a risk multiplier
             sim_pop <- increment_sim(
                 sim_pop = sim_pop,
@@ -98,7 +131,11 @@ simulate_null_model <- function(testing_type,
             res <- bind_rows(
                 res,
                 left_join(
-                    summarize_sim_state(sim_pop),
+                    summarize_sim_state(sim_pop) %>%
+                        mutate(
+                            n_test_false_pos = sum(sim_pop$sTested_fp, na.rm = TRUE),
+                            n_test_true_pos = sum(sim_pop$sTested_tp, na.rm = TRUE)
+                        ),
                     summarize_infectiousness(
                         sim_pop,
                         if_weights,
@@ -109,33 +146,38 @@ simulate_null_model <- function(testing_type,
                 )
             )
             
+            sim_pop <- clear_old_tests(sim_pop)
+            
             ## 4. Post-flight iterations ----
             for (k in (day_of_flight + 1):(day_of_flight + n_outcome_day)) {
-                ## We only want to count infections we could have potentially
-                ## averted so after our t+3 (last possible testing day across
-                ## all our scenarios), we stop infecting the population.
-                if (k > (day_of_flight + 3)) {
-                    sim_pop <- increment_sim(
-                        sim_pop = sim_pop,
-                        t_step = k,
-                        prob_inf = 0,
-                        if_weights = if_weights,
-                        days_quarantine = days_quarantine
-                    )
-                } else {
-                    sim_pop <- increment_sim(
-                        sim_pop = sim_pop,
-                        t_step = k,
-                        prob_inf = prob_inf,
-                        if_weights = if_weights,
-                        days_quarantine = days_quarantine
-                    )
-                }
+                ## Test with perfect tests every day
+                sim_pop <- pcr_test_subset_simpop(
+                    sim_pop,
+                    k,
+                    n_subsets = 1,
+                    subset_to_test = 1,
+                    p_sens = return_test_sensitivity("perfect"),
+                    p_spec = 1,
+                    days_incubation,
+                    days_symptomatic
+                )
+                
+                sim_pop <- increment_sim(
+                    sim_pop = sim_pop,
+                    t_step = k,
+                    prob_inf = prob_inf,
+                    if_weights = if_weights,
+                    days_quarantine = days_quarantine
+                )
                 
                 res <- bind_rows(
                     res,
                     left_join(
-                        summarize_sim_state(sim_pop),
+                        summarize_sim_state(sim_pop) %>%
+                            mutate(
+                                n_test_false_pos = sum(sim_pop$sTested_fp, na.rm = TRUE),
+                                n_test_true_pos = sum(sim_pop$sTested_tp, na.rm = TRUE)
+                            ),
                         summarize_infectiousness(
                             sim_pop,
                             if_weights,
@@ -146,6 +188,8 @@ simulate_null_model <- function(testing_type,
                         
                     )
                 )
+                
+                sim_pop <- clear_old_tests(sim_pop)
             }
             
             ## 5. Close out simulations ----
@@ -161,6 +205,7 @@ simulate_null_model <- function(testing_type,
                     round = round,
                     rep = r,
                     prob_inf = prob_inf,
+                    prop_subclin = prop_subclin, 
                     risk_multiplier,
                     rapid_test_multiplier = rapid_test_multiplier
                 )
