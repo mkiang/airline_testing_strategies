@@ -48,3 +48,7 @@ sensitivity_sub_clin:
 sensitivity_test_sens:
   n_rounds_of_sims: 20
   sens_type: "median"
+
+## Sensitivity baseline for other testing scenarios
+sensitivity_scenarios:
+  n_rounds_of_sims: 20

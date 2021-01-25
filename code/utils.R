@@ -454,6 +454,76 @@ return_parameter_grid <- function(cfig = NA, new_only = TRUE) {
                                               prob_inf = prob_inf,
                                               prop_subclin = prop_subclin, 
                                               risk_multiplier = risk_multiplier,
+                                              sens_type = sens_type, 
+                                              rapid_test_multiplier = rapid_test_multiplier,
+                                              round = round
+                                          )
+                                      )),]
+    }
+    param_grid
+}
+
+## Return sensitivity scenario parameter grid
+return_sensitivity_parameter_grid <- function(new_only = TRUE) {
+    cfig <- config::get(config = "sensitivity_scenarios")
+    prob_infs <- cfig$prob_inf / 1000000
+    n_rounds <- cfig$n_rounds_of_sims
+    risk_multipliers <- cfig$risk_multiplier
+    sens_type <- cfig$sens_type
+    rapid_test_multipliers <- cfig$rt_sens_multiplier
+    prop_subclin <- cfig$prop_subclin
+    
+    param_grid <- dplyr::bind_rows(
+        ## PCR pre testing with different test timing (01a, 01b, 01c) or 
+        ## quarantine duration (02a, 02b), or test timing + quarantine (02c/d/e)
+        expand.grid(
+            testing_type = c(
+                "pcr_two_days_before",
+                "pcr_five_days_before",
+                "pcr_seven_days_before",
+                "pcr_three_days_before_7_day_quarantine_pcr",
+                "pcr_three_days_before_14_day_quarantine_pcr",
+                "pcr_two_days_before_5_day_quarantine_pcr",
+                "pcr_five_days_before_5_day_quarantine_pcr",
+                "pcr_seven_days_before_5_day_quarantine_pcr"
+            ),
+            prob_inf = prob_infs,
+            sens_type = sens_type,
+            risk_multiplier = risk_multipliers,
+            rapid_test_multiplier = NA,
+            symptom_screening = c(TRUE, FALSE),
+            round = 1:n_rounds,
+            prop_subclin = prop_subclin, 
+            stringsAsFactors = FALSE
+        ),
+        
+        ## Rapid tests with different quarantine periods (04a, 04b)
+        expand.grid(
+            testing_type = c(
+                "rapid_same_day_7_day_quarantine_pcr",
+                "rapid_same_day_14_day_quarantine_pcr"
+            ),
+            prob_inf = prob_infs,
+            sens_type = sens_type,
+            risk_multiplier = risk_multipliers,
+            rapid_test_multiplier = rapid_test_multipliers,
+            symptom_screening = c(TRUE, FALSE),
+            round = 1:n_rounds,
+            prop_subclin = prop_subclin, 
+            stringsAsFactors = FALSE
+        )
+    )
+    
+    if (new_only) {
+        param_grid <- param_grid[with(param_grid,
+                                      !file.exists(
+                                          return_sim_file_name(
+                                              scenario_name = testing_type,
+                                              symptom_screening = symptom_screening,
+                                              prob_inf = prob_inf,
+                                              prop_subclin = prop_subclin, 
+                                              risk_multiplier = risk_multiplier,
+                                              sens_type = sens_type, 
                                               rapid_test_multiplier = rapid_test_multiplier,
                                               round = round
                                           )
