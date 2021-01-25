@@ -27,8 +27,8 @@ prop_subclin <- cfig$prop_subclin
 subclin_infectious <- cfig$subclin_infectious
 n_cores <- cfig$n_cores
 n_burnin <- cfig$n_burnin_days
-days_quarantine <- cfig$days_quarantine
 sens_type <- cfig$sens_type
+days_quarantine <- cfig$days_quarantine
 
 ## Create parameter grid of main analyses ----
 param_grid <- expand.grid(
@@ -36,7 +36,6 @@ param_grid <- expand.grid(
     rep = 1:n_reps,
     prob_inf = prob_infs,
     prop_subclin = prop_subclin, 
-    sens_type = sens_type, 
     stringsAsFactors = FALSE
 )
 
@@ -48,15 +47,6 @@ param_grid <- bind_rows(
         rep = 1:n_reps,
         prob_inf = prob_infs,
         prop_subclin = config::get(config = "sensitivity_sub_clin")$prop_subclin,
-        sens_type = sens_type,
-        stringsAsFactors = FALSE
-    ),
-    expand.grid(
-        round = 1:config::get(config = "sensitivity_test_sens")$n_rounds_of_sims,
-        rep = 1:n_reps,
-        prob_inf = prob_infs,
-        prop_subclin = prop_subclin,
-        sens_type = config::get(config = "sensitivity_test_sens")$sens_type,
         stringsAsFactors = FALSE
     )
 )
@@ -68,8 +58,7 @@ param_grid <- param_grid[with(param_grid,
                                       round,
                                       rep,
                                       prob_inf,
-                                      prop_subclin,
-                                      sens_type
+                                      prop_subclin
                                   )
                               )), ]
 
@@ -79,7 +68,6 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
     round <- param_grid$round[i]
     rep <- param_grid$rep[i]
     prob_inf <- param_grid$prob_inf[i]
-    sens_type <- param_grid$sens_type[i]
     prop_subclin <- param_grid$prop_subclin[i]
     
     ## Get the seed to save later
@@ -102,8 +90,7 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
         round, 
         rep, 
         prob_inf, 
-        prop_subclin, 
-        sens_type
+        prop_subclin
         )
     
     fs::dir_create(dirname(state_file_name))
@@ -135,7 +122,6 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
             days_incubation = days_incubation,
             days_symptomatic = days_symptomatic,
             prop_subclin = prop_subclin, 
-            sens_type = sens_type, 
             if_weights = if_weights,
             initial_seed = initial_seed,
             rseed = .Random.seed
