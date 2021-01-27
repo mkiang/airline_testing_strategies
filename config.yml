@@ -14,7 +14,7 @@ default:
   
   ## Transmission settings 
   days_quarantine: 14         # Number of days people quarantine (days.quarantine) 
-  n_burnin_days: 67           # Fast forward simulation this many days
+  n_burnin_days: 62           # Fast forward simulation this many days
   day_of_flight: 70           # Time 0 in the simulation
   n_outcome_day: 14           # Time + x to count up infectious days
   n_passengers: 100000        # Number of passengers per simulation 
