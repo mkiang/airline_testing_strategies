@@ -35,7 +35,7 @@ param_grid <- dplyr::bind_rows(
     return_parameter_grid(cfig = "sensitivity_sub_clin"), 
     return_parameter_grid(cfig = "sensitivity_test_sens"),
     return_sensitivity_parameter_grid()
-    )
+    ) 
 
 doParallel::registerDoParallel(cores = n_cores)
 foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {

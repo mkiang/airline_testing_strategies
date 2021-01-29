@@ -35,7 +35,7 @@ param_grid <- expand.grid(
     round = 1:n_rounds,
     rep = 1:n_reps,
     prob_inf = prob_infs,
-    prop_subclin = prop_subclin, 
+    prop_subclin = prop_subclin,
     stringsAsFactors = FALSE
 )
 
@@ -49,7 +49,7 @@ param_grid <- bind_rows(
         prop_subclin = config::get(config = "sensitivity_sub_clin")$prop_subclin,
         stringsAsFactors = FALSE
     )
-)
+) 
 
 ## Remove files we've already created from the parameter grid
 param_grid <- param_grid[with(param_grid,
