@@ -1364,90 +1364,100 @@ summarize_infectiousness <- function(sim_pop,
 }
 
 ## Analysis helpers ----
-collect_results <- function(scenario_name, results = "main") {
+collect_results <- function(scenario_name) {
     all_files <- fs::dir_ls(dir_results(scenario_name),
                             recurse = TRUE,
                             glob = "*.RDS")
     
-    pattern_x <- "risk_multi_2-rt_multi_[(90)(NA)]"
-    
-    if (results == "main") {
-        x <- all_files[grepl(pattern_x, all_files)]
-    } else if (results == "sensitivity") {
-        x <- all_files[!grepl(pattern_x, all_files)]
-    } else if (results == "all") {
-        x <- all_files
-    } else {
-        stop("results must be 'main', 'all', or 'sensitivity'.")
-    }
-    
-    purrr::map_df(.x = x,
+    purrr::map_df(.x = all_files,
                   .f = ~ readRDS(.x))
 }
 
-collect_and_munge_simulations <-
-    function(scenario_name, results_x = "main") {
-        temp_x <- collect_results(scenario_name, results = results_x) %>%
-            ## We collected pre-data just for diagnostics, but we don't want to
-            ## use it for calculations so remove early days. Also, in very rare
-            ## cases (low-prevalence scenarios), it is possible we reach 0
-            ## infections — this results in an if_threshold of NA so we remove them.
-            dplyr::filter(time_step >= 67,
-                   !is.na(if_threshold)) %>%
-            add_cume_infections() %>%
-            categorize_testing_types() %>%
-            categorize_prob_inf() %>%
-            categorize_symptom_screening() %>%
-            categorize_rt_multiplier() %>%
-            categorize_risk_multiplier() %>%
-            shift_time_steps(day_of_flight = 70) %>%
-            dplyr::mutate(sim_id = sprintf("%03d.%02d", round, rep)) %>%
-            dplyr::select(
-                testing_type,
-                testing_cat,
-                prob_inf,
-                prob_inf_cat,
-                sens_type,
-                symptom_screening,
-                symptom_cat,
-                risk_multiplier,
-                risk_multi_cat,
-                rapid_test_multiplier,
-                rapid_test_cat,
-                if_threshold,
-                time_step,
-                round,
-                rep,
-                sim_id,
-                dplyr::everything()
-            ) %>%
-            dplyr::arrange(
-                testing_type,
-                testing_cat,
-                prob_inf,
-                prob_inf_cat,
-                sens_type,
-                symptom_screening,
-                symptom_cat,
-                risk_multiplier,
-                risk_multi_cat,
-                rapid_test_multiplier,
-                rapid_test_cat,
-                if_threshold,
-                round,
-                rep,
-                time_step
-            )
-        
-        if (!tibble::has_name(temp_x, "n_test_false_pos") &
-            !tibble::has_name(temp_x, "n_test_true_pos")) {
-            temp_x <- temp_x %>%
-                dplyr::mutate(n_test_false_pos = NA,
-                       n_test_true_pos = NA)
-        }
-        
-        temp_x
+collect_and_munge_simulations <- function(scenario_name) {
+    temp_x <- collect_results(scenario_name) %>%
+        dplyr::filter(time_step >= 67,
+                      !is.na(if_threshold)) %>%
+        shift_time_steps(day_of_flight = 70) %>%
+        add_cume_infections() %>%
+        categorize_testing_types() %>%
+        categorize_prob_inf() %>%
+        categorize_sens_type() %>%
+        categorize_prop_subclin() %>% 
+        categorize_symptom_screening() %>%
+        categorize_rt_multiplier() %>%
+        categorize_risk_multiplier() %>%
+        dplyr::mutate(sim_id = sprintf("%03d.%02d", round, rep)) %>%
+        dplyr::select(
+            testing_type,
+            testing_cat,
+            prob_inf,
+            prob_inf_cat,
+            sens_type,
+            sens_cat,
+            prop_subclin,
+            prop_subclin_cat,
+            symptom_screening,
+            symptom_cat,
+            risk_multiplier,
+            risk_multi_cat,
+            rapid_test_multiplier,
+            rapid_test_cat,
+            if_threshold,
+            time_step,
+            round,
+            rep,
+            sim_id,
+            dplyr::everything()
+        ) %>%
+        dplyr::arrange(
+            testing_type,
+            testing_cat,
+            prob_inf,
+            prob_inf_cat,
+            sens_type,
+            symptom_screening,
+            symptom_cat,
+            risk_multiplier,
+            risk_multi_cat,
+            rapid_test_multiplier,
+            rapid_test_cat,
+            if_threshold,
+            round,
+            rep,
+            time_step
+        )
+    
+    if (!tibble::has_name(temp_x, "n_test_false_pos") &
+        !tibble::has_name(temp_x, "n_test_true_pos")) {
+        temp_x <- temp_x %>%
+            dplyr::mutate(n_test_false_pos = NA,
+                          n_test_true_pos = NA)
     }
+    
+    temp_x
+}
+
+categorize_prop_subclin <- function(all_results) {
+    all_results %>%
+        mutate(prop_subclin_cat = factor(
+            prop_subclin,
+            levels = c(.3, .4),
+            labels = c("30%", "40%"),
+            ordered = TRUE
+        ))
+}
+
+categorize_sens_type <- function(all_results) {
+    all_results %>%
+        mutate(sens_cat = factor(
+            sens_type,
+            levels = c("upper",
+                       "median"),
+            labels = c("Upper Bound",
+                       "Median Value"),
+            ordered = TRUE
+        ))
+}
 
 categorize_testing_types <- function(all_results) {
     all_results %>%
@@ -1615,10 +1625,10 @@ categorize_prob_inf <- function(all_results) {
         dplyr::mutate(prob_inf_cat =
                           factor(
                               prob_inf,
-                              levels = c(10, 50, 100, 200, 500,
-                                         1000, 1500, 2500) / 1000000,
-                              labels = paste(c(1, 5, 10, 20,
-                                               50, 100, 150, 250),
+                              levels = c(50, 100, 200, 500, 1000, 
+                                         1500, 2500, 5000) / 1000000,
+                              labels = paste(c(5, 10, 20, 50, 
+                                               100, 150, 250, 500),
                                              "per 100,000"),
                               ordered = TRUE
                           ))
