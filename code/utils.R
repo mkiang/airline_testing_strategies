@@ -1492,24 +1492,24 @@ categorize_testing_types <- function(all_results) {
                 "No testing",
                 "No testing, no screening",
                 "PCR 3 days before",
-                "PCR 3 days before + 5-day quarantine + PCR",
+                "PCR 3 days before + 5-day quarantine",
                 "Same-day Rapid Test",
-                "Same-day Rapid Test + 5-day quarantine + PCR",
+                "Same-day Rapid Test + 5-day quarantine",
                 "PCR 5 days after",
                 
                 "PCR 2 days before",
                 "PCR 5 days before",
                 "PCR 7 days before",
                 
-                "PCR 3 days before + 7-day quarantine + PCR",
-                "PCR 3 days before + 14-day quarantine + PCR",
+                "PCR 3 days before + 7-day quarantine",
+                "PCR 3 days before + 14-day quarantine",
                 
-                "PCR 2 days before + 5-day quarantine + PCR",
-                "PCR 5 days before + 5-day quarantine + PCR",
-                "PCR 7 days before + 5-day quarantine + PCR",
+                "PCR 2 days before + 5-day quarantine",
+                "PCR 5 days before + 5-day quarantine",
+                "PCR 7 days before + 5-day quarantine",
                 
-                "Same-day Rapid Test + 7-day quarantine + PCR",
-                "Same-day Rapid Test + 14-day quarantine + PCR",
+                "Same-day Rapid Test + 7-day quarantine",
+                "Same-day Rapid Test + 14-day quarantine",
                 
                 "Daily perfect testing"
             ),

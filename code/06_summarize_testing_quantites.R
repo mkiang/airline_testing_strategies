@@ -11,28 +11,37 @@ library(foreach)
 library(doParallel)
 source(here::here("code", "utils.R"))
 
-testing_scenarios <- basename(fs::dir_ls(
-    here::here("intermediate_files"),
-    type = "directory",
-    regexp = "pcr|rapid|no_testing|perfect"
-))
+## Different levels of adherence to symptom screening
+adherence_level <- seq(0, 1, .2)
 
-## Calculate and summarize testing quantities ----
+testing_dict <- list(
+    no_testing = 70,
+    pcr_three_days_before = 68,
+    pcr_three_days_before_5_day_quarantine_pcr = c(70, 75),
+    rapid_test_same_day = 70,
+    rapid_same_day_5_day_quarantine_pcr = c(70, 75),
+    pcr_five_days_after = 75
+)
+
+## Calculate testing quantities ----
 doParallel::registerDoParallel()
-testing_results <- foreach::foreach(s = testing_scenarios) %dopar% {
-    temp_x <-
-        readRDS(here::here("data", sprintf("raw_simulations_%s.RDS", s)))
+testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
+    testing_type <- names(testing_dict)[i]
+    time_steps <- testing_dict[[testing_type]]
     
-    ## Testing only occurs in a subset of time_steps so we don't need all of them
-    x1 <- temp_x %>%
+    temp_x <- readRDS(here("data_raw", 
+                           sprintf("raw_simulations_%s.RDS", 
+                                   testing_type))) %>% 
         dplyr::group_by(
             testing_type,
             testing_cat,
             prob_inf,
             prob_inf_cat,
             sens_type,
+            sens_cat,
+            prop_subclin,
+            prop_subclin_cat,
             symptom_screening,
-            symptom_cat,
             risk_multiplier,
             risk_multi_cat,
             rapid_test_multiplier,
@@ -41,94 +50,157 @@ testing_results <- foreach::foreach(s = testing_scenarios) %dopar% {
             round,
             rep,
             sim_id
+        ) 
+    
+    ## Get day of flight infections and total infections
+    temp_x_infs <- left_join(
+        temp_x %>%
+            filter(time_step == 70) %>%
+            select(
+                n_infected_day_of_flight = n_infected_all,
+                n_active_infected_day_of_flight = n_active_infection,
+                n_active_infected_subclin_day_of_flight = n_active_infection_subclin
+            ),
+        temp_x  %>%
+            dplyr::summarize(n_total_infections = n_susceptible[time_step == 84] -
+                                 n_susceptible[time_step == 67] +
+                                 n_infected_all[time_step == 67]) %>%
+            dplyr::ungroup() %>%
+            dplyr::distinct()
+    )
+    
+    ## Get testing statistics based on the scenario dictionary
+    temp_x_test <- temp_x %>%
+        filter(time_step %in% time_steps) %>% 
+        select(time_step, n_test_false_pos, n_test_true_pos) %>% 
+        summarize(
+            n_test_false_pos_first = case_when(
+                testing_type == "no_testing"  ~ NA_integer_,
+                n_distinct(time_steps) == 1 ~ as.integer(max(n_test_false_pos)),
+                n_distinct(time_steps) == 2 ~ as.integer(n_test_false_pos[time_step == min(time_steps)])
+            ),
+            n_test_false_pos_second = case_when(
+                testing_type == "no_testing"  ~ NA_integer_,
+                n_distinct(time_steps) == 1 ~ NA_integer_,
+                n_distinct(time_steps) == 2 ~ as.integer(n_test_false_pos[time_step == max(time_steps)])
+            ),
+            n_test_true_pos_first = case_when(
+                testing_type == "no_testing"  ~ NA_integer_,
+                n_distinct(time_steps) == 1 ~ as.integer(max(n_test_true_pos)),
+                n_distinct(time_steps) == 2 ~ as.integer(n_test_true_pos[time_step == min(time_steps)])
+            ),
+            n_test_true_pos_second = case_when(
+                testing_type == "no_testing"  ~ NA_integer_,
+                n_distinct(time_steps) == 1 ~ NA_integer_,
+                n_distinct(time_steps) == 2 ~ as.integer(n_test_true_pos[time_step == max(time_steps)])
+            )
         ) %>%
-        dplyr::summarize(
-            n_test_false_pos_first = dplyr::case_when(
-                ## No testing
-                testing_type == "no_testing" ~ NA_integer_,
-                ## Case of multiple tests
-                testing_type == "rapid_same_day_pcr_three_days_after" ~
-                    as.integer(n_test_false_pos[time_step == 70]),
-                testing_type == "pcr_three_days_before_5_day_quarantine_pcr" ~
-                    as.integer(n_test_false_pos[time_step == 70]),
-                testing_type == "rapid_same_day_5_day_quarantine_pcr" ~
-                    as.integer(n_test_false_pos[time_step == 70]),
-                ## Case of just a single test
-                TRUE ~ as.integer(max(n_test_false_pos, na.rm = TRUE))
+        distinct() %>%
+        mutate(
+            n_test_false_pos = case_when(
+                testing_type == "no_testing"  ~ NA_integer_,
+                TRUE ~ sum(n_test_false_pos_first, n_test_false_pos_second, na.rm = TRUE)
             ),
-            n_test_false_pos_second = dplyr::case_when(
-                ## Case of multiple tests
-                testing_type == "rapid_same_day_pcr_three_days_after" ~
-                    as.integer(n_test_false_pos[time_step == 73]),
-                testing_type == "pcr_three_days_before_5_day_quarantine_pcr" ~
-                    as.integer(n_test_false_pos[time_step == 75]),
-                testing_type == "rapid_same_day_5_day_quarantine_pcr" ~
-                    as.integer(n_test_false_pos[time_step == 75]),
-                ## Case of just a single test
-                TRUE ~ NA_integer_
+            n_test_true_pos = case_when(
+                testing_type == "no_testing"  ~ NA_integer_,
+                TRUE ~ sum(n_test_true_pos_first, n_test_true_pos_second, na.rm = TRUE)
+            )
+        )
+    
+    rm(temp_x); gc2()
+    
+    ## Pivot wider to we can get "adherence" to symptom screening
+    ## This shouldn't change anything but reviewers want it. 
+    temp_x_wide <- temp_x_infs %>%
+        left_join(temp_x_test) %>% 
+        pivot_wider(
+            id_cols = c(
+                testing_type,
+                testing_cat,
+                prob_inf,
+                prob_inf_cat,
+                sens_type,
+                sens_cat,
+                prop_subclin,
+                prop_subclin_cat,
+                risk_multi_cat,
+                risk_multiplier,
+                rapid_test_multiplier,
+                rapid_test_cat,
+                if_threshold,
+                round,
+                rep,
+                sim_id
             ),
-            n_test_true_pos_first = dplyr::case_when(
-                ## No testing
-                testing_type == "no_testing" ~ NA_integer_,
-                ## Case of multiple tests
-                testing_type == "rapid_same_day_pcr_three_days_after" ~
-                    as.integer(n_test_true_pos[time_step == 70]),
-                testing_type == "pcr_three_days_before_5_day_quarantine_pcr" ~
-                    as.integer(n_test_true_pos[time_step == 70]),
-                testing_type == "rapid_same_day_5_day_quarantine_pcr" ~
-                    as.integer(n_test_true_pos[time_step == 70]),
-                ## Case of just a single test
-                TRUE ~ as.integer(max(n_test_true_pos, na.rm = TRUE))
-            ),
-            n_test_true_pos_second = dplyr::case_when(
-                ## Case of multiple tests
-                testing_type == "rapid_same_day_pcr_three_days_after" ~
-                    as.integer(n_test_true_pos[time_step == 73]),
-                testing_type == "pcr_three_days_before_5_day_quarantine_pcr" ~
-                    as.integer(n_test_true_pos[time_step == 75]),
-                testing_type == "rapid_same_day_5_day_quarantine_pcr" ~
-                    as.integer(n_test_true_pos[time_step == 75]),
-                ## Case of just a single test
-                TRUE ~ NA_integer_
-            ),
-            n_test_false_pos = dplyr::case_when(
-                ## No testing
-                testing_type == "no_testing" ~ NA_integer_,
-                ## Case of multiple tests
-                testing_type == "rapid_same_day_pcr_three_days_after" ~
-                    as.integer(n_test_false_pos[time_step == 70] +
-                                   n_test_false_pos[time_step == 73]),
-                testing_type == "pcr_three_days_before_5_day_quarantine_pcr" ~
-                    as.integer(n_test_false_pos[time_step == 70] +
-                                   n_test_false_pos[time_step == 75]),
-                testing_type == "rapid_same_day_5_day_quarantine_pcr" ~
-                    as.integer(n_test_false_pos[time_step == 70] +
-                                   n_test_false_pos[time_step == 75]),
-                ## Case of just a single test
-                TRUE ~ as.integer(max(n_test_false_pos, na.rm = TRUE))
-            ),
-            n_test_true_pos = dplyr::case_when(
-                ## No testing
-                testing_type == "no_testing" ~ NA_integer_,
-                ## Case of multiple tests
-                testing_type == "rapid_same_day_pcr_three_days_after" ~
-                    as.integer(n_test_true_pos[time_step == 70] +
-                                   n_test_true_pos[time_step == 73]),
-                testing_type == "pcr_three_days_before_5_day_quarantine_pcr" ~
-                    as.integer(n_test_true_pos[time_step == 70] +
-                                   n_test_true_pos[time_step == 75]),
-                testing_type == "rapid_same_day_5_day_quarantine_pcr" ~
-                    as.integer(n_test_true_pos[time_step == 70] +
-                                   n_test_true_pos[time_step == 75]),
-                ## Case of just a single test
-                TRUE ~ as.integer(max(n_test_true_pos, na.rm = TRUE))
-            ),
-            n_infected_day_of_flight = n_infected_all[time_step == 70],
-            n_active_infected_day_of_flight = n_active_infection[time_step == 70],
-            n_active_infected_subclin_day_of_flight = n_active_infection_subclin[time_step == 70]
-        ) %>%
-        dplyr::ungroup() %>%
-        dplyr::distinct() %>%
+            names_from = symptom_screening,
+            values_from = n_infected_day_of_flight:n_test_true_pos
+        )
+    
+    ## Loop through different levels of adherence to symptom screening. 
+    temp_x_list <- vector("list", length = NROW(adherence_level))
+    for (i in 1:NROW(adherence_level)) {
+        a <- adherence_level[i]
+        
+        temp_x_list[[i]] <- temp_x_wide %>%
+            transmute(
+                testing_type,
+                testing_cat,
+                prob_inf,
+                prob_inf_cat,
+                sens_type,
+                sens_cat,
+                prop_subclin,
+                prop_subclin_cat,
+                risk_multiplier,
+                risk_multi_cat,
+                rapid_test_multiplier,
+                rapid_test_cat,
+                if_threshold,
+                round,
+                rep,
+                sim_id,
+                symptom_adherence = a,
+                n_infected_day_of_flight = round(
+                    (n_infected_day_of_flight_TRUE * a) +
+                        (n_infected_day_of_flight_FALSE * (1 - a))
+                ),
+                n_active_infected_day_of_flight = round(
+                    (n_active_infected_day_of_flight_TRUE * a) +
+                        (n_active_infected_day_of_flight_FALSE * (1 - a))
+                ),
+                n_active_infected_subclin_day_of_flight = round(
+                    (n_active_infected_subclin_day_of_flight_TRUE * a) +
+                        (n_active_infected_subclin_day_of_flight_FALSE * (1 - a))
+                ),
+                n_total_infections = round((n_total_infections_TRUE * a) +
+                                               (n_total_infections_FALSE * (1 - a))),
+                
+                n_test_false_pos_first = round(
+                    (n_test_false_pos_first_TRUE * a) +
+                        (n_test_false_pos_first_FALSE * (1 - a))
+                ),
+                n_test_false_pos_second = round(
+                    (n_test_false_pos_second_TRUE * a) +
+                        (n_test_false_pos_second_FALSE * (1 - a))
+                ),
+                n_test_true_pos_first = round(
+                    (n_test_true_pos_first_TRUE * a) +
+                        (n_test_true_pos_first_FALSE * (1 - a))
+                ),
+                n_test_true_pos_second = round(
+                    (n_test_true_pos_second_TRUE * a) +
+                        (n_test_true_pos_second_FALSE * (1 - a))
+                ),
+                n_test_false_pos = round((n_test_false_pos_TRUE * a) +
+                                             (n_test_false_pos_FALSE * (1 - a))),
+                n_test_true_pos = round((n_test_true_pos_TRUE * a) +
+                                            (n_test_true_pos_FALSE * (1 - a)))
+            )
+    }
+    
+    ## Calculate testing quantities we are interested in but don't summarize
+    temp_x_list %>%
+        bind_rows() %>% 
         dplyr::mutate(
             any_positive_test = n_test_false_pos + n_test_true_pos,
             ratio_false_true = n_test_false_pos / n_test_true_pos,
@@ -138,37 +210,10 @@ testing_results <- foreach::foreach(s = testing_scenarios) %dopar% {
             frac_active_detected = n_test_true_pos / n_active_infected_day_of_flight,
             time_step = 84
         )
-    
-    ## Calculate total infections
-    x2 <- temp_x %>%
-        dplyr::group_by(
-            testing_type,
-            testing_cat,
-            prob_inf,
-            prob_inf_cat,
-            sens_type,
-            symptom_screening,
-            symptom_cat,
-            risk_multiplier,
-            risk_multi_cat,
-            rapid_test_multiplier,
-            rapid_test_cat,
-            if_threshold,
-            round,
-            rep
-        ) %>%
-        dplyr::summarize(n_total_infections = n_susceptible[time_step == 84] -
-                             n_susceptible[time_step == 67] +
-                             n_infected_all[time_step == 67]) %>%
-        dplyr::ungroup() %>%
-        dplyr::distinct() %>%
-        dplyr::mutate(time_step = 84)
-    
-    dplyr::full_join(x1, x2)
 }
 doParallel::stopImplicitCluster()
-testing_results <- dplyr::bind_rows(testing_results)
 
+testing_results <- dplyr::bind_rows(testing_results)
 saveRDS(testing_results,
         here::here("data", "all_testing_results.RDS"),
         compress = "xz")
@@ -181,8 +226,10 @@ testing_results <- testing_results %>%
         prob_inf,
         prob_inf_cat,
         sens_type,
-        symptom_screening,
-        symptom_cat,
+        sens_cat,
+        prop_subclin,
+        prop_subclin_cat,
+        symptom_adherence,
         risk_multiplier,
         risk_multi_cat,
         rapid_test_multiplier,
