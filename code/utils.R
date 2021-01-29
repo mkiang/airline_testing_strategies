@@ -1684,6 +1684,7 @@ add_cume_infections <- function(all_results) {
             rapid_test_multiplier,
             sens_type,
             prob_inf,
+            prop_subclin, 
             if_threshold,
             round,
             rep,
@@ -1696,9 +1697,10 @@ add_cume_infections <- function(all_results) {
             rapid_test_multiplier,
             sens_type,
             prob_inf,
+            prop_subclin, 
+            if_threshold, 
             round,
-            rep,
-            if_threshold
+            rep
         ) %>%
         dplyr::mutate(
             cume_n_infection_daily = cumsum(n_infection_daily),
