@@ -11,27 +11,25 @@ plot_df <- readRDS(here("data", "summarized_testing_results.RDS")) %>%
     filter(
         if_threshold == 0,
         risk_multiplier == 2,
+        prop_subclin == .3, 
+        sens_type == "upper" | is.na(sens_type), 
+        symptom_adherence %in% c(0, .8),
         testing_type %in% c("no_testing", "pcr_three_days_before", "rapid_test_same_day"),
+        metric == "n_active_infected_day_of_flight", 
         rapid_test_multiplier == .9 |
             is.na(rapid_test_multiplier)
-    ) %>% 
+    ) %>%
     categorize_metric()
 
 plot_df <- bind_rows(
     plot_df %>% 
-        filter(testing_type == "no_testing" & !symptom_screening), 
+        filter(testing_type == "no_testing" & symptom_adherence == 0), 
     plot_df %>% 
-        filter(testing_type != "no_testing" & symptom_screening)
+        filter(testing_type != "no_testing" & symptom_adherence == .8)
 )
 
-## Add a line break to RT + PCR
-levels(plot_df$testing_cat)[7] <- "PCR 3 days before +\nSame-day RT" 
-levels(plot_df$testing_cat)[8] <- "Same-day RT + 5-day\nquarantine + PCR"
-levels(plot_df$testing_cat)[9] <- "PCR 3 days before +\n5-day quarantine + PCR" 
-
 p1 <- ggplot(
-    plot_df %>%
-        filter(metric %in% c("n_active_infected_day_of_flight")),
+    plot_df, 
     aes(
         x = prob_inf,
         y = mean,
@@ -48,7 +46,7 @@ p1 <- ggplot(
     scale_x_continuous(
         "Daily probability of infection per 100,000",
         expand = c(0, 0),
-        breaks = c(1, seq(50, 250, 50)) / 100000, 
+        breaks = unique(plot_df$prob_inf)[-2], 
         labels = function(x)
             as.numeric(x) * 100000
     ) +
@@ -67,7 +65,7 @@ p1 <- ggplot(
                                          fill = alpha("white", .75)),
         legend.position = c(.01, .99),
         legend.justification = c(0, 1),
-        axis.text.x = element_text(hjust = c(0, .5, .5, .5, .5, 1))
+        axis.text.x = element_text(hjust = c(0, .5, .5, .5, .5, .5, 1))
     )
 
 ggsave(
@@ -89,8 +87,6 @@ ggsave(
 )
 
 write_csv(
-    plot_df %>%
-        filter(metric %in% c("n_active_infected_day_of_flight"), 
-               symptom_screening),
+    plot_df,
     "./output/fig3_data.csv"
 )

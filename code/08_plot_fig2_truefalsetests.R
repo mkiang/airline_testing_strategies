@@ -11,17 +11,23 @@ plot_df <- plot_df %>%
     filter(
         risk_multiplier == 2,
         testing_type != "perfect_testing", 
+        metric == "ratio_false_true",
+        testing_type != "no_testing", 
         rapid_test_multiplier == .9 | is.na(rapid_test_multiplier),
-        symptom_screening,
         prob_inf > 5 / 1000000,
-        if_threshold == 0
+        prop_subclin == .3, 
+        sens_type == "upper", 
+        if_threshold == 0,
+        symptom_adherence == .8
     ) %>%
     categorize_metric()
 
+## Add a line break to RT + PCR
+levels(plot_df$testing_cat)[4] <-  "PCR 3 days before +\n5-day quarantine"
+levels(plot_df$testing_cat)[6] <-  "Same-day Rapid Test +\n5-day quarantine"
+
 p1 <- ggplot(
-    plot_df %>%
-        filter(metric == "ratio_false_true",
-               testing_type != "no_testing"),
+    plot_df,
     aes(
         x = as.factor(prob_inf),
         y = mean,
@@ -43,7 +49,24 @@ p1 <- ggplot(
     scale_y_continuous(
         "Mean (95% UI) ratio of False/True positive results",
         expand = c(0, 0),
-        breaks = c(0, 1/100, 1/50, 1/25, 1/10, 1/5, 1/2, 1, 2, 5, 10, 25, 50, 100),
+        breaks = c(
+            0,
+            # 1 / 200,
+            1 / 100,
+            1 / 50,
+            1 / 25,
+            1 / 10,
+            1 / 5,
+            1 / 2,
+            1,
+            2,
+            5,
+            10,
+            25,
+            50,
+            100,
+            200
+        ),
         trans = "log"
     ) +
     scale_color_brewer("Testing strategy",
@@ -53,31 +76,29 @@ p1 <- ggplot(
         panel.border = element_rect(color = "grey30"),
         legend.background = element_rect(color = NA,
                                          fill = alpha("white", .75)),
-        legend.position = c(.99, .99),
-        legend.justification = c(1, 1)
+        legend.position = "right" # ,
+        # legend.justification = c(1, 1)
     )
 
 ggsave(
     "./plots/fig2_falsetrue_ratio.pdf",
     p1,
     device = cairo_pdf,
-    width = 7,
+    width = 9,
     height = 4.5,
-    scale = 1.05
+    scale = 1.1
 )
 
 ggsave(
     "./plots/fig2_falsetrue_ratio.jpg",
     p1,
     dpi = 300, 
-    width = 7,
+    width = 9,
     height = 4,
-    scale = 1.05
+    scale = 1.1
 )
 
 write_csv(
-    plot_df %>% 
-        filter(metric == "ratio_false_true",
-               testing_type != "no_testing"),
+    plot_df,
     "./output/fig2_data.csv"
 )
