@@ -1,4 +1,4 @@
-## 04_summarize_infection_quantities.R ----
+## 04_gather_and_munge_intermediate_files.R ----
 ## 
 ## Once all the testing scenarios have run, we collect and summarize the 
 ## saved intermediate files into a single file. collect_and_munge_simulations()
