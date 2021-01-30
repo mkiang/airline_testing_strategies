@@ -16,25 +16,23 @@ plot_df <- readRDS(here("data", "summarized_results.RDS")) %>%
         testing_type != "perfect_testing",
         rapid_test_multiplier == .9 |
             is.na(rapid_test_multiplier),
+        prop_subclin == .3, 
         sens_type != "median" | is.na(sens_type),
-        prop_subclin == .3,
-        symptom_adherence ==.8,
+        symptom_adherence %in% c(0),
+        quarantine_adherence %in% c(0),
         testing_type %in% c(
             "pcr_three_days_before_5_day_quarantine_pcr",
-            "rapid_same_day_5_day_quarantine_pcr"
+            "pcr_three_days_before_7_day_quarantine_pcr",
+            "pcr_three_days_before_14_day_quarantine_pcr",
+            "rapid_same_day_5_day_quarantine_pcr",
+            "rapid_same_day_7_day_quarantine_pcr",
+            "rapid_same_day_14_day_quarantine_pcr"
         )
     ) %>%
     shift_time_steps() %>%
     categorize_metric() %>%
-    filter(metric %in% c("cume_n_infection_daily"))
-
-## Add a line break to RT + PCR
-levels(plot_df$testing_cat)[
-    which(levels(plot_df$testing_cat) == "PCR 3 days before + 5-day quarantine")
-] <-  "PCR 3 days before +\n5-day quarantine"
-levels(plot_df$testing_cat)[
-    which(levels(plot_df$testing_cat) == "Same-day Rapid Test + 5-day quarantine")
-] <-  "Same-day Rapid Test +\n5-day quarantine"
+    filter(metric %in% c("cume_n_infection_daily")) %>% 
+    categorize_testing_types()
 
 p1 <- ggplot(
     plot_df,
@@ -42,7 +40,7 @@ p1 <- ggplot(
         x = relative_time,
         y = mean,
         ymin = p025,
-        ymax = p975
+        ymax = p975,
     )
 ) +
     geom_vline(xintercept = 0,
@@ -50,7 +48,7 @@ p1 <- ggplot(
                alpha = .8) +
     geom_ribbon(color = NA, alpha = .2) +  
     geom_line(alpha = .8) +
-    facet_grid(quarantine_adherence ~ testing_cat) +
+    facet_wrap(~ testing_cat, nrow = 2) +
     scale_x_continuous(
         "Time relative to flight, days",
         expand = c(0, 0),
@@ -58,11 +56,9 @@ p1 <- ggplot(
     ) +
     scale_y_continuous("Mean (95% UI) cumulative infectious days",
                        expand = c(0, 0)) +
-    scale_color_brewer("Day-specific test sensitivity",
-                       labels = c("Median", "Upper bound"), 
+    scale_color_brewer("Percent of infections\nthat are subclinical",
                        palette = "Set1") +
-    scale_fill_brewer("Day-specific test sensitivity",
-                      labels = c("Median", "Upper bound"), 
+    scale_fill_brewer("Percent of infections\nthat are subclinical",
                       palette = "Set1") +
     mk_nytimes(
         panel.border = element_rect(color = "grey30"),
@@ -73,24 +69,24 @@ p1 <- ggplot(
                                  title.position = "top")) 
 
 ggsave(
-    "./plots/figS9_cume_inf_quarantine_adherence.pdf",
+    "./plots/figS12_by_quarantine_duration.pdf",
     p1,
     device = cairo_pdf,
-    width = 4,
-    height = 8,
+    width = 8,
+    height = 5,
     scale = 1.1
 )
 
 ggsave(
-    "./plots/figS9_cume_inf_quarantine_adherence.jpg",
+    "./plots/figS12_by_quarantine_duration.jpg",
     p1,
-    dpi = 300,
-    width = 4,
-    height = 8,
+    dpi = 300, 
+    width = 8,
+    height = 5,
     scale = 1.1
 )
 
 write_csv(
     plot_df,
-    "./output/figS9_data.csv"
+    "./output/figS12_data.csv"
 )

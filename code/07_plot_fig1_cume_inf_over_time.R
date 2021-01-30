@@ -62,8 +62,12 @@ plot_df <- bind_rows(
 ) 
 
 ## Add a line break to RT + PCR
-levels(plot_df$testing_cat)[4] <-  "PCR 3 days before +\n5-day quarantine"
-levels(plot_df$testing_cat)[6] <-  "Same-day Rapid Test +\n5-day quarantine"
+levels(plot_df$testing_cat)[
+    which(levels(plot_df$testing_cat) == "PCR 3 days before + 5-day quarantine")
+] <-  "PCR 3 days before +\n5-day quarantine"
+levels(plot_df$testing_cat)[
+    which(levels(plot_df$testing_cat) == "Same-day Rapid Test + 5-day quarantine")
+] <-  "Same-day Rapid Test +\n5-day quarantine"
 
 p1 <- ggplot(
     plot_df,
