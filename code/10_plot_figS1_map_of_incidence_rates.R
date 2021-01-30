@@ -39,8 +39,14 @@ p1 <- ggplot(state_covid,
               color = "red") +
     facet_geo( ~ state) +
     scale_x_date(NULL,
-                 expand = c(0, 0)) +
-    scale_y_continuous("New daily cases per 100,000 (truncated)",
+                 expand = c(0, 0),
+                 breaks = c(as.Date("2020-04-01"),
+                            as.Date("2020-07-01"),
+                            as.Date("2020-10-01"),
+                            as.Date("2021-01-01")),
+                 labels = c("4/20", "7/20", "10/20", "1/21")
+                 ) +
+    scale_y_continuous("New daily reported cases per 100,000 (truncated)",
                        limits = c(0, 200),
                        expand = c(0, 0)) +
     scale_alpha_manual(NULL, values = c(.5, 1)) + 
@@ -66,41 +72,41 @@ ggsave(
 write_csv(state_covid, here("output", "figS1_data.csv"))
 
 ## Histogram
-state_sum <- state_covid %>% 
-    group_by(state, fipschar) %>% 
-    mutate(above = (avg_new_cases >= 50) + 0) %>% 
-    summarize(days = sum(above, na.rm = TRUE), 
-              prop = mean(above, na.rm = TRUE)) %>% 
-    filter(fipschar <= 56) 
-p2 <- ggplot(state_sum, aes(x = days)) + 
-    # geom_density() + 
-    geom_histogram(binwidth = 1,
-                   color = "white") + 
-    geom_hline(yintercept = seq(0, 15, 1), 
-               color = "white",
-               alpha = 1) + 
-    scale_x_continuous("Days where 7-day average of new cases > 50 per 100,000",
-                       expand = c(0, 1)) + 
-    scale_y_continuous("Number of states", limits = c(0, NA), expand = c(.02, 0)) + 
-    mk_nytimes()
-
-ggsave(
-    here("plots", "figS2_hist_rolling_avg_above_threshold.pdf"), 
-    p2,
-    width = 5,
-    height = 3.5,
-    device = cairo_pdf,
-    scale = 1.25
-)
-ggsave(
-    here("plots", "figS2_hist_rolling_avg_above_threshold.jpg"), 
-    p2,
-    width = 5,
-    height = 3.5,
-    dpi = 300, 
-    scale = 1.25
-)
-
-sum(state_sum$prop > 0)
-sum(state_sum$days >= 14)
-median(state_sum$days)
+# state_sum <- state_covid %>% 
+#     group_by(state, fipschar) %>% 
+#     mutate(above = (avg_new_cases >= 50) + 0) %>% 
+#     summarize(days = sum(above, na.rm = TRUE), 
+#               prop = mean(above, na.rm = TRUE)) %>% 
+#     filter(fipschar <= 56) 
+# p2 <- ggplot(state_sum, aes(x = days)) + 
+#     # geom_density() + 
+#     geom_histogram(binwidth = 1,
+#                    color = "white") + 
+#     geom_hline(yintercept = seq(0, 15, 1), 
+#                color = "white",
+#                alpha = 1) + 
+#     scale_x_continuous("Days where 7-day average of reported new cases > 50 per 100,000",
+#                        expand = c(0, 1)) + 
+#     scale_y_continuous("Number of states", limits = c(0, NA), expand = c(.02, 0)) + 
+#     mk_nytimes()
+# 
+# ggsave(
+#     here("plots", "figS2_hist_rolling_avg_above_threshold.pdf"), 
+#     p2,
+#     width = 5,
+#     height = 3.5,
+#     device = cairo_pdf,
+#     scale = 1.25
+# )
+# ggsave(
+#     here("plots", "figS2_hist_rolling_avg_above_threshold.jpg"), 
+#     p2,
+#     width = 5,
+#     height = 3.5,
+#     dpi = 300, 
+#     scale = 1.25
+# )
+# 
+# sum(state_sum$prop > 0)
+# sum(state_sum$days >= 14)
+# median(state_sum$days)

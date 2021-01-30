@@ -11,31 +11,56 @@ PROB_INF <- config::get()$primary_prob_inf / 1000000
 plot_df <- readRDS(here("data", "summarized_results.RDS")) %>% 
     filter(if_threshold == 0, 
            prob_inf == PROB_INF, 
-           testing_type != "perfect_testing", 
            risk_multiplier == 2,
-           !is.na(rapid_test_multiplier)) %>% 
+           !is.na(rapid_test_multiplier),
+           sens_type != "median" | is.na(sens_type),
+           prop_subclin == .3,
+           symptom_adherence %in% c(0, .8),
+           quarantine_adherence %in% c(0, .8),
+           metric %in% c("cume_n_infection_daily"),
+           testing_type %in% c(
+               "rapid_test_same_day",
+               "rapid_same_day_5_day_quarantine_pcr"
+           )) %>% 
     shift_time_steps() %>% 
     categorize_metric() %>% 
     categorize_rt_multiplier()
 
-## Add a line break to RT + PCR
-levels(plot_df$testing_cat)[7] <- "PCR 3 days before +\nSame-day RT" 
-levels(plot_df$testing_cat)[8] <- "Same-day RT + 5-day\nquarantine + PCR"
-levels(plot_df$testing_cat)[9] <- "PCR 3 days before +\n5-day quarantine + PCR"
-
-p1 <- ggplot(
+## Subset to the main analyses ----
+plot_df <- bind_rows(
+    ## No quarantine 80% symptom screening adherence
     plot_df %>%
         filter(
-            metric %in% c("cume_n_infection_daily")
+            testing_type %in% c(
+                "pcr_three_days_before",
+                "rapid_test_same_day",
+                "pcr_five_days_after"
+            ) & 
+                symptom_adherence == .8
         ),
+    ## With 80% quarantine and 80% symptom screening adherence
+    plot_df %>% 
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before_5_day_quarantine_pcr",
+                "rapid_same_day_5_day_quarantine_pcr"
+            ) & 
+                symptom_adherence == .8 & 
+                quarantine_adherence == .8
+        )
+) 
+
+## Add a line break to RT + PCR
+levels(plot_df$testing_cat)[4] <-  "PCR 3 days before +\n5-day quarantine"
+levels(plot_df$testing_cat)[6] <-  "Same-day Rapid Test +\n5-day quarantine"
+
+p1 <- ggplot(
+    plot_df, 
     aes(
         x = relative_time,
         y = mean,
         ymin = p025,
         ymax = p975, 
-        group = symptom_cat,
-        color = symptom_cat,
-        fill = symptom_cat
     )
 ) +
     geom_vline(xintercept = 0,
@@ -52,10 +77,6 @@ p1 <- ggplot(
     ) +
     scale_y_continuous("Mean (95% UI) cumulative infectious days",
                        expand = c(0, 0)) +
-    scale_color_brewer(NULL,
-                       palette = "Set1") +
-    scale_fill_brewer(NULL,
-                      palette = "Set1") +
     mk_nytimes(
         panel.border = element_rect(color = "grey30"),
         legend.position = "bottom",
@@ -65,7 +86,7 @@ p1 <- ggplot(
                                  title.position = "top")) 
 
 ggsave(
-    "./plots/figS7_cume_infdays_by_rt_multi.pdf",
+    "./plots/figS6_cume_infdays_by_rt_multi.pdf",
     p1,
     device = cairo_pdf,
     width = 9,
@@ -74,7 +95,7 @@ ggsave(
 )
 
 ggsave(
-    "./plots/figS7_cume_infdays_by_rt_multi.jpg",
+    "./plots/figS6_cume_infdays_by_rt_multi.jpg",
     p1,
     dpi = 300, 
     width = 9,
@@ -83,9 +104,6 @@ ggsave(
 )
 
 write_csv(
-    plot_df %>%
-        filter(
-            metric %in% c("cume_n_infection_daily")
-        ),
-    "./output/figS7_data.csv"
+    plot_df,
+    "./output/figS6_data.csv"
 )

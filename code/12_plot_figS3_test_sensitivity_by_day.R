@@ -23,14 +23,14 @@ p2 <- ggplot(plot_df,
                        labels = function(x) round(x * 100)) + 
     mk_nytimes() 
 
-ggsave(here("plots", "figS4_test_sens.pdf"), 
+ggsave(here("plots", "figS3_test_sens.pdf"), 
        p2,
        width = 5,
        height = 3.5,
        scale = 1,
        device = cairo_pdf)
 
-ggsave(here("plots", "figS4_test_sens.jpg"), 
+ggsave(here("plots", "figS3_test_sens.jpg"), 
        p2,
        width = 5,
        height = 3.5,
@@ -38,4 +38,4 @@ ggsave(here("plots", "figS4_test_sens.jpg"),
        dpi = 300)
 
 write_csv(plot_df,
-          here("output", "figS4_data.csv"))
+          here("output", "figS3_data.csv"))

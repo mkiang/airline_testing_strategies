@@ -8,7 +8,18 @@ source(here("code", "mk_nytimes.R"))
 
 ## Read in all simulated populations and extract the random draws ----
 if (!file_exists(here("data", "observed_parameter_draws.RDS"))) {
-    sim_files <- dir_ls(here("intermediate_files", "simulation_states"), recurse = TRUE, glob = "*.RDS")
+    ## Get a list of all the primary simulation state files
+    sim_params <- vector("list", 50)
+    for (i in 1:NROW(sim_params)) {
+        sim_params[[i]] <- return_parameter_grid(new_only = FALSE) %>% 
+            mutate(rep = i)
+    }
+    sim_params <- bind_rows(sim_params)
+    sim_files <- unique(return_sim_state_file(
+        sim_params$round,
+        sim_params$rep,
+        sim_params$prob_inf,
+        sim_params$prop_subclin))
     
     doParallel::registerDoParallel(cores = 15)
     sim_parameters <- foreach::foreach(i = 1:NROW(sim_files)) %dopar% {
@@ -86,13 +97,13 @@ p5 <- ggplot(sim_parameters,
     mk_nytimes()
 p_all <- p1 + p2 + p3 + p4 + p5 + plot_layout(nrow = 1)
 
-ggsave(here("plots", "figS3_distribution_of_simulation_draws.pdf"), 
+ggsave(here("plots", "figS2_distribution_of_simulation_draws.pdf"), 
        p_all,
        width = 12.5,
        height = 3,
        scale = 1,
        device = cairo_pdf)
-ggsave(here("plots", "figS3_distribution_of_simulation_draws.jpg"), 
+ggsave(here("plots", "figS2_distribution_of_simulation_draws.jpg"), 
        p_all,
        width = 12.5,
        height = 3,
