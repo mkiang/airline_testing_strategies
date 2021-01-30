@@ -9,189 +9,16 @@ library(here)
 ## Comment out if you want "friendly" dplyr warnings.
 options(dplyr.summarise.inform = FALSE)
 
-## Testing scenarios ----
-## These functions are held as their own files. See each file for details. 
-source(here::here("code", "testing_scenarios", "01_simulate_null_model.R"))
-source(here::here("code", "testing_scenarios", "02_simulate_rapid_test_same_day.R"))
-source(here::here("code", "testing_scenarios", "03_simulate_pcr_three_days_before.R"))
-source(here::here("code", "testing_scenarios", "04_simulate_pcr_three_days_after.R"))
-source(here::here("code", "testing_scenarios", "05_simulate_rapid_antigen_same_day_5_day_quarantine_pcr.R"))
-source(here::here("code", "testing_scenarios", "06_simulate_pcr_3_days_before_5_day_quarantine_pcr.R"))
-source(here::here("code", "testing_scenarios", "99_simulate_perfect_daily_testing.R"))
-
-
-#' Wrapper function for selecting testing scenarios
-#' 
-#' Note, this is just a wrapper for passing things along to the underlying
-#' scenario functions. See each scenario function for details. 
-#'
-#' @param testing_type testing scenario short code
-#' @param prob_inf probability of infection 
-#' @param sens_type sensitivity type for return_test_sensitivity()
-#' @param risk_multiplier day of travel risk multiplier
-#' @param rapid_test_multiplier discount for rapid test sensitivity relative to PCR
-#' @param symptom_screening TRUE/FALSE for day of flight symptomatic screening
-#' @param round which round of simulation is this?
-#' @param n_reps number of repetitions per round of simulation
-#' @param prop_subclin proportion of infections that are subclinical
-#' @param subclin_infectious discount for subclinical infectiousness
-#' @param n_burnin number of days to burn in
-#' @param day_of_flight day of travel 
-#' @param n_outcome_day days post-travel to follow the cohort
-#' @param days_quarantine duration of quarantine
-#'
-#' @return none (saves file into intermediate_files folder)
-run_and_save_simulation <- function(testing_type,
-                         prob_inf,
-                         sens_type,
-                         risk_multiplier,
-                         rapid_test_multiplier,
-                         symptom_screening,
-                         round,
-                         n_reps,
-                         prop_subclin,
-                         subclin_infectious,
-                         n_burnin,
-                         day_of_flight,
-                         n_outcome_day,
-                         days_quarantine) {
-    if (testing_type == "no_testing") {
-        simulate_null_model(
-            testing_type,
-            prob_inf,
-            sens_type,
-            risk_multiplier,
-            rapid_test_multiplier,
-            symptom_screening,
-            round,
-            n_reps,
-            prop_subclin,
-            subclin_infectious,
-            n_burnin,
-            day_of_flight,
-            n_outcome_day,
-            days_quarantine
-        )
-    }
-    
-    if (testing_type == "perfect_testing") {
-        simulate_perfect_daily_testing(
-            testing_type,
-            prob_inf,
-            sens_type,
-            risk_multiplier,
-            rapid_test_multiplier,
-            symptom_screening,
-            round,
-            n_reps,
-            prop_subclin,
-            subclin_infectious,
-            n_burnin,
-            day_of_flight,
-            n_outcome_day,
-            days_quarantine
-        )
-    }
-    
-    if (testing_type == "rapid_test_same_day") {
-        simulate_rapid_test_same_day(
-            testing_type,
-            prob_inf,
-            sens_type,
-            risk_multiplier,
-            rapid_test_multiplier,
-            symptom_screening,
-            round,
-            n_reps,
-            prop_subclin,
-            subclin_infectious,
-            n_burnin,
-            day_of_flight,
-            n_outcome_day,
-            days_quarantine
-        )
-    }
-    
-    if (testing_type == "pcr_three_days_before") {
-        simulate_pcr_three_days_before(
-            testing_type,
-            prob_inf,
-            sens_type,
-            risk_multiplier,
-            rapid_test_multiplier,
-            symptom_screening,
-            round,
-            n_reps,
-            prop_subclin,
-            subclin_infectious,
-            n_burnin,
-            day_of_flight,
-            n_outcome_day,
-            days_quarantine
-        )
-    }
-    
-    if (testing_type == "pcr_three_days_after") {
-        simulate_pcr_three_days_after(
-            testing_type,
-            prob_inf,
-            sens_type,
-            risk_multiplier,
-            rapid_test_multiplier,
-            symptom_screening,
-            round,
-            n_reps,
-            prop_subclin,
-            subclin_infectious,
-            n_burnin,
-            day_of_flight,
-            n_outcome_day,
-            days_quarantine
-        )
-    }
-    
-    if (testing_type == "rapid_same_day_5_day_quarantine_pcr") {
-        simulate_rapid_antigen_same_day_5_day_quarantine_pcr(
-            testing_type,
-            prob_inf,
-            sens_type,
-            risk_multiplier,
-            rapid_test_multiplier,
-            symptom_screening,
-            round,
-            n_reps,
-            prop_subclin,
-            subclin_infectious,
-            n_burnin,
-            day_of_flight,
-            n_outcome_day,
-            days_quarantine
-        )
-    }
-    
-    if (testing_type == "pcr_three_days_before_5_day_quarantine_pcr") {
-        simulate_pcr_before_5_day_quarantine_pcr(
-            testing_type,
-            prob_inf,
-            sens_type,
-            risk_multiplier,
-            rapid_test_multiplier,
-            symptom_screening,
-            round,
-            n_reps,
-            prop_subclin,
-            subclin_infectious,
-            n_burnin,
-            day_of_flight,
-            n_outcome_day,
-            days_quarantine
-        )
-    }
-}
+## Testing simulations
+## NOTE: Testing simulations are held in their own files because they are
+## fairly long. See ./code/testing_scenarios for each file. There is a
+## convenience wrapper called run_and_save_simulation() saved in the 
+## ./code/testing_scenarios/run_and_save_simulation.R file. 
+source(here("code", "testing_scenarios", "run_and_save_simulation.R"))
 
 ## Randomness helpers ----
 
-#' Return a vector of n randomly generated non-sympatomatic days
+#' Return a vector of n randomly generated non-symptomatic days
 #'
 #' For simplicity, this is really time spent asymptomatic, some of which is
 #' incubation time (i.e., not infectious) and some of which is infectious 
@@ -558,6 +385,7 @@ return_parameter_grid <- function(cfig = NA, new_only = TRUE) {
     risk_multipliers <- cfig$risk_multiplier
     sens_type <- cfig$sens_type
     rapid_test_multipliers <- cfig$rt_sens_multiplier
+    prop_subclin <- cfig$prop_subclin
     
     param_grid <- dplyr::bind_rows(
         ## Null model
@@ -569,6 +397,7 @@ return_parameter_grid <- function(cfig = NA, new_only = TRUE) {
             risk_multiplier = risk_multipliers,
             rapid_test_multiplier = NA,
             symptom_screening = c(TRUE, FALSE),
+            prop_subclin = prop_subclin, 
             stringsAsFactors = FALSE
         ),
         ## Null models
@@ -580,13 +409,13 @@ return_parameter_grid <- function(cfig = NA, new_only = TRUE) {
             risk_multiplier = risk_multipliers,
             rapid_test_multiplier = NA,
             symptom_screening = c(TRUE, FALSE),
+            prop_subclin = prop_subclin, 
             stringsAsFactors = FALSE
         ),
         ## Rapid tests
         expand.grid(
             testing_type = c(
                 "rapid_test_same_day",
-                # "rapid_same_day_pcr_three_days_after",
                 "rapid_same_day_5_day_quarantine_pcr"
             ),
             prob_inf = prob_infs,
@@ -595,12 +424,13 @@ return_parameter_grid <- function(cfig = NA, new_only = TRUE) {
             rapid_test_multiplier = rapid_test_multipliers,
             symptom_screening = c(TRUE, FALSE),
             round = 1:n_rounds,
+            prop_subclin = prop_subclin, 
             stringsAsFactors = FALSE
         ),
         ## PCR only
         expand.grid(
             testing_type = c(
-                "pcr_three_days_after",
+                "pcr_five_days_after",
                 "pcr_three_days_before",
                 "pcr_three_days_before_5_day_quarantine_pcr"
             ),
@@ -610,6 +440,7 @@ return_parameter_grid <- function(cfig = NA, new_only = TRUE) {
             rapid_test_multiplier = NA,
             symptom_screening = c(TRUE, FALSE),
             round = 1:n_rounds,
+            prop_subclin = prop_subclin, 
             stringsAsFactors = FALSE
         )
     )
@@ -618,13 +449,83 @@ return_parameter_grid <- function(cfig = NA, new_only = TRUE) {
         param_grid <- param_grid[with(param_grid,
                                       !file.exists(
                                           return_sim_file_name(
-                                              testing_type,
-                                              symptom_screening,
-                                              prob_inf,
-                                              sens_type,
-                                              risk_multiplier,
-                                              rapid_test_multiplier,
-                                              round
+                                              scenario_name = testing_type,
+                                              symptom_screening = symptom_screening,
+                                              prob_inf = prob_inf,
+                                              prop_subclin = prop_subclin, 
+                                              risk_multiplier = risk_multiplier,
+                                              sens_type = sens_type, 
+                                              rapid_test_multiplier = rapid_test_multiplier,
+                                              round = round
+                                          )
+                                      )),]
+    }
+    param_grid
+}
+
+## Return sensitivity scenario parameter grid
+return_sensitivity_parameter_grid <- function(new_only = TRUE) {
+    cfig <- config::get(config = "sensitivity_scenarios")
+    prob_infs <- cfig$prob_inf / 1000000
+    n_rounds <- cfig$n_rounds_of_sims
+    risk_multipliers <- cfig$risk_multiplier
+    sens_type <- cfig$sens_type
+    rapid_test_multipliers <- cfig$rt_sens_multiplier
+    prop_subclin <- cfig$prop_subclin
+    
+    param_grid <- dplyr::bind_rows(
+        ## PCR pre testing with different test timing (01a, 01b, 01c) or 
+        ## quarantine duration (02a, 02b), or test timing + quarantine (02c/d/e)
+        expand.grid(
+            testing_type = c(
+                "pcr_two_days_before",
+                "pcr_five_days_before",
+                "pcr_seven_days_before",
+                "pcr_three_days_before_7_day_quarantine_pcr",
+                "pcr_three_days_before_14_day_quarantine_pcr",
+                "pcr_two_days_before_5_day_quarantine_pcr",
+                "pcr_five_days_before_5_day_quarantine_pcr",
+                "pcr_seven_days_before_5_day_quarantine_pcr"
+            ),
+            prob_inf = prob_infs,
+            sens_type = sens_type,
+            risk_multiplier = risk_multipliers,
+            rapid_test_multiplier = NA,
+            symptom_screening = c(TRUE, FALSE),
+            round = 1:n_rounds,
+            prop_subclin = prop_subclin, 
+            stringsAsFactors = FALSE
+        ),
+        
+        ## Rapid tests with different quarantine periods (04a, 04b)
+        expand.grid(
+            testing_type = c(
+                "rapid_same_day_7_day_quarantine_pcr",
+                "rapid_same_day_14_day_quarantine_pcr"
+            ),
+            prob_inf = prob_infs,
+            sens_type = sens_type,
+            risk_multiplier = risk_multipliers,
+            rapid_test_multiplier = rapid_test_multipliers,
+            symptom_screening = c(TRUE, FALSE),
+            round = 1:n_rounds,
+            prop_subclin = prop_subclin, 
+            stringsAsFactors = FALSE
+        )
+    )
+    
+    if (new_only) {
+        param_grid <- param_grid[with(param_grid,
+                                      !file.exists(
+                                          return_sim_file_name(
+                                              scenario_name = testing_type,
+                                              symptom_screening = symptom_screening,
+                                              prob_inf = prob_inf,
+                                              prop_subclin = prop_subclin, 
+                                              risk_multiplier = risk_multiplier,
+                                              sens_type = sens_type, 
+                                              rapid_test_multiplier = rapid_test_multiplier,
+                                              round = round
                                           )
                                       )),]
     }
@@ -1108,52 +1009,37 @@ subset_to_inf_passengers <- function(sim_pop) {
 }
 
 ## Misc. helpers ----
-# unpack_config <- function(cfig = NA) {
-#     cfig <- config::get(config = cfig)
-#     assign("n_reps", cfig$n_reps_per_round, envir=.GlobalEnv)
-#     assign("n_pop", cfig$n_passengers, envir=.GlobalEnv)
-#     assign("prob_infs", cfig$prob_inf / 1000000, envir=.GlobalEnv)
-#     assign("prop_subclin",  cfig$prop_subclin, envir=.GlobalEnv)
-#     assign("subclin_infectious", cfig$subclin_infectious, envir=.GlobalEnv)
-#     assign("n_rounds", cfig$n_rounds_of_sims, envir=.GlobalEnv)
-#     assign("n_cores", cfig$n_cores, envir=.GlobalEnv)
-#     assign("n_burnin", cfig$n_burnin_days, envir=.GlobalEnv)
-#     assign("day_of_flight", cfig$day_of_flight, envir=.GlobalEnv)
-#     assign("n_outcome_day", cfig$n_outcome_day, envir=.GlobalEnv)
-#     assign("days_quarantine", cfig$days_quarantine, envir=.GlobalEnv)
-#     assign("risk_multipliers", cfig$risk_multiplier, envir=.GlobalEnv)
-#     assign("sens_type", cfig$sens_type, envir=.GlobalEnv)
-#     assign("rapid_test_multiplier", cfig$rt_sens_multiplier, envir=.GlobalEnv)
-# }
-
 return_sim_file_name <- function(scenario_name,
                                  symptom_screening,
                                  prob_inf,
-                                 sens_type,
+                                 prop_subclin, 
                                  risk_multiplier,
                                  rapid_test_multiplier,
+                                 sens_type, 
                                  round) {
     sprintf(
-        "%s/%s/%03d-%s-prob_inf_%03d-sens_type_%s-risk_multi_%i-rt_multi_%i-results.RDS",
+        "%s/%s/%03d-%s-prob_inf_%03d-asx_%02d-risk_multi_%i-sens_type_%s-rt_multi_%i-results.RDS",
         dir_results(scenario_name),
         ifelse(symptom_screening, "with_screening", "no_screening"),
         round,
         scenario_name,
         prob_inf * 1000000,
-        sens_type,
+        prop_subclin * 100, 
         risk_multiplier,
+        sens_type, 
         rapid_test_multiplier * 100
     )
 }
 
-return_sim_state_file <- function(round, rep, prob_inf) {
+return_sim_state_file <- function(round, rep, prob_inf, prop_subclin) {
     sprintf(
-        "%s/round_%02d/round_%02d-rep_%03d-prob_inf_%03d-post_burnin_simulation_state.RDS",
+        "%s/round_%02d/round_%02d-rep_%03d-prob_inf_%03d-asx_%02d-post_burnin_simulation_state.RDS",
         dir_results("simulation_states"),
         round,
         round,
         rep,
-        prob_inf * 1000000
+        prob_inf * 1000000,
+        prop_subclin * 100
     )
 }
 
@@ -1163,6 +1049,7 @@ print_sim_start <- function(scenario_name,
                             sens_type,
                             risk_multiplier,
                             rapid_test_multiplier,
+                            prop_subclin, 
                             round) {
     print(
         sprintf(
@@ -1173,6 +1060,7 @@ print_sim_start <- function(scenario_name,
                 "sens: %s, ",
                 "symptom_testing: %s, ",
                 "prob_inf: %s, ",
+                "prop_subclin: %s, ", 
                 "risk_multi: %s, ",
                 "rt_multi: %s"
             ),
@@ -1182,6 +1070,7 @@ print_sim_start <- function(scenario_name,
             sens_type,
             symptom_screening,
             prob_inf,
+            prop_subclin, 
             risk_multiplier,
             rapid_test_multiplier
         )
@@ -1191,15 +1080,17 @@ print_sim_start <- function(scenario_name,
 print_sim_rep <- function(rep,
                           days_incubation,
                           days_symptomatic,
-                          prob_inf) {
+                          prob_inf,
+                          prop_subclin) {
     print(
         sprintf(
-            "Rep %s (%s): days_inc: %s, days_sympt: %s, prob_inf: %s",
+            "Rep %s (%s): days_inc: %s, days_sympt: %s, prob_inf: %s, prop_subclin: %s",
             rep,
             Sys.time(),
             days_incubation,
             days_symptomatic,
-            prob_inf
+            prob_inf, 
+            prop_subclin
         )
     )
 }
@@ -1473,122 +1364,159 @@ summarize_infectiousness <- function(sim_pop,
 }
 
 ## Analysis helpers ----
-collect_results <- function(scenario_name, results = "main") {
+collect_results <- function(scenario_name) {
     all_files <- fs::dir_ls(dir_results(scenario_name),
                             recurse = TRUE,
                             glob = "*.RDS")
     
-    pattern_x <- "risk_multi_2-rt_multi_[(90)(NA)]"
-    
-    if (results == "main") {
-        x <- all_files[grepl(pattern_x, all_files)]
-    } else if (results == "sensitivity") {
-        x <- all_files[!grepl(pattern_x, all_files)]
-    } else if (results == "all") {
-        x <- all_files
-    } else {
-        stop("results must be 'main', 'all', or 'sensitivity'.")
-    }
-    
-    purrr::map_df(.x = x,
+    purrr::map_df(.x = all_files,
                   .f = ~ readRDS(.x))
 }
 
-collect_and_munge_simulations <-
-    function(scenario_name, results_x = "main") {
-        temp_x <- collect_results(scenario_name, results = results_x) %>%
-            ## We collected pre-data just for diagnostics, but we don't want to
-            ## use it for calculations so remove early days. Also, in very rare
-            ## cases (low-prevalence scenarios), it is possible we reach 0
-            ## infections — this results in an if_threshold of NA so we remove them.
-            dplyr::filter(time_step >= 67,
-                   !is.na(if_threshold)) %>%
-            add_cume_infections() %>%
-            categorize_testing_types() %>%
-            categorize_prob_inf() %>%
-            categorize_symptom_screening() %>%
-            categorize_rt_multiplier() %>%
-            categorize_risk_multiplier() %>%
-            shift_time_steps(day_of_flight = 70) %>%
-            dplyr::mutate(sim_id = sprintf("%03d.%02d", round, rep)) %>%
-            dplyr::select(
-                testing_type,
-                testing_cat,
-                prob_inf,
-                prob_inf_cat,
-                sens_type,
-                symptom_screening,
-                symptom_cat,
-                risk_multiplier,
-                risk_multi_cat,
-                rapid_test_multiplier,
-                rapid_test_cat,
-                if_threshold,
-                time_step,
-                round,
-                rep,
-                sim_id,
-                dplyr::everything()
-            ) %>%
-            dplyr::arrange(
-                testing_type,
-                testing_cat,
-                prob_inf,
-                prob_inf_cat,
-                sens_type,
-                symptom_screening,
-                symptom_cat,
-                risk_multiplier,
-                risk_multi_cat,
-                rapid_test_multiplier,
-                rapid_test_cat,
-                if_threshold,
-                round,
-                rep,
-                time_step
-            )
-        
-        if (!tibble::has_name(temp_x, "n_test_false_pos") &
-            !tibble::has_name(temp_x, "n_test_true_pos")) {
-            temp_x <- temp_x %>%
-                dplyr::mutate(n_test_false_pos = NA,
-                       n_test_true_pos = NA)
-        }
-        
-        temp_x
+collect_and_munge_simulations <- function(scenario_name) {
+    temp_x <- collect_results(scenario_name) %>%
+        dplyr::filter(time_step >= 67,
+                      !is.na(if_threshold)) %>%
+        shift_time_steps(day_of_flight = 70) %>%
+        add_cume_infections() %>%
+        categorize_testing_types() %>%
+        categorize_prob_inf() %>%
+        categorize_sens_type() %>%
+        categorize_prop_subclin() %>% 
+        categorize_symptom_screening() %>%
+        categorize_rt_multiplier() %>%
+        categorize_risk_multiplier() %>%
+        dplyr::mutate(sim_id = sprintf("%03d.%02d", round, rep)) %>%
+        dplyr::select(
+            testing_type,
+            testing_cat,
+            prob_inf,
+            prob_inf_cat,
+            sens_type,
+            sens_cat,
+            prop_subclin,
+            prop_subclin_cat,
+            symptom_screening,
+            symptom_cat,
+            risk_multiplier,
+            risk_multi_cat,
+            rapid_test_multiplier,
+            rapid_test_cat,
+            if_threshold,
+            time_step,
+            round,
+            rep,
+            sim_id,
+            dplyr::everything()
+        ) %>%
+        dplyr::arrange(
+            testing_type,
+            testing_cat,
+            prob_inf,
+            prob_inf_cat,
+            prop_subclin,
+            prop_subclin_cat,
+            sens_type,
+            symptom_screening,
+            symptom_cat,
+            risk_multiplier,
+            risk_multi_cat,
+            rapid_test_multiplier,
+            rapid_test_cat,
+            if_threshold,
+            round,
+            rep,
+            time_step
+        )
+    
+    if (!tibble::has_name(temp_x, "n_test_false_pos") &
+        !tibble::has_name(temp_x, "n_test_true_pos")) {
+        temp_x <- temp_x %>%
+            dplyr::mutate(n_test_false_pos = NA,
+                          n_test_true_pos = NA)
     }
+    
+    temp_x
+}
+
+categorize_prop_subclin <- function(all_results) {
+    all_results %>%
+        mutate(prop_subclin_cat = factor(
+            prop_subclin,
+            levels = c(.3, .4),
+            labels = c("30%", "40%"),
+            ordered = TRUE
+        ))
+}
+
+categorize_sens_type <- function(all_results) {
+    all_results %>%
+        mutate(sens_cat = factor(
+            sens_type,
+            levels = c("upper",
+                       "median"),
+            labels = c("Upper Bound",
+                       "Median Value"),
+            ordered = TRUE
+        ))
+}
 
 categorize_testing_types <- function(all_results) {
     all_results %>%
-        dplyr::mutate(testing_cat =
-                          factor(
-                              testing_type,
-                              levels = c(
-                                  "no_testing",
-                                  "no_testing_no_screening",
-                                  "rapid_test_same_day",
-                                  "pcr_three_days_before",
-                                  "pcr_three_days_after",
-                                  "rapid_same_day_pcr_three_days_after",
-                                  "pcr_three_days_before_rapid_same_day",
-                                  "rapid_same_day_5_day_quarantine_pcr", 
-                                  "pcr_three_days_before_5_day_quarantine_pcr",
-                                  "perfect_testing"
-                              ),
-                              labels = c(
-                                  "No testing",
-                                  "No testing, no screening", 
-                                  "Same-day RT",
-                                  "PCR 3 days before",
-                                  "PCR 3 days after",
-                                  "Same-day RT + PCR 3 days after",
-                                  "PCR 3 days before + same-day RT",
-                                  "Same-day RT + 5-day quarantine + PCR", 
-                                  "PCR 3 days before + 5-day quarantine + PCR", 
-                                  "Daily perfect testing"
-                              ),
-                              ordered = TRUE
-                          ))
+        dplyr::mutate(testing_cat = factor(
+            testing_type,
+            levels = c(
+                "no_testing",
+                "no_testing_no_screening",
+                "pcr_three_days_before",
+                "pcr_three_days_before_5_day_quarantine_pcr",
+                "rapid_test_same_day",
+                "rapid_same_day_5_day_quarantine_pcr",
+                "pcr_five_days_after",
+                
+                "pcr_two_days_before",
+                "pcr_five_days_before",
+                "pcr_seven_days_before",
+                
+                "pcr_three_days_before_7_day_quarantine_pcr",
+                "pcr_three_days_before_14_day_quarantine_pcr",
+                
+                "pcr_two_days_before_5_day_quarantine_pcr",
+                "pcr_five_days_before_5_day_quarantine_pcr",
+                "pcr_seven_days_before_5_day_quarantine_pcr",
+                
+                "rapid_same_day_7_day_quarantine_pcr",
+                "rapid_same_day_14_day_quarantine_pcr",
+                
+                "perfect_testing"
+            ),
+            labels = c(
+                "No testing",
+                "No testing, no screening",
+                "PCR 3 days before",
+                "PCR 3 days before + 5-day quarantine",
+                "Same-day Rapid Test",
+                "Same-day Rapid Test + 5-day quarantine",
+                "PCR 5 days after",
+                
+                "PCR 2 days before",
+                "PCR 5 days before",
+                "PCR 7 days before",
+                
+                "PCR 3 days before + 7-day quarantine",
+                "PCR 3 days before + 14-day quarantine",
+                
+                "PCR 2 days before + 5-day quarantine",
+                "PCR 5 days before + 5-day quarantine",
+                "PCR 7 days before + 5-day quarantine",
+                
+                "Same-day Rapid Test + 7-day quarantine",
+                "Same-day Rapid Test + 14-day quarantine",
+                
+                "Daily perfect testing"
+            ),
+            ordered = TRUE
+        ))
 }
 
 categorize_metric <- function(summarized_results) {
@@ -1699,10 +1627,10 @@ categorize_prob_inf <- function(all_results) {
         dplyr::mutate(prob_inf_cat =
                           factor(
                               prob_inf,
-                              levels = c(10, 50, 100, 200, 500,
-                                         1000, 1500, 2500) / 1000000,
-                              labels = paste(c(1, 5, 10, 20,
-                                               50, 100, 150, 250),
+                              levels = c(50, 100, 200, 500, 1000, 
+                                         1500, 2500, 5000) / 1000000,
+                              labels = paste(c(5, 10, 20, 50, 
+                                               100, 150, 250, 500),
                                              "per 100,000"),
                               ordered = TRUE
                           ))
@@ -1758,6 +1686,7 @@ add_cume_infections <- function(all_results) {
             rapid_test_multiplier,
             sens_type,
             prob_inf,
+            prop_subclin, 
             if_threshold,
             round,
             rep,
@@ -1770,9 +1699,10 @@ add_cume_infections <- function(all_results) {
             rapid_test_multiplier,
             sens_type,
             prob_inf,
+            prop_subclin, 
+            if_threshold, 
             round,
-            rep,
-            if_threshold
+            rep
         ) %>%
         dplyr::mutate(
             cume_n_infection_daily = cumsum(n_infection_daily),

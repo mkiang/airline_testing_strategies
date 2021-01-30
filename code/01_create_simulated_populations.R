@@ -27,15 +27,29 @@ prop_subclin <- cfig$prop_subclin
 subclin_infectious <- cfig$subclin_infectious
 n_cores <- cfig$n_cores
 n_burnin <- cfig$n_burnin_days
+sens_type <- cfig$sens_type
 days_quarantine <- cfig$days_quarantine
 
-## Create parameter grid ----
+## Create parameter grid of main analyses ----
 param_grid <- expand.grid(
     round = 1:n_rounds,
     rep = 1:n_reps,
     prob_inf = prob_infs,
+    prop_subclin = prop_subclin,
     stringsAsFactors = FALSE
 )
+
+## Bind the sensitivity analyses that involve new simulation states ----
+param_grid <- bind_rows(
+    param_grid,
+    expand.grid(
+        round = 1:config::get(config = "sensitivity_sub_clin")$n_rounds_of_sims,
+        rep = 1:n_reps,
+        prob_inf = prob_infs,
+        prop_subclin = config::get(config = "sensitivity_sub_clin")$prop_subclin,
+        stringsAsFactors = FALSE
+    )
+) 
 
 ## Remove files we've already created from the parameter grid
 param_grid <- param_grid[with(param_grid,
@@ -43,7 +57,8 @@ param_grid <- param_grid[with(param_grid,
                                   return_sim_state_file(
                                       round,
                                       rep,
-                                      prob_inf
+                                      prob_inf,
+                                      prop_subclin
                                   )
                               )), ]
 
@@ -53,13 +68,14 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
     round <- param_grid$round[i]
     rep <- param_grid$rep[i]
     prob_inf <- param_grid$prob_inf[i]
+    prop_subclin <- param_grid$prop_subclin[i]
     
     ## Get the seed to save later
     initial_seed <- get_seed_alpha(list(Sys.time(), Sys.getpid()))
     
     ## Draw random variables (save later)
     set.seed(initial_seed)
-    p_sens <- return_test_sensitivity("upper")
+    p_sens <- return_test_sensitivity(sens_type)
     p_spec <- draw_specificity(1)
     days_incubation <- draw_incubation(1)
     days_symptomatic <- draw_symptomatic(1)
@@ -70,7 +86,12 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
         days_symptomatic = days_symptomatic
     )
     
-    state_file_name <- return_sim_state_file(round, rep, prob_inf)
+    state_file_name <- return_sim_state_file(
+        round, 
+        rep, 
+        prob_inf, 
+        prop_subclin
+        )
     
     fs::dir_create(dirname(state_file_name))
     
@@ -100,6 +121,7 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
             p_spec = p_spec,
             days_incubation = days_incubation,
             days_symptomatic = days_symptomatic,
+            prop_subclin = prop_subclin, 
             if_weights = if_weights,
             initial_seed = initial_seed,
             rseed = .Random.seed
@@ -108,3 +130,4 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
         saveRDS(x, state_file_name, compress = "xz")
     }
 }
+doParallel::stopImplicitCluster()

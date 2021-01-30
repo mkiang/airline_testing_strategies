@@ -13,7 +13,7 @@ library(tidyverse)
 library(here)
 library(fs)
 library(config)
-library(foreach::foreach)
+library(foreach)
 library(doParallel)
 source(here::here("code", "utils.R"))
 
@@ -21,7 +21,6 @@ source(here::here("code", "utils.R"))
 cfig <- config::get(config = "dev")
 n_cores <- cfig$n_cores
 n_reps <- cfig$n_reps_per_round
-prop_subclin <- cfig$prop_subclin
 subclin_infectious <- cfig$subclin_infectious
 n_burnin <- cfig$n_burnin_days
 day_of_flight <- cfig$day_of_flight
@@ -44,6 +43,7 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
     rapid_test_multiplier <- param_grid$rapid_test_multiplier[i]
     symptom_screening <- param_grid$symptom_screening[i]
     round <- param_grid$round[i]
+    prop_subclin <- param_grid$prop_subclin[i]
     
     run_and_save_simulation(
         testing_type,

@@ -1,6 +1,8 @@
 # Project specific
 intermediate_files/**
 code/-old_code/**
+code/scratchpad.R
+data_raw/**
 lit/**
 manuscript/**
 .bash_history

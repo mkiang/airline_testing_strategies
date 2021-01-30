@@ -1,7 +1,7 @@
 ---
-title: "Table SX. Point prevalence at equilibrium"
+title: "Table S1. Point prevalence at equilibrium"
 author: "Mathew Kiang"
-date: "12/7/2020"
+date: "1/29/2021"
 output: html_document
 ---
 
@@ -23,7 +23,8 @@ Below, we list mean (95% UI) of the daily prevalence of test-positive infections
 ```{r}
 results_df <- readRDS(here("data", "summarized_results.RDS")) %>% 
     filter(testing_type == "no_testing",
-           !symptom_screening,
+           symptom_adherence == 0, 
+           prop_subclin == .3, 
            metric == "n_infected_all",
            risk_multiplier == 2,
            time_step == min(time_step))

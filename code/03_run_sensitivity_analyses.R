@@ -18,7 +18,6 @@ source(here::here("code", "utils.R"))
 cfig <- config::get(config = "dev")
 n_cores <- cfig$n_cores
 n_reps <- cfig$n_reps_per_round
-prop_subclin <- cfig$prop_subclin
 subclin_infectious <- cfig$subclin_infectious
 n_burnin <- cfig$n_burnin_days
 day_of_flight <- cfig$day_of_flight
@@ -29,10 +28,14 @@ days_quarantine <- cfig$days_quarantine
 fs::dir_create(dir_logs())
 
 ### Create parameter grid ----
+## These are sensitivity analyses that involve changing parameters of interest.
 param_grid <- dplyr::bind_rows(
     return_parameter_grid(cfig = "sensitivity_risk_multiplier"),
-    return_parameter_grid(cfig = "sensitivity_rt_multiplier")
-    )
+    return_parameter_grid(cfig = "sensitivity_rt_multiplier"),
+    return_parameter_grid(cfig = "sensitivity_sub_clin"), 
+    return_parameter_grid(cfig = "sensitivity_test_sens"),
+    return_sensitivity_parameter_grid()
+    ) 
 
 doParallel::registerDoParallel(cores = n_cores)
 foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
@@ -44,6 +47,7 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
     rapid_test_multiplier <- param_grid$rapid_test_multiplier[i]
     symptom_screening <- param_grid$symptom_screening[i]
     round <- param_grid$round[i]
+    prop_subclin <- param_grid$prop_subclin[i]
     
     run_and_save_simulation(
         testing_type,
