@@ -5,6 +5,10 @@ library(data.table)
 library(digest)
 library(fs)
 library(here)
+library(foreach)
+library(doParallel)
+library(geofacet)
+library(config)
 
 ## Comment out if you want "friendly" dplyr warnings.
 options(dplyr.summarise.inform = FALSE)
@@ -1468,18 +1472,21 @@ categorize_testing_types <- function(all_results) {
             levels = c(
                 "no_testing",
                 "no_testing_no_screening",
-                "pcr_three_days_before",
-                "pcr_three_days_before_5_day_quarantine_pcr",
-                "rapid_test_same_day",
-                "rapid_same_day_5_day_quarantine_pcr",
-                "pcr_five_days_after",
                 
                 "pcr_two_days_before",
-                "pcr_five_days_before",
-                "pcr_seven_days_before",
+                "pcr_three_days_before",
                 
+                "pcr_three_days_before_5_day_quarantine_pcr",
                 "pcr_three_days_before_7_day_quarantine_pcr",
                 "pcr_three_days_before_14_day_quarantine_pcr",
+                
+                "rapid_test_same_day",
+                "rapid_same_day_5_day_quarantine_pcr",
+                
+                "pcr_five_days_after",
+                
+                "pcr_five_days_before",
+                "pcr_seven_days_before",
                 
                 "pcr_two_days_before_5_day_quarantine_pcr",
                 "pcr_five_days_before_5_day_quarantine_pcr",
@@ -1493,18 +1500,21 @@ categorize_testing_types <- function(all_results) {
             labels = c(
                 "No testing",
                 "No testing, no screening",
-                "PCR 3 days before",
-                "PCR 3 days before + 5-day quarantine",
-                "Same-day Rapid Test",
-                "Same-day Rapid Test + 5-day quarantine",
-                "PCR 5 days after",
                 
                 "PCR 2 days before",
-                "PCR 5 days before",
-                "PCR 7 days before",
+                "PCR 3 days before",
                 
+                "PCR 3 days before + 5-day quarantine",
                 "PCR 3 days before + 7-day quarantine",
                 "PCR 3 days before + 14-day quarantine",
+                
+                "Same-day Rapid Test",
+                "Same-day Rapid Test + 5-day quarantine",
+                
+                "PCR 5 days after",
+                
+                "PCR 5 days before",
+                "PCR 7 days before",
                 
                 "PCR 2 days before + 5-day quarantine",
                 "PCR 5 days before + 5-day quarantine",
