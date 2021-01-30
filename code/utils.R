@@ -1414,6 +1414,8 @@ collect_and_munge_simulations <- function(scenario_name) {
             testing_cat,
             prob_inf,
             prob_inf_cat,
+            prop_subclin,
+            prop_subclin_cat,
             sens_type,
             symptom_screening,
             symptom_cat,
