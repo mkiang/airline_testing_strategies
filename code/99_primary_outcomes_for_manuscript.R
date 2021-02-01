@@ -2,15 +2,15 @@
 library(tidyverse)
 library(here)
 library(fs)
-source(here("code", "utils.R"))
+source(here::here("code", "utils.R"))
 
 ## Constants ----
 PROB_INF <- config::get()$primary_prob_inf / 1000000
 
 ## End of travel period infection stats
-inf_df <- readRDS(here("data", "summarized_results.RDS")) %>%
-    filter(
-        time_step == 84, 
+inf_df <- readRDS(here::here("data", "summarized_results.RDS")) %>%
+    dplyr::filter(
+        time_step == 84,
         if_threshold == 0,
         prob_inf == PROB_INF,
         risk_multiplier == 2,
@@ -32,45 +32,46 @@ inf_df <- readRDS(here("data", "summarized_results.RDS")) %>%
     ) %>%
     shift_time_steps() %>%
     categorize_metric() %>%
-    filter(metric %in% c("cume_n_infection_daily",
-                         "rel_cume_n_infection_daily"))
+    dplyr::filter(metric %in% c("cume_n_infection_daily",
+                                "rel_cume_n_infection_daily"))
 
 ## Subset to the main analyses ----
-inf_df <- bind_rows(
+inf_df <- dplyr::bind_rows(
     ## No testing no symptom screening
     inf_df %>%
-        filter(testing_type == "no_testing" &
-                   symptom_adherence == 0),
+        dplyr::filter(testing_type == "no_testing" &
+                          symptom_adherence == 0),
     ## No quarantine 80% symptom screening adherence
     inf_df %>%
-        filter(
+        dplyr::filter(
             testing_type %in% c(
                 "pcr_three_days_before",
                 "rapid_test_same_day",
                 "pcr_five_days_after",
-                "pcr_five_days_before", 
+                "pcr_five_days_before",
                 "pcr_seven_days_before",
                 "pcr_two_days_before"
-            ) & 
+            ) &
                 symptom_adherence == .8
         ),
     ## With 80% quarantine and 80% symptom screening adherence
-    inf_df %>% 
-        filter(
+    inf_df %>%
+        dplyr::filter(
             testing_type %in% c(
                 "pcr_three_days_before_5_day_quarantine_pcr",
                 "rapid_same_day_5_day_quarantine_pcr"
-            ) & 
-                symptom_adherence == .8 & 
+            ) &
+                symptom_adherence == .8 &
                 quarantine_adherence == .8
         )
-) 
+)
 
-## Testing statistics 
-test_df <- readRDS(here("data", "summarized_testing_results.RDS"))
+## Testing statistics
+test_df <-
+    readRDS(dplyr::filter("data", "summarized_testing_results.RDS"))
 
 test_df <- test_df %>%
-    filter(
+    dplyr::filter(
         risk_multiplier == 2,
         testing_type %in% c(
             "no_testing",
@@ -99,19 +100,19 @@ test_df <- test_df %>%
     ) %>%
     categorize_metric()
 
-test_df <- bind_rows(
+test_df <- dplyr::bind_rows(
     ## No testing no symptom screening
     test_df %>%
-        filter(testing_type == "no_testing" &
-                   symptom_adherence == 0),
+        dplyr::filter(testing_type == "no_testing" &
+                          symptom_adherence == 0),
     test_df %>%
-        filter(testing_type != "no_testing" &
-                   symptom_adherence == .8)
-) 
+        dplyr::filter(testing_type != "no_testing" &
+                          symptom_adherence == .8)
+)
 
 ## Day of flight statistics
-dof_df <- readRDS(here("data", "summarized_results.RDS")) %>%
-    filter(
+dof_df <- readRDS(here::here("data", "summarized_results.RDS")) %>%
+    dplyr::filter(
         time_step == 70,
         if_threshold == 0,
         prob_inf == PROB_INF,
@@ -137,7 +138,7 @@ dof_df <- readRDS(here("data", "summarized_results.RDS")) %>%
     ) %>%
     shift_time_steps() %>%
     categorize_metric() %>%
-    filter(
+    dplyr::filter(
         metric %in% c(
             "n_active_infection",
             "rel_n_active_infection",
@@ -145,64 +146,66 @@ dof_df <- readRDS(here("data", "summarized_results.RDS")) %>%
         )
     )
 
-dof_df <- bind_rows(
+dof_df <- dplyr::filter(
     ## No testing no symptom screening
     dof_df %>%
-        filter(testing_type == "no_testing" &
-                   symptom_adherence == 0),
+        dplyr::filter(testing_type == "no_testing" &
+                          symptom_adherence == 0),
     ## No quarantine 80% symptom screening adherence
     dof_df %>%
-        filter(
+        dplyr::filter(
             testing_type %in% c(
                 "pcr_three_days_before",
                 "rapid_test_same_day",
                 "pcr_five_days_after",
-                "pcr_five_days_before", 
+                "pcr_five_days_before",
                 "pcr_seven_days_before",
                 "pcr_two_days_before"
-            ) & 
+            ) &
                 symptom_adherence == .8
         ),
     ## With 80% quarantine and 80% symptom screening adherence
-    dof_df %>% 
-        filter(
+    dof_df %>%
+        dplyr::filter(
             testing_type %in% c(
                 "pcr_three_days_before_5_day_quarantine_pcr",
                 "rapid_same_day_5_day_quarantine_pcr"
-            ) & 
-                symptom_adherence == .8 & 
+            ) &
+                symptom_adherence == .8 &
                 quarantine_adherence == .8
         )
-) 
+)
 
 ## All main outcomes
-all_df <- bind_rows(dof_df,
-                    inf_df,
-                    test_df) %>%
-    arrange(testing_cat, metric_cat,) %>%
-    mutate(print = case_when(
-                  metric %in% c(
-                      "cume_n_infection_daily",
-                      "n_active_infection",
-                      "n_active_infection_clin",
-                      "n_active_infected_subclin_day_of_flight",
-                      "any_positive_test",
-                      "n_test_true_pos",
-                      "n_test_false_pos"
-                      
-                  ) ~
-                      sprintf("%i (95%% UI: %i, %i)",
-                              round(mean),
-                              round(p025),
-                              round(p975)),
-                  TRUE ~ sprintf(
-                      "%0.2f (95%%: %0.2f, %0.2f)",
-                      round(mean, 2),
-                      round(p025, 2),
-                      round(p975, 2)
-                  )
-              )) %>% 
-    select(testing_cat, metric, metric_cat, print, everything())
+all_df <- dplyr::filter(dof_df,
+                        inf_df,
+                        test_df) %>%
+    dplyr::arrange(testing_cat, metric_cat, ) %>%
+    dplyr::mutate(print = dplyr::case_when(
+        metric %in% c(
+            "cume_n_infection_daily",
+            "n_active_infection",
+            "n_active_infection_clin",
+            "n_active_infected_subclin_day_of_flight",
+            "any_positive_test",
+            "n_test_true_pos",
+            "n_test_false_pos"
+            
+        ) ~
+            sprintf("%i (95%% UI: %i, %i)",
+                    round(mean),
+                    round(p025),
+                    round(p975)),
+        TRUE ~ sprintf(
+            "%0.2f (95%%: %0.2f, %0.2f)",
+            round(mean, 2),
+            round(p025, 2),
+            round(p975, 2)
+        )
+    )) %>%
+    dplyr::select(testing_cat, metric, metric_cat, print, dplyr::everything())
 
-write_csv(all_df, here("output", "99_main_manuscript_numbers.csv"))
-saveRDS(all_df, here("output", "99_main_manuscript_numbers.RDS"))
+readr::write_csv(all_df,
+                 here::here("output", "99_main_manuscript_numbers.csv"))
+saveRDS(all_df,
+        here::here("output", "99_main_manuscript_numbers.RDS"))

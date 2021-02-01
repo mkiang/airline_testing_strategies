@@ -14,25 +14,25 @@ library(here)
 library(fs)
 library(foreach)
 library(doParallel)
-source(here("code", "utils.R"))
+source(here::here("code", "utils.R"))
 
 ## Different levels of adherence to symptom screening
 adherence_level <- seq(0, 1, .2)
 
 ## Get testing scenario names
 testing_scenarios <- basename(fs::dir_ls(
-    here("intermediate_files"),
+    here::here("intermediate_files"),
     type = "directory",
     regexp = "pcr|rapid|no_testing|perfect"
 ))
 
 ## Get in the null results so we can calculate differences
 null_results <-
-    readRDS(here("data_raw", "raw_simulations_no_testing.RDS"))
+    readRDS(here::here("data_raw", "raw_simulations_no_testing.RDS"))
 no_symp <- null_results %>%
-    filter(symptom_screening == FALSE) %>%
-    mutate(null_n_active_infection_clin = n_active_infection - n_active_infection_subclin) %>%
-    select(
+    dplyr::filter(symptom_screening == FALSE) %>%
+    dplyr::mutate(null_n_active_infection_clin = n_active_infection - n_active_infection_subclin) %>%
+    dplyr::select(
         prob_inf,
         prop_subclin,
         risk_multiplier,
@@ -61,21 +61,21 @@ no_symp <- null_results %>%
 ##      5. Number of infectious days (weighted) over time
 
 doParallel::registerDoParallel()
-temp_holder <- foreach(s = testing_scenarios) %dopar% {
+temp_holder <- foreach::foreach(s = testing_scenarios) %dopar% {
     temp_x <-
-        readRDS(here("data_raw", sprintf("raw_simulations_%s.RDS", s)))
+        readRDS(here::here("data_raw", sprintf("raw_simulations_%s.RDS", s)))
     
     ## Calculate number of active infections (clinical)
     temp_x <- temp_x %>%
-        mutate(n_active_infection_clin = n_active_infection - n_active_infection_subclin)
+        dplyr::mutate(n_active_infection_clin = n_active_infection - n_active_infection_subclin)
     
     ## Join with null model (no testing, no symptom screening)
     temp_x <- temp_x %>%
-        left_join(no_symp)
+        dplyr::left_join(no_symp)
     
     ## Absolute differences
     temp_x <- temp_x %>%
-        mutate(
+        dplyr::mutate(
             abs_n_infected_all = n_infected_all - null_n_infected_all,
             abs_n_infected_new = n_infected_new - null_n_infected_new,
             abs_n_active_infection = n_active_infection - null_n_active_infection,
@@ -90,7 +90,7 @@ temp_holder <- foreach(s = testing_scenarios) %dopar% {
     
     ## Relative differences
     temp_x <- temp_x %>%
-        mutate(
+        dplyr::mutate(
             rel_n_infected_all = (null_n_infected_all - n_infected_all) / null_n_infected_all,
             rel_n_infected_new = (null_n_infected_new - n_infected_new) / null_n_infected_new,
             rel_n_active_infection = (null_n_active_infection - n_active_infection) / null_n_active_infection,
@@ -107,7 +107,7 @@ temp_holder <- foreach(s = testing_scenarios) %dopar% {
     
     ## Pivot wider
     temp_x_wide <- temp_x %>%
-        pivot_wider(
+        tidyr::pivot_wider(
             id_cols = c(
                 testing_type,
                 testing_cat,
@@ -147,7 +147,7 @@ temp_holder <- foreach(s = testing_scenarios) %dopar% {
         a <- adherence_level[i]
         
         temp_x_list[[i]] <- temp_x_wide %>%
-            transmute(
+            dplyr::transmute(
                 testing_type,
                 testing_cat,
                 prob_inf,
@@ -198,8 +198,8 @@ temp_holder <- foreach(s = testing_scenarios) %dopar% {
             )
     }
     
-    saveRDS(bind_rows(temp_x_list),
-            here(
+    saveRDS(dplyr::bind_rows(temp_x_list),
+            here::here(
                 "data_raw",
                 sprintf("processed_simulations_wide_%s.RDS", s)
             ),
@@ -210,16 +210,16 @@ doParallel::stopImplicitCluster()
 ## Summarize all results that do not incorporate quarantine ----
 doParallel::registerDoParallel()
 results_no_quarantine <-
-    foreach(s = testing_scenarios[!grepl("quarantine", testing_scenarios)]) %dopar% {
+    foreach::foreach(s = testing_scenarios[!grepl("quarantine", testing_scenarios)]) %dopar% {
         temp_x <-
-            readRDS(here(
+            readRDS(here::here(
                 "data_raw",
                 sprintf("processed_simulations_wide_%s.RDS", s)
             ))
         
         ## Group these up and then use summarize function
         temp_x <- temp_x %>%
-            group_by(
+            dplyr::group_by(
                 testing_type,
                 testing_cat,
                 prob_inf,
@@ -239,7 +239,7 @@ results_no_quarantine <-
         
         ## summarize_results_column() takes a single column and returns
         ## descriptive summary stats for that column (by the grouping variables)
-        bind_rows(
+        dplyr::bind_rows(
             temp_x %>% summarize_results_column(n_infected_all),
             temp_x %>% summarize_results_column(n_infected_new),
             temp_x %>% summarize_results_column(n_active_infection),
@@ -272,14 +272,14 @@ results_no_quarantine <-
             temp_x %>% summarize_results_column(rel_cume_n_infection_daily),
             temp_x %>% summarize_results_column(rel_cume_w_infection_daily)
         ) %>%
-            ungroup() %>%
-            mutate(quarantine_adherence = 0)
+            dplyr::ungroup() %>%
+            dplyr::mutate(quarantine_adherence = 0)
     }
 doParallel::stopImplicitCluster()
 
 ## Now like above, we want to take a weighted average using different weights
 ## to estimate different levels of adherence to quarantining.
-quarantine_comparisons <- bind_rows(
+quarantine_comparisons <- dplyr::bind_rows(
     expand.grid(
         base_case = "rapid_test_same_day",
         comparison_case = c(
@@ -299,33 +299,33 @@ quarantine_comparisons <- bind_rows(
         stringsAsFactors = FALSE
     ),
 ) %>%
-    add_case(base_case = "pcr_five_days_before",
+    tibble::add_case(base_case = "pcr_five_days_before",
              comparison_case = "pcr_five_days_before_5_day_quarantine_pcr") %>%
-    add_case(base_case = "pcr_seven_days_before",
+    tibble::add_case(base_case = "pcr_seven_days_before",
              comparison_case = "pcr_seven_days_before_5_day_quarantine_pcr") %>%
-    add_case(base_case = "pcr_two_days_before",
+    tibble::add_case(base_case = "pcr_two_days_before",
              comparison_case = "pcr_two_days_before_5_day_quarantine_pcr")
 
 doParallel::registerDoParallel()
 results_quarantine <-
-    foreach(i = 1:NROW(quarantine_comparisons)) %dopar% {
+    foreach::foreach(i = 1:NROW(quarantine_comparisons)) %dopar% {
         b <- quarantine_comparisons$base_case[i]
         comp <- quarantine_comparisons$comparison_case[i]
         base_x <-
-            readRDS(here(
+            readRDS(here::here(
                 "data_raw",
                 sprintf("processed_simulations_wide_%s.RDS", b)
             ))
         comp_x <-
-            readRDS(here(
+            readRDS(here::here(
                 "data_raw",
                 sprintf("processed_simulations_wide_%s.RDS", comp)
             ))
         
-        joined_x <- left_join(
+        joined_x <- dplyr::left_join(
             comp_x,
             base_x %>%
-                select(-testing_type, -testing_cat),
+                dplyr::select(-testing_type, -testing_cat),
             by = c(
                 "prob_inf",
                 "prob_inf_cat",
@@ -353,7 +353,7 @@ results_quarantine <-
             a <- adherence_level[i]
             
             temp_x_list[[i]] <- joined_x %>%
-                transmute(
+                dplyr::transmute(
                     testing_type,
                     testing_cat,
                     prob_inf,
@@ -409,8 +409,8 @@ results_quarantine <-
         
         ## Group these up and then use summarize function
         temp_x <- temp_x_list %>%
-            bind_rows() %>%
-            group_by(
+            dplyr::bind_rows() %>%
+            dplyr::group_by(
                 testing_type,
                 testing_cat,
                 prob_inf,
@@ -431,7 +431,7 @@ results_quarantine <-
         
         ## summarize_results_column() takes a single column and returns
         ## descriptive summary stats for that column (by the grouping variables)
-        bind_rows(
+        dplyr::bind_rows(
             temp_x %>% summarize_results_column(n_infected_all),
             temp_x %>% summarize_results_column(n_infected_new),
             temp_x %>% summarize_results_column(n_active_infection),
@@ -464,11 +464,11 @@ results_quarantine <-
             temp_x %>% summarize_results_column(rel_cume_n_infection_daily),
             temp_x %>% summarize_results_column(rel_cume_w_infection_daily)
         ) %>%
-            ungroup()
+            dplyr::ungroup()
     }
 doParallel::stopImplicitCluster()
 
-summarized_results <- bind_rows(results_no_quarantine, results_quarantine)
+summarized_results <- dplyr::bind_rows(results_no_quarantine, results_quarantine)
 saveRDS(summarized_results,
-        here("data", "summarized_results.RDS"),
+        here::here("data", "summarized_results.RDS"),
         compress = "xz")

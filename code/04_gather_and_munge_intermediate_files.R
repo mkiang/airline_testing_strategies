@@ -13,19 +13,19 @@ library(here)
 library(fs)
 library(foreach)
 library(doParallel)
-source(here("code", "utils.R"))
-dir_create(here("data_raw"))
+source(here::here("code", "utils.R"))
+fs::dir_create(here::here("data_raw"))
 
 testing_scenarios <- basename(
-    fs::dir_ls(here("intermediate_files"),
+    fs::dir_ls(here::here("intermediate_files"),
                type = "directory",
                regexp = "pcr|rapid|no_testing|perfect")
 )
 
 ## Collect and save intermediate files in raw form ----
 doParallel::registerDoParallel()
-all_results <- foreach(s = testing_scenarios) %dopar% {
-    s_name <- here("data_raw", sprintf("raw_simulations_%s.RDS", s))
+all_results <- foreach::foreach(s = testing_scenarios) %dopar% {
+    s_name <- here::here("data_raw", sprintf("raw_simulations_%s.RDS", s))
     
     temp_x <- collect_and_munge_simulations(s)
     

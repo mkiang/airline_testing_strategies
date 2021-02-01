@@ -2,15 +2,16 @@
 library(tidyverse)
 library(here)
 library(fs)
-source(here("code", "utils.R"))
-source(here("code", "mk_nytimes.R"))
+source(here::here("code", "utils.R"))
+source(here::here("code", "mk_nytimes.R"))
 
 ## Constants ----
 PROB_INF <- config::get()$primary_prob_inf / 1000000
 
-plot_df <- readRDS(here("data", "summarized_testing_results.RDS"))  %>%
-    filter(metric %in% c("n_active_infected_day_of_flight")) %>%
-    filter(
+plot_df <-
+    readRDS(here::here("data", "summarized_testing_results.RDS"))  %>%
+    dplyr::filter(metric %in% c("n_active_infected_day_of_flight")) %>%
+    dplyr::filter(
         if_threshold == 0,
         prob_inf == PROB_INF,
         risk_multiplier == 2,
@@ -32,37 +33,37 @@ plot_df <- readRDS(here("data", "summarized_testing_results.RDS"))  %>%
     categorize_metric()
 
 plot_df <- plot_df %>%
-    mutate(symptom_adherence_cat = factor(
+    dplyr::mutate(symptom_adherence_cat = factor(
         symptom_adherence,
         levels = seq(0, 1, .2),
         labels = c("0%", "20%", "40%", "60%", "80%", "100%"),
         ordered = TRUE
     ))
 
-p1 <- ggplot(plot_df,
-       aes(
-           x = symptom_adherence_cat,
-           y = mean,
-           ymax = p975,
-           ymin = p025
-       )) + 
-    geom_point(alpha = 1) + 
-    geom_errorbar(width = .1) + 
-    facet_wrap(~testing_cat, nrow = 1) + 
-    mk_nytimes(panel.border = element_rect(color = "grey70")) + 
-    scale_x_discrete("Percent of passengers adherening to symptomatic self-isolation") + 
-    scale_y_continuous("Number of actively infectious passengers on day of flight")
+p1 <- ggplot2::ggplot(plot_df,
+                      ggplot2::aes(
+                          x = symptom_adherence_cat,
+                          y = mean,
+                          ymax = p975,
+                          ymin = p025
+                      )) +
+    ggplot2::geom_point(alpha = 1) +
+    ggplot2::geom_errorbar(width = .1) +
+    ggplot2::facet_wrap( ~ testing_cat, nrow = 1) +
+    mk_nytimes(panel.border = ggplot2::element_rect(color = "grey70")) +
+    ggplot2::scale_x_discrete("Percent of passengers adherening to symptomatic self-isolation") +
+    ggplot2::scale_y_continuous("Number of actively infectious passengers on day of flight")
 
-ggsave(
+ggplot2::ggsave(
     "./plots/figS9_active_inf_dof.pdf",
     p1,
-    device = cairo_pdf,
+    device = grDevices::cairo_pdf,
     width = 7,
     height = 4,
     scale = 1.2
 )
 
-ggsave(
+ggplot2::ggsave(
     "./plots/figS9_active_inf_dof.jpg",
     p1,
     dpi = 300,
@@ -71,7 +72,5 @@ ggsave(
     scale = 1.2
 )
 
-write_csv(
-    plot_df,
-    "./output/figS9_data.csv"
-)
+readr::write_csv(plot_df,
+                 "./output/figS9_data.csv")

@@ -6,7 +6,9 @@
 ## intermediate_files folder along with the data necessary to reproduce the
 ## random state (e.g., .Random.seed objects). Comparisons between the testing
 ## strategy and a "no testing" scenario are *within* simulations using the 
-## same random state and burned in population. 
+## same random state and burned in population. This means everything up until
+## the actual intervention should be identical within realizations and all
+## variation is due to different realizations. 
 
 ## Imports ----
 library(tidyverse)
@@ -40,7 +42,7 @@ param_grid <- expand.grid(
 )
 
 ## Bind the sensitivity analyses that involve new simulation states ----
-param_grid <- bind_rows(
+param_grid <- dplyr::bind_rows(
     param_grid,
     expand.grid(
         round = 1:config::get(config = "sensitivity_sub_clin")$n_rounds_of_sims,

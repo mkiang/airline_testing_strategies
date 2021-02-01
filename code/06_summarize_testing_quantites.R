@@ -39,7 +39,7 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
     testing_type <- names(testing_dict)[i]
     time_steps <- testing_dict[[testing_type]]
     
-    temp_x <- readRDS(here("data_raw", 
+    temp_x <- readRDS(here::here("data_raw", 
                            sprintf("raw_simulations_%s.RDS", 
                                    testing_type))) %>% 
         dplyr::group_by(
@@ -63,10 +63,10 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
         ) 
     
     ## Get day of flight infections and total infections
-    temp_x_infs <- left_join(
+    temp_x_infs <- dplyr::left_join(
         temp_x %>%
-            filter(time_step == 70) %>%
-            select(
+            dplyr::filter(time_step == 70) %>%
+            dplyr::select(
                 n_infected_day_of_flight = n_infected_all,
                 n_active_infected_day_of_flight = n_active_infection,
                 n_active_infected_subclin_day_of_flight = n_active_infection_subclin
@@ -95,60 +95,60 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
             round,
             rep
         ) %>% 
-        filter(time_step %in% time_steps) 
+        dplyr::filter(time_step %in% time_steps) 
     
-    if (!has_name(temp_x_test, "n_test_false_pos")) {
+    if (!tibble::has_name(temp_x_test, "n_test_false_pos")) {
         temp_x_test <- temp_x_test %>% 
-            mutate(n_test_false_pos = NA_integer_,
+            dplyr::mutate(n_test_false_pos = NA_integer_,
                    n_test_true_pos = NA_integer_)
     }
     
     temp_x_test <- temp_x_test %>% 
-        select(time_step, n_test_false_pos, n_test_true_pos) %>% 
-        summarize(
-            n_test_false_pos_first = case_when(
+        dplyr::select(time_step, n_test_false_pos, n_test_true_pos) %>% 
+        dplyr::summarize(
+            n_test_false_pos_first = dplyr::case_when(
                 testing_type == "no_testing"  ~ NA_integer_,
-                n_distinct(time_steps) == 1 ~ as.integer(max(n_test_false_pos)),
-                n_distinct(time_steps) == 2 ~ as.integer(n_test_false_pos[time_step == min(time_steps)])
+                dplyr::n_distinct(time_steps) == 1 ~ as.integer(max(n_test_false_pos)),
+                dplyr::n_distinct(time_steps) == 2 ~ as.integer(n_test_false_pos[time_step == min(time_steps)])
             ),
-            n_test_false_pos_second = case_when(
+            n_test_false_pos_second = dplyr::case_when(
                 testing_type == "no_testing"  ~ NA_integer_,
-                n_distinct(time_steps) == 1 ~ NA_integer_,
-                n_distinct(time_steps) == 2 ~ as.integer(n_test_false_pos[time_step == max(time_steps)])
+                dplyr::n_distinct(time_steps) == 1 ~ NA_integer_,
+                dplyr::n_distinct(time_steps) == 2 ~ as.integer(n_test_false_pos[time_step == max(time_steps)])
             ),
-            n_test_true_pos_first = case_when(
+            n_test_true_pos_first = dplyr::case_when(
                 testing_type == "no_testing"  ~ NA_integer_,
-                n_distinct(time_steps) == 1 ~ as.integer(max(n_test_true_pos)),
-                n_distinct(time_steps) == 2 ~ as.integer(n_test_true_pos[time_step == min(time_steps)])
+                dplyr::n_distinct(time_steps) == 1 ~ as.integer(max(n_test_true_pos)),
+                dplyr::n_distinct(time_steps) == 2 ~ as.integer(n_test_true_pos[time_step == min(time_steps)])
             ),
-            n_test_true_pos_second = case_when(
+            n_test_true_pos_second = dplyr::case_when(
                 testing_type == "no_testing"  ~ NA_integer_,
-                n_distinct(time_steps) == 1 ~ NA_integer_,
-                n_distinct(time_steps) == 2 ~ as.integer(n_test_true_pos[time_step == max(time_steps)])
+                dplyr::n_distinct(time_steps) == 1 ~ NA_integer_,
+                dplyr::n_distinct(time_steps) == 2 ~ as.integer(n_test_true_pos[time_step == max(time_steps)])
             )
         ) %>%
-        ungroup() %>% 
-        distinct() %>%
-        rowwise() %>% 
-        mutate(
-            n_test_false_pos = case_when(
+        dplyr::ungroup() %>% 
+        dplyr::distinct() %>%
+        dplyr::rowwise() %>% 
+        dplyr::mutate(
+            n_test_false_pos = dplyr::case_when(
                 testing_type == "no_testing"  ~ NA_integer_,
                 TRUE ~ sum(n_test_false_pos_first, n_test_false_pos_second, na.rm = TRUE)
             ),
-            n_test_true_pos = case_when(
+            n_test_true_pos = dplyr::case_when(
                 testing_type == "no_testing"  ~ NA_integer_,
                 TRUE ~ sum(n_test_true_pos_first, n_test_true_pos_second, na.rm = TRUE)
             )
         ) %>% 
-        ungroup()
+        dplyr::ungroup()
     
     rm(temp_x); gc2()
     
     ## Pivot wider to we can get "adherence" to symptom screening
     ## This shouldn't change anything but reviewers want it. 
     temp_x_wide <- temp_x_infs %>%
-        left_join(temp_x_test) %>% 
-        pivot_wider(
+        dplyr::left_join(temp_x_test) %>% 
+        tidyr::pivot_wider(
             id_cols = c(
                 testing_type,
                 testing_cat,
@@ -177,7 +177,7 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
         a <- adherence_level[i]
         
         temp_x_list[[i]] <- temp_x_wide %>%
-            transmute(
+            dplyr::transmute(
                 testing_type,
                 testing_cat,
                 prob_inf,
@@ -235,7 +235,7 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
     
     ## Calculate testing quantities we are interested in but don't summarize
     temp_x_list %>%
-        bind_rows() %>% 
+        dplyr::bind_rows() %>% 
         dplyr::mutate(
             any_positive_test = n_test_false_pos + n_test_true_pos,
             ratio_false_true = n_test_false_pos / n_test_true_pos,
