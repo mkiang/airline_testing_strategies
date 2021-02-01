@@ -16,156 +16,255 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Setting up
 ```{r error=FALSE, message=FALSE, warning=FALSE, results='hide'}
+## Imports ----
 library(tidyverse)
 library(here)
-library(DT)
+library(fs)
 library(knitr)
 source(here("code", "utils.R"))
 
 ## Constants ----
 PROB_INF <- config::get()$primary_prob_inf / 1000000
 
-results_df <- readRDS(here("data", "summarized_results.RDS"))
-testing_df <- readRDS(here("data", "summarized_testing_results.RDS"))
-
-long_table <- bind_rows(
-    results_df,
-    testing_df,
-    results_df %>%
-        filter(metric == "rel_n_active_infection", time_step == 70) %>%
-        mutate(metric = "rel_n_active_infected_day_of_flight",
-               time_step = 84),
-    results_df %>%
-        filter(metric == "abs_n_active_infection", time_step == 70) %>%
-        mutate(metric = "abs_n_active_infected_day_of_flight",
-               time_step = 84)
-) %>% 
+## End of travel period infection stats
+inf_df <- readRDS(here("data", "summarized_results.RDS")) %>%
     filter(
-      testing_type != "perfect_testing", 
-        sens_type == "upper" | is.na(sens_type), 
-        time_step == max(time_step),
+        time_step == 84, 
         if_threshold == 0,
-        metric %in% c(
-            "cume_w_infection_daily",
-            "cume_n_infection_daily",
-            "n_active_infected_day_of_flight",
-            "ratio_false_true",
-            "abs_n_active_infected_day_of_flight",
-            "rel_n_active_infected_day_of_flight",
-            "abs_cume_n_infection_daily",
-            "rel_cume_n_infection_daily",
-            "abs_cume_w_infection_daily",
-            "rel_cume_w_infection_daily"
-        )
-    ) %>%
-    categorize_metric() %>%
-    select(
-        testing_type,
-        testing_cat,
-        prob_inf,
-        prob_inf_cat,
-        symptom_screening,
-        symptom_cat,
-        risk_multiplier, 
-        risk_multi_cat,
-        rapid_test_multiplier, 
-        rapid_test_cat,
-        metric, 
-        metric_cat,
-        n:n_total
-    ) %>%
-    arrange(symptom_cat, testing_cat, metric_cat)
-
-long_table <- bind_rows(
-    long_table, 
-    long_table %>% 
-        filter(testing_type == "no_testing", !symptom_screening) %>%
-        mutate(testing_type = "no_testing_no_screening",
-               symptom_screening = TRUE)
-) %>%
-    categorize_testing_types() %>%
-    categorize_symptom_screening() %>% 
-    filter(testing_type != "no_testing",
-           symptom_screening)
-
-table_2_long <- long_table %>%
-    filter(
         prob_inf == PROB_INF,
         risk_multiplier == 2,
+        testing_type != "perfect_testing",
         rapid_test_multiplier == .9 |
-            is.na(rapid_test_multiplier)
+            is.na(rapid_test_multiplier),
+        sens_type != "median" | is.na(sens_type),
+        prop_subclin == .3,
+        symptom_adherence %in% c(0, .8),
+        quarantine_adherence %in% c(0, .8),
+        testing_type %in% c(
+            "no_testing",
+            "pcr_three_days_before",
+            "pcr_three_days_before_5_day_quarantine_pcr",
+            "rapid_test_same_day",
+            "rapid_same_day_5_day_quarantine_pcr",
+            "pcr_five_days_after"
+        )
     ) %>%
-    select(
-        testing_type, 
+    shift_time_steps() %>%
+    categorize_metric() %>%
+    filter(metric %in% c("cume_n_infection_daily",
+                         "rel_cume_n_infection_daily"))
+
+## Subset to the main analyses ----
+inf_df <- bind_rows(
+    ## No testing no symptom screening
+    inf_df %>%
+        filter(testing_type == "no_testing" &
+                   symptom_adherence == 0),
+    ## No quarantine 80% symptom screening adherence
+    inf_df %>%
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before",
+                "rapid_test_same_day",
+                "pcr_five_days_after"
+            ) & 
+                symptom_adherence == .8
+        ),
+    ## With 80% quarantine and 80% symptom screening adherence
+    inf_df %>% 
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before_5_day_quarantine_pcr",
+                "rapid_same_day_5_day_quarantine_pcr"
+            ) & 
+                symptom_adherence == .8 & 
+                quarantine_adherence == .8
+        )
+) 
+
+## Testing statistics 
+test_df <- readRDS(here("data", "summarized_testing_results.RDS"))
+
+test_df <- test_df %>%
+    filter(
+        risk_multiplier == 2,
+        testing_type %in% c(
+            "no_testing",
+            "pcr_three_days_before",
+            "pcr_three_days_before_5_day_quarantine_pcr",
+            "rapid_test_same_day",
+            "rapid_same_day_5_day_quarantine_pcr",
+            "pcr_five_days_after"
+        ), 
+        metric %in% c("ratio_false_true"),
+        rapid_test_multiplier == .9 | is.na(rapid_test_multiplier),
+        prob_inf == PROB_INF,
+        prop_subclin == .3, 
+        sens_type != "median" | is.na(sens_type),
+        if_threshold == 0,
+        symptom_adherence %in% c(0, .8)
+    ) %>%
+    categorize_metric()
+
+test_df <- bind_rows(
+    ## No testing no symptom screening
+    test_df %>%
+        filter(testing_type == "no_testing" &
+                   symptom_adherence == 0),
+    test_df %>%
+        filter(testing_type != "no_testing" &
+                   symptom_adherence == .8)
+) 
+
+## Day of flight statistics
+dof_df <- readRDS(here("data", "summarized_results.RDS")) %>%
+    filter(
+        time_step == 70, 
+        if_threshold == 0,
+        prob_inf == PROB_INF,
+        risk_multiplier == 2,
+        testing_type != "perfect_testing",
+        rapid_test_multiplier == .9 |
+            is.na(rapid_test_multiplier),
+        sens_type != "median" | is.na(sens_type),
+        prop_subclin == .3,
+        symptom_adherence %in% c(0, .8),
+        quarantine_adherence %in% c(0, .8),
+        testing_type %in% c(
+            "no_testing",
+            "pcr_three_days_before",
+            "pcr_three_days_before_5_day_quarantine_pcr",
+            "rapid_test_same_day",
+            "rapid_same_day_5_day_quarantine_pcr",
+            "pcr_five_days_after"
+        )
+    ) %>%
+    shift_time_steps() %>%
+    categorize_metric() %>%
+    filter(metric %in% c("n_active_infection", "rel_n_active_infection"))
+
+dof_df <- bind_rows(
+    ## No testing no symptom screening
+    dof_df %>%
+        filter(testing_type == "no_testing" &
+                   symptom_adherence == 0),
+    ## No quarantine 80% symptom screening adherence
+    dof_df %>%
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before",
+                "rapid_test_same_day",
+                "pcr_five_days_after"
+            ) & 
+                symptom_adherence == .8
+        ),
+    ## With 80% quarantine and 80% symptom screening adherence
+    dof_df %>% 
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before_5_day_quarantine_pcr",
+                "rapid_same_day_5_day_quarantine_pcr"
+            ) & 
+                symptom_adherence == .8 & 
+                quarantine_adherence == .8
+        )
+) 
+
+## All main outcomes
+all_df <- bind_rows(
+    dof_df,
+    inf_df,
+    test_df
+)
+
+all_df %>%
+    select(testing_cat, metric, mean, p025, p975) %>%
+    pivot_wider(
+        id_cols = testing_cat,
+        names_from = metric,
+        values_from = c(mean, p025, p975)
+    ) %>% select(
         testing_cat,
-        prob_inf_cat, 
-        risk_multi_cat,
-        rapid_test_cat,
-        metric, 
-        metric_cat,
-        n:n_total
-    ) %>%
-    arrange(testing_cat, metric_cat)
+        mean_infectious_days = mean_cume_n_infection_daily,
+        p025_infectious_days = p025_cume_n_infection_daily,
+        p975_infectious_days = p975_cume_n_infection_daily,
+        mean_rel_infectious_days = mean_rel_cume_n_infection_daily,
+        p025_rel_infectious_days = p025_rel_cume_n_infection_daily,
+        p975_rel_infectious_days = p975_rel_cume_n_infection_daily,
+        mean_infectious_dof = mean_n_active_infection,
+        p025_infectious_dof = p025_n_active_infection,
+        p975_infectious_dof = p975_n_active_infection,
+        mean_rel_infectious_dof = mean_rel_n_active_infection,
+        p025_rel_infectious_dof = p025_rel_n_active_infection,
+        p975_rel_infectious_dof = p975_rel_n_active_infection,
+        mean_ratio_false_true,
+        p025_ratio_false_true,
+        p975_ratio_false_true
+    )
+
+print_df <- all_df %>%
+    select(testing_cat, metric, mean, p025, p975) %>%
+    arrange(testing_cat, metric) %>%
+    transmute(testing_cat,
+              metric,
+              print = case_when(
+                  metric %in% c("cume_n_infection_daily", "n_active_infection") ~
+                      sprintf("%i (%i, %i)",
+                              round(mean),
+                              round(p025),
+                              round(p975)),
+                  TRUE ~ sprintf(
+                      "%0.2f (%0.2f, %0.2f)",
+                      round(mean, 2),
+                      round(p025, 2),
+                      round(p975, 2)
+                  )
+              )) %>%
+    pivot_wider(id_cols = testing_cat,
+                names_from = metric,
+                values_from = print) %>%
+    select(
+        testing_cat,
+        cume_n_infection_daily,
+        rel_cume_n_infection_daily,
+        n_active_infection,
+        rel_n_active_infection,
+        ratio_false_true
+    )
 ```
 
 ##  Table 2
 ```{r}
-table_2_long %>%
-  filter(
-    metric %in% c(
-      "cume_n_infection_daily",
-      "rel_n_active_infected_day_of_flight",
-      "ratio_false_true"
-    )
-  ) %>%
-  mutate(
-    print_col = case_when(
-      grepl("cume_", metric, fixed = TRUE) ~ sprintf(
-        "%s (%s, %s)",
-        formatC(round(mean, 0), big.mark = ","),
-        formatC(round(p025, 0), big.mark = ","),
-        formatC(round(p975, 0), big.mark = ",")
-      ),
-      TRUE ~ sprintf(
-        "%0.2f (%0.2f, %0.2f)",
-        round(mean, 2),
-        round(p025, 2),
-        round(p975, 2)
-      ),
-    ),
-    testing_cat_relevel = fct_relevel(
-      testing_cat,
-      "No testing, no screening",
-      "PCR 3 days before",
-      "PCR 3 days before + 5-day quarantine + PCR",
-      "Same-day RT",
-      "Same-day RT + 5-day quarantine + PCR",
-      "PCR 3 days after"
-    )
-  ) %>%
-  select(testing_cat_relevel, metric_cat, print_col) %>%
-  spread(metric_cat, print_col) %>%
-  select(1:2, 4, 3) %>%
-  kable()
-```
+print_df <- all_df %>%
+    select(testing_cat, metric, mean, p025, p975) %>%
+    arrange(testing_cat, metric) %>%
+    transmute(testing_cat,
+              metric,
+              print = case_when(
+                  metric %in% c("cume_n_infection_daily", "n_active_infection") ~
+                      sprintf("%i (%i, %i)",
+                              round(mean),
+                              round(p025),
+                              round(p975)),
+                  TRUE ~ sprintf(
+                      "%0.2f (%0.2f, %0.2f)",
+                      round(mean, 2),
+                      round(p025, 2),
+                      round(p975, 2)
+                  )
+              )) %>%
+    pivot_wider(id_cols = testing_cat,
+                names_from = metric,
+                values_from = print) %>%
+    select(
+        testing_cat,
+        cume_n_infection_daily,
+        rel_cume_n_infection_daily,
+        n_active_infection,
+        rel_n_active_infection,
+        ratio_false_true
+    ) 
 
-## Extra columns
-```{r}
-table_2_long %>% 
-    mutate(print_col = case_when(
-        grepl("cume_", metric, fixed = TRUE) ~ sprintf(
-            "%0.1f (%0.1f, %0.1f)",
-            round(mean, 1),
-            round(p025, 1),
-            round(p975, 1)
-        ),
-        TRUE ~ sprintf(
-            "%0.2f (%0.2f, %0.2f)",
-            round(mean, 2),
-            round(p025, 2),
-            round(p975, 2)
-        ),
-    )) %>%
-    select(testing_cat, metric_cat, print_col) %>% 
-    DT::datatable(rownames = FALSE, filter = "top")
+print_df %>%
+  kable()
 ```
