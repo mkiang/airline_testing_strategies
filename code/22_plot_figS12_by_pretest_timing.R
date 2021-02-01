@@ -67,7 +67,7 @@ p1 <- ggplot(
                                  title.position = "top")) 
 
 ggsave(
-    "./plots/figS11_by_pretest_timing.pdf",
+    "./plots/figS12_by_pretest_timing.pdf",
     p1,
     device = cairo_pdf,
     width = 8,
@@ -76,7 +76,7 @@ ggsave(
 )
 
 ggsave(
-    "./plots/figS11_by_pretest_timing.jpg",
+    "./plots/figS12_by_pretest_timing.jpg",
     p1,
     dpi = 300, 
     width = 8,
@@ -86,5 +86,5 @@ ggsave(
 
 write_csv(
     plot_df,
-    "./output/figS11_data.csv"
+    "./output/figS12_data.csv"
 )

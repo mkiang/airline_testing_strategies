@@ -8,7 +8,8 @@ source(here("code", "mk_nytimes.R"))
 ## Constants ----
 PROB_INF <- config::get()$primary_prob_inf / 1000000
 
-plot_df <- readRDS(here("data", "summarized_results.RDS")) %>%
+plot_df <- readRDS(here("data", "summarized_results.RDS"))  %>%
+    filter(metric %in% c("cume_n_infection_daily")) %>%
     filter(
         if_threshold == 0,
         prob_inf == PROB_INF,
@@ -29,27 +30,32 @@ plot_df <- readRDS(here("data", "summarized_results.RDS")) %>%
         )
     ) %>%
     shift_time_steps() %>%
-    categorize_metric() %>%
-    filter(metric %in% c("cume_n_infection_daily"))
+    categorize_metric()
 
 plot_df <- bind_rows(
     ## With 80% quarantine adherence
-    plot_df %>% 
+    plot_df %>%
         filter(
             testing_type %in% c(
                 "pcr_three_days_before_5_day_quarantine_pcr",
                 "rapid_same_day_5_day_quarantine_pcr"
-            ) & 
+            ) &
                 quarantine_adherence == .8
         ),
-    plot_df %>% 
+    plot_df %>%
         filter(!(
             testing_type %in% c(
                 "pcr_three_days_before_5_day_quarantine_pcr",
                 "rapid_same_day_5_day_quarantine_pcr"
             )
         ))
-) 
+) %>%
+    mutate(symptom_adherence_cat = factor(
+        symptom_adherence,
+        levels = seq(0, 1, .2),
+        labels = c("0%", "20%", "40%", "60%", "80% (baseline)", "100%"),
+        ordered = TRUE
+    ))
 
 ## Add a line break to RT + PCR
 levels(plot_df$testing_cat)[
@@ -73,7 +79,7 @@ p1 <- ggplot(
                alpha = .8) +
     geom_ribbon(color = NA, alpha = .2) +  
     geom_line(alpha = .8) +
-    facet_grid(symptom_adherence ~ testing_cat) +
+    facet_grid(symptom_adherence_cat ~ testing_cat) +
     scale_x_continuous(
         "Time relative to flight, days",
         expand = c(0, 0),

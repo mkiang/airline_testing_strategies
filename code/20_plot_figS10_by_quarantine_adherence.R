@@ -26,7 +26,13 @@ plot_df <- readRDS(here("data", "summarized_results.RDS")) %>%
     ) %>%
     shift_time_steps() %>%
     categorize_metric() %>%
-    filter(metric %in% c("cume_n_infection_daily"))
+    filter(metric %in% c("cume_n_infection_daily")) %>% 
+    mutate(quarantine_adherence_cat = factor(
+        quarantine_adherence,
+        levels = seq(0, 1, .2),
+        labels = c("0%", "20%", "40%", "60%", "80% (baseline)", "100%"),
+        ordered = TRUE
+    ))
 
 ## Add a line break to RT + PCR
 levels(plot_df$testing_cat)[
@@ -50,7 +56,7 @@ p1 <- ggplot(
                alpha = .8) +
     geom_ribbon(color = NA, alpha = .2) +  
     geom_line(alpha = .8) +
-    facet_grid(quarantine_adherence ~ testing_cat) +
+    facet_grid(quarantine_adherence_cat ~ testing_cat) +
     scale_x_continuous(
         "Time relative to flight, days",
         expand = c(0, 0),
@@ -73,7 +79,7 @@ p1 <- ggplot(
                                  title.position = "top")) 
 
 ggsave(
-    "./plots/figS9_cume_inf_quarantine_adherence.pdf",
+    "./plots/figS10_cume_inf_quarantine_adherence.pdf",
     p1,
     device = cairo_pdf,
     width = 4,
@@ -82,7 +88,7 @@ ggsave(
 )
 
 ggsave(
-    "./plots/figS9_cume_inf_quarantine_adherence.jpg",
+    "./plots/figS10_cume_inf_quarantine_adherence.jpg",
     p1,
     dpi = 300,
     width = 4,
@@ -92,5 +98,5 @@ ggsave(
 
 write_csv(
     plot_df,
-    "./output/figS9_data.csv"
+    "./output/figS10_data.csv"
 )

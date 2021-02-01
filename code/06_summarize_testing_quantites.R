@@ -16,10 +16,20 @@ adherence_level <- seq(0, 1, .2)
 
 testing_dict <- list(
     no_testing = 70,
+    pcr_two_days_before = 68,
+    pcr_two_days_before_5_day_quarantine_pcr = c(70, 75),
     pcr_three_days_before = 68,
     pcr_three_days_before_5_day_quarantine_pcr = c(70, 75),
+    pcr_three_days_before_7_day_quarantine_pcr = c(70, 77),
+    pcr_three_days_before_14_day_quarantine_pcr = c(70, 84),
+    pcr_five_days_before = 66, 
+    pcr_five_days_before_5_day_quarantine_pcr = c(70, 75),
+    pcr_seven_days_before = 64, 
+    pcr_seven_days_before_5_day_quarantine_pcr = c(70, 75),
     rapid_test_same_day = 70,
     rapid_same_day_5_day_quarantine_pcr = c(70, 75),
+    rapid_same_day_7_day_quarantine_pcr = c(70, 77),
+    rapid_same_day_14_day_quarantine_pcr = c(70, 84),
     pcr_five_days_after = 75
 )
 
@@ -70,8 +80,30 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
     )
     
     ## Get testing statistics based on the scenario dictionary
-    temp_x_test <- temp_x %>%
-        filter(time_step %in% time_steps) %>% 
+    ## because some tests are *before* t-3 (when we started counting cumulative
+    ## infections), we need to get the raw files instead of processed files. 
+    temp_x_test <- collect_results(testing_type) %>% 
+        dplyr::group_by(
+            testing_type,
+            prob_inf,
+            sens_type,
+            prop_subclin,
+            symptom_screening,
+            risk_multiplier,
+            rapid_test_multiplier,
+            if_threshold,
+            round,
+            rep
+        ) %>% 
+        filter(time_step %in% time_steps) 
+    
+    if (!has_name(temp_x_test, "n_test_false_pos")) {
+        temp_x_test <- temp_x_test %>% 
+            mutate(n_test_false_pos = NA_integer_,
+                   n_test_true_pos = NA_integer_)
+    }
+    
+    temp_x_test <- temp_x_test %>% 
         select(time_step, n_test_false_pos, n_test_true_pos) %>% 
         summarize(
             n_test_false_pos_first = case_when(
@@ -95,7 +127,9 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
                 n_distinct(time_steps) == 2 ~ as.integer(n_test_true_pos[time_step == max(time_steps)])
             )
         ) %>%
+        ungroup() %>% 
         distinct() %>%
+        rowwise() %>% 
         mutate(
             n_test_false_pos = case_when(
                 testing_type == "no_testing"  ~ NA_integer_,
@@ -105,7 +139,8 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
                 testing_type == "no_testing"  ~ NA_integer_,
                 TRUE ~ sum(n_test_true_pos_first, n_test_true_pos_second, na.rm = TRUE)
             )
-        )
+        ) %>% 
+        ungroup()
     
     rm(temp_x); gc2()
     

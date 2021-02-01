@@ -44,7 +44,7 @@ p1 <- ggplot(state_covid,
                             as.Date("2020-07-01"),
                             as.Date("2020-10-01"),
                             as.Date("2021-01-01")),
-                 labels = c("4/20", "7/20", "10/20", "1/21")
+                 labels = c("Apr", "Jul", "Oct", "Jan")
                  ) +
     scale_y_continuous("New daily reported cases per 100,000 (truncated)",
                        limits = c(0, 200),

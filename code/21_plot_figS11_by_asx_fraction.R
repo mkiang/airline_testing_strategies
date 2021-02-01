@@ -17,7 +17,6 @@ plot_df <- readRDS(here("data", "summarized_results.RDS")) %>%
         rapid_test_multiplier == .9 |
             is.na(rapid_test_multiplier),
         sens_type != "median" | is.na(sens_type),
-        prop_subclin == .3,
         symptom_adherence %in% c(0, .8),
         quarantine_adherence %in% c(0, .8),
         testing_type %in% c(
@@ -34,7 +33,7 @@ plot_df <- readRDS(here("data", "summarized_results.RDS")) %>%
     filter(metric %in% c("cume_n_infection_daily"))
 
 ## Subset to the main analyses ----
-plot_df_upper <- bind_rows(
+plot_df <- bind_rows(
     ## No testing no symptom screening
     plot_df %>%
         filter(testing_type == "no_testing" &
@@ -59,63 +58,7 @@ plot_df_upper <- bind_rows(
                 symptom_adherence == .8 & 
                 quarantine_adherence == .8
         )
-) %>% 
-    mutate(pcr_sens = "upper")
-
-plot_df <- readRDS(here("data", "summarized_results.RDS")) %>%
-    filter(
-        if_threshold == 0,
-        prob_inf == PROB_INF,
-        risk_multiplier == 2,
-        testing_type != "perfect_testing",
-        rapid_test_multiplier == .9 |
-            is.na(rapid_test_multiplier),
-        sens_type != "upper" | is.na(sens_type),
-        prop_subclin == .3,
-        symptom_adherence %in% c(0, .8),
-        quarantine_adherence %in% c(0, .8),
-        testing_type %in% c(
-            "no_testing",
-            "pcr_three_days_before",
-            "pcr_three_days_before_5_day_quarantine_pcr",
-            "rapid_test_same_day",
-            "rapid_same_day_5_day_quarantine_pcr",
-            "pcr_five_days_after"
-        )
-    ) %>%
-    shift_time_steps() %>%
-    categorize_metric() %>%
-    filter(metric %in% c("cume_n_infection_daily"))
-
-## Subset to the main analyses ----
-plot_df_median <- bind_rows(
-    ## No testing no symptom screening
-    plot_df %>%
-        filter(testing_type == "no_testing" &
-                   symptom_adherence == 0),
-    ## No quarantine 80% symptom screening adherence
-    plot_df %>%
-        filter(
-            testing_type %in% c(
-                "pcr_three_days_before",
-                "rapid_test_same_day",
-                "pcr_five_days_after"
-            ) & 
-                symptom_adherence == .8
-        ),
-    ## With 80% quarantine and 80% symptom screening adherence
-    plot_df %>% 
-        filter(
-            testing_type %in% c(
-                "pcr_three_days_before_5_day_quarantine_pcr",
-                "rapid_same_day_5_day_quarantine_pcr"
-            ) & 
-                symptom_adherence == .8 & 
-                quarantine_adherence == .8
-        )
-)  %>% 
-    mutate(pcr_sens = "median") %>% 
-    bind_rows(plot_df_upper)
+) 
 
 ## Add a line break to RT + PCR
 levels(plot_df$testing_cat)[
@@ -126,15 +69,15 @@ levels(plot_df$testing_cat)[
 ] <-  "Same-day Rapid Test +\n5-day quarantine"
 
 p1 <- ggplot(
-    plot_df_median,
+    plot_df,
     aes(
         x = relative_time,
         y = mean,
         ymin = p025,
         ymax = p975,
-        group = pcr_sens, 
-        color = pcr_sens,
-        fill = pcr_sens, 
+        group = prop_subclin_cat, 
+        color = prop_subclin_cat,
+        fill = prop_subclin_cat 
     )
 ) +
     geom_vline(xintercept = 0,
@@ -150,12 +93,12 @@ p1 <- ggplot(
     ) +
     scale_y_continuous("Mean (95% UI) cumulative infectious days",
                        expand = c(0, 0)) +
-    scale_color_brewer("Day-specific test sensitivity",
-                       labels = c("Median", "Upper bound"), 
-                       palette = "Set1") +
-    scale_fill_brewer("Day-specific test sensitivity",
-                      labels = c("Median", "Upper bound"), 
-                      palette = "Set1") +
+    scale_color_brewer("Percent of infections\nthat are subclinical",
+                       palette = "Set1",
+                       labels = c("30% (baseline)", "40%")) +
+    scale_fill_brewer("Percent of infections\nthat are subclinical",
+                      palette = "Set1",
+                      labels = c("30% (baseline)", "40%")) +
     mk_nytimes(
         panel.border = element_rect(color = "grey30"),
         legend.position = "bottom",
@@ -165,7 +108,7 @@ p1 <- ggplot(
                                  title.position = "top")) 
 
 ggsave(
-    "./plots/figS7_cume_inf_over_time_by_pcr_sens.pdf",
+    "./plots/figS11_by_frac_asx.pdf",
     p1,
     device = cairo_pdf,
     width = 7,
@@ -174,9 +117,9 @@ ggsave(
 )
 
 ggsave(
-    "./plots/figS7_cume_inf_over_time_by_pcr_sens.jpg",
+    "./plots/figS11_by_frac_asx.jpg",
     p1,
-    dpi = 300,
+    dpi = 300, 
     width = 7,
     height = 5,
     scale = 1.1
@@ -184,5 +127,5 @@ ggsave(
 
 write_csv(
     plot_df,
-    "./output/figS7_data.csv"
+    "./output/figS11_data.csv"
 )

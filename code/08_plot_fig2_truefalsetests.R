@@ -10,7 +10,14 @@ plot_df <- readRDS(here("data", "summarized_testing_results.RDS"))
 plot_df <- plot_df %>%
     filter(
         risk_multiplier == 2,
-        testing_type != "perfect_testing", 
+        testing_type %in% c(
+            "no_testing",
+            "pcr_three_days_before",
+            "pcr_three_days_before_5_day_quarantine_pcr",
+            "rapid_test_same_day",
+            "rapid_same_day_5_day_quarantine_pcr",
+            "pcr_five_days_after"
+        ), 
         metric == "ratio_false_true",
         testing_type != "no_testing", 
         rapid_test_multiplier == .9 | is.na(rapid_test_multiplier),

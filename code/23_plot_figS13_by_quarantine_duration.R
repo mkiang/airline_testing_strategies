@@ -69,7 +69,7 @@ p1 <- ggplot(
                                  title.position = "top")) 
 
 ggsave(
-    "./plots/figS12_by_quarantine_duration.pdf",
+    "./plots/figS13_by_quarantine_duration.pdf",
     p1,
     device = cairo_pdf,
     width = 8,
@@ -78,7 +78,7 @@ ggsave(
 )
 
 ggsave(
-    "./plots/figS12_by_quarantine_duration.jpg",
+    "./plots/figS13_by_quarantine_duration.jpg",
     p1,
     dpi = 300, 
     width = 8,
@@ -88,5 +88,5 @@ ggsave(
 
 write_csv(
     plot_df,
-    "./output/figS12_data.csv"
+    "./output/figS13_data.csv"
 )
