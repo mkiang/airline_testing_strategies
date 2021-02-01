@@ -100,9 +100,16 @@ This project is structured as follows:
     tables and providing session information.
 
 Note, we use the `config.yml` file to modify high-level project-wide
-parameters. All information necessary for full reproducibility,
-including package version numbers, is available in
-`./rmds/02_session_info.html`.
+parameters.
+
+### Reproducibility
+
+All information necessary for full reproducibility, including package
+version numbers, is available in `./rmds/02_session_info.html`. This
+project uses the
+[`renv`](https://rstudio.github.io/renv/articles/renv.html) package for
+package version control. To use this, open the project in
+[RStudio](https://rstudio.com/) and run `renv::restore()`.
 
 ### `config.yml`
 
