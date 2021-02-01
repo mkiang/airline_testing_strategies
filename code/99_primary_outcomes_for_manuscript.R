@@ -4,6 +4,9 @@ library(here)
 library(fs)
 source(here("code", "utils.R"))
 
+## Constants ----
+PROB_INF <- config::get()$primary_prob_inf / 1000000
+
 ## End of travel period infection stats
 inf_df <- readRDS(here("data", "summarized_results.RDS")) %>%
     filter(
@@ -202,3 +205,4 @@ all_df <- bind_rows(dof_df,
     select(testing_cat, metric, metric_cat, print, everything())
 
 write_csv(all_df, here("output", "99_main_manuscript_numbers.csv"))
+saveRDS(all_df, here("output", "99_main_manuscript_numbers.RDS"))

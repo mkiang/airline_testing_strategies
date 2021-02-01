@@ -220,17 +220,16 @@ summary {
 <pre class="r"><code>## Constants ----
 PROB_INF &lt;- config::get()$primary_prob_inf / 1000000
 
-plot_df &lt;- readRDS(here(&quot;data&quot;, &quot;summarized_testing_results.RDS&quot;)) %&gt;%
+plot_df &lt;- readRDS(here(&quot;output&quot;, &quot;99_main_manuscript_numbers.RDS&quot;)) %&gt;%
     filter(
         if_threshold == 0,
-        prob_inf == PROB_INF,
         risk_multiplier == 2,
         testing_type != &quot;perfect_testing&quot;,
         rapid_test_multiplier == .9 |
             is.na(rapid_test_multiplier),
         prop_subclin == .3, 
         sens_type != &quot;median&quot; | is.na(sens_type),
-        symptom_adherence %in% c(.8),
+        symptom_adherence %in% c(.8, 0),
         testing_type %in% c(
           &quot;no_testing&quot;,
           &quot;rapid_test_same_day&quot;,
@@ -240,43 +239,37 @@ plot_df &lt;- readRDS(here(&quot;data&quot;, &quot;summarized_testing_results.RD
           &quot;pcr_seven_days_before&quot;
         )
     ) %&gt;%
-    shift_time_steps() %&gt;%
-    categorize_metric() %&gt;%
-    filter(metric %in% c(&quot;n_active_infected_day_of_flight&quot;)) %&gt;% 
-    categorize_testing_types()
+    filter(metric %in% c(&quot;n_active_infection&quot;, &quot;rel_n_active_infection&quot;)) 
 
 plot_df %&gt;%
-    bind_cols(
-        plot_df %&gt;% filter(testing_type == &quot;no_testing&quot;) %&gt;% select(
-            baseline_mean = mean,
-            baseline_p025 = p025,
-            baseline_p975 = p975
-        )
-    ) %&gt;%
-    transmute(
-        testing_cat,
-        n_active_infected_day_of_flight =
-            sprintf(&quot;%d (95%% UI: %d, %d)&quot;,
-                    round(mean),
-                    round(p025),
-                    round(p975)),
-        rel_reduction = 
-            sprintf(&quot;%0.2f (95%% UI: %0.2f, %0.2f)&quot;,
-                    round((mean - baseline_mean) / baseline_mean, 2),
-                    round((p025 - baseline_p025) / baseline_p025, 2),
-                    round((p975 - baseline_p975) / baseline_p975, 2))
-    ) %&gt;%
-    arrange(testing_cat) %&gt;%
-    datatable(
-        rownames = FALSE,
-        colnames = c(
-            &quot;Testing Strategy&quot;,
-            &quot;Number of active infections\non day of flight&quot;,
-            &quot;Relative reduction&quot;
-        )
-    )</code></pre>
-<div id="htmlwidget-cbbe9254a2d2acaaaa0f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cbbe9254a2d2acaaaa0f">{"x":{"filter":"none","data":[["No testing","PCR 2 days before","PCR 3 days before","Same-day Rapid Test","PCR 5 days before","PCR 7 days before"],["467 (95% UI: 360, 695)","58 (95% UI: 33, 120)","80 (95% UI: 46, 201)","89 (95% UI: 61, 144)","220 (95% UI: 136, 430)","393 (95% UI: 303, 611)"],["0.00 (95% UI: 0.00, 0.00)","-0.87 (95% UI: -0.91, -0.83)","-0.83 (95% UI: -0.87, -0.71)","-0.81 (95% UI: -0.83, -0.79)","-0.53 (95% UI: -0.62, -0.38)","-0.16 (95% UI: -0.16, -0.12)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Testing Strategy<\/th>\n      <th>Number of active infections\non day of flight<\/th>\n      <th>Relative reduction<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+  transmute(
+    testing_cat,
+    metric_cat,
+    print = case_when(
+      metric == &quot;n_active_infection&quot; ~ sprintf(&quot;%i (95%% UI: %i, %i)&quot;,
+                                               round(mean),
+                                               round(p025),
+                                               round(p975)),
+      TRUE ~ sprintf(
+        &quot;%0.2f (95%% UI: %0.2f, %0.2f)&quot;,
+        round(mean, 2),
+        round(p025, 2),
+        round(p975, 2)
+      )
+    )
+  ) %&gt;% 
+  spread(metric_cat, print) %&gt;%
+  arrange(testing_cat) %&gt;%
+  datatable(
+    rownames = FALSE,
+    colnames = c(
+      &quot;Testing Strategy&quot;,
+      &quot;Number of active infections\non day of flight&quot;,
+      &quot;Relative reduction&quot;
+    )
+  )</code></pre>
+<div id="htmlwidget-9dc8f137e5d7bd122310" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9dc8f137e5d7bd122310">{"x":{"filter":"none","data":[["No testing","PCR 2 days before","PCR 3 days before","Same-day Rapid Test","PCR 5 days before","PCR 7 days before"],["649 (95% UI: 505, 950)","58 (95% UI: 33, 120)","80 (95% UI: 46, 201)","89 (95% UI: 61, 144)","220 (95% UI: 136, 430)","393 (95% UI: 303, 611)"],["0.00 (95% UI: 0.00, 0.00)","0.91 (95% UI: 0.86, 0.94)","0.88 (95% UI: 0.76, 0.92)","0.86 (95% UI: 0.83, 0.89)","0.67 (95% UI: 0.48, 0.80)","0.39 (95% UI: 0.26, 0.57)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Testing Strategy<\/th>\n      <th>Number of active infections\non day of flight<\/th>\n      <th>Relative reduction<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="impact-of-higher-asymptomatic-fraction-on-number-of-active-infections-on-day-of-flight" class="section level2">
 <h2>Impact of higher asymptomatic fraction on number of active infections on day of flight</h2>
@@ -339,8 +332,8 @@ plot_df %&gt;%
             &quot;Number of active infections\non day of flight\nwith 40% asymptomatic infections&quot;
         )
     )</code></pre>
-<div id="htmlwidget-5468907fbb9a81ac5473" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5468907fbb9a81ac5473">{"x":{"filter":"none","data":[["No testing","PCR 3 days before","Same-day Rapid Test","PCR 5 days after"],["649 (95% UI: 505, 950)","80 (95% UI: 46, 201)","89 (95% UI: 61, 144)","467 (95% UI: 360, 695)"],["639 (95% UI: 499, 927)","80 (95% UI: 46, 199)","93 (95% UI: 64, 147)","486 (95% UI: 370, 725)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Testing Strategy<\/th>\n      <th>Number of active infections\non day of flight\nwith 30% asymptomatic infections<\/th>\n      <th>Number of active infections\non day of flight\nwith 40% asymptomatic infections<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-482442f3c8ba5b509aec" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-482442f3c8ba5b509aec">{"x":{"filter":"none","data":[["No testing","PCR 3 days before","Same-day Rapid Test","PCR 5 days after"],["649 (95% UI: 505, 950)","80 (95% UI: 46, 201)","89 (95% UI: 61, 144)","467 (95% UI: 360, 695)"],["639 (95% UI: 499, 927)","80 (95% UI: 46, 199)","93 (95% UI: 64, 147)","486 (95% UI: 370, 725)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Testing Strategy<\/th>\n      <th>Number of active infections\non day of flight\nwith 30% asymptomatic infections<\/th>\n      <th>Number of active infections\non day of flight\nwith 40% asymptomatic infections<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="impact-of-test-sensitivity-on-number-of-active-infections-on-day-of-flight" class="section level2">
 <h2>Impact of test sensitivity on number of active infections on day of flight</h2>
@@ -441,8 +434,8 @@ plot_df_median %&gt;%
             &quot;Number of active infections\non day of flight\nwith baseline PCR test sensitivity&quot;
         )
     )</code></pre>
-<div id="htmlwidget-72c0659a339892fdec83" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-72c0659a339892fdec83">{"x":{"filter":"none","data":[["No testing","PCR 3 days before","PCR 3 days before + 5-day quarantine","Same-day Rapid Test","Same-day Rapid Test + 5-day quarantine","PCR 5 days after"],["649 (95% UI: 505, 950)","128 (95% UI: 83, 269)","128 (95% UI: 83, 269)","131 (95% UI: 94, 208)","131 (95% UI: 94, 208)","468 (95% UI: 362, 691)"],["649 (95% UI: 505, 950)","80 (95% UI: 46, 201)","80 (95% UI: 46, 201)","89 (95% UI: 61, 144)","89 (95% UI: 61, 144)","467 (95% UI: 360, 695)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Testing Strategy<\/th>\n      <th>Number of active infections\non day of flight\nwith lower PCR test sensitivity<\/th>\n      <th>Number of active infections\non day of flight\nwith baseline PCR test sensitivity<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c37550e01d2051e2f262" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c37550e01d2051e2f262">{"x":{"filter":"none","data":[["No testing","PCR 3 days before","PCR 3 days before + 5-day quarantine","Same-day Rapid Test","Same-day Rapid Test + 5-day quarantine","PCR 5 days after"],["649 (95% UI: 505, 950)","128 (95% UI: 83, 269)","128 (95% UI: 83, 269)","131 (95% UI: 94, 208)","131 (95% UI: 94, 208)","468 (95% UI: 362, 691)"],["649 (95% UI: 505, 950)","80 (95% UI: 46, 201)","80 (95% UI: 46, 201)","89 (95% UI: 61, 144)","89 (95% UI: 61, 144)","467 (95% UI: 360, 695)"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Testing Strategy<\/th>\n      <th>Number of active infections\non day of flight\nwith lower PCR test sensitivity<\/th>\n      <th>Number of active infections\non day of flight\nwith baseline PCR test sensitivity<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 
 

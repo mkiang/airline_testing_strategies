@@ -22,17 +22,16 @@ library(DT)
 ## Constants ----
 PROB_INF <- config::get()$primary_prob_inf / 1000000
 
-plot_df <- readRDS(here("data", "summarized_testing_results.RDS")) %>%
+plot_df <- readRDS(here("output", "99_main_manuscript_numbers.RDS")) %>%
     filter(
         if_threshold == 0,
-        prob_inf == PROB_INF,
         risk_multiplier == 2,
         testing_type != "perfect_testing",
         rapid_test_multiplier == .9 |
             is.na(rapid_test_multiplier),
         prop_subclin == .3, 
         sens_type != "median" | is.na(sens_type),
-        symptom_adherence %in% c(.8),
+        symptom_adherence %in% c(.8, 0),
         testing_type %in% c(
           "no_testing",
           "rapid_test_same_day",
@@ -42,41 +41,35 @@ plot_df <- readRDS(here("data", "summarized_testing_results.RDS")) %>%
           "pcr_seven_days_before"
         )
     ) %>%
-    shift_time_steps() %>%
-    categorize_metric() %>%
-    filter(metric %in% c("n_active_infected_day_of_flight")) %>% 
-    categorize_testing_types()
+    filter(metric %in% c("n_active_infection", "rel_n_active_infection")) 
 
 plot_df %>%
-    bind_cols(
-        plot_df %>% filter(testing_type == "no_testing") %>% select(
-            baseline_mean = mean,
-            baseline_p025 = p025,
-            baseline_p975 = p975
-        )
-    ) %>%
-    transmute(
-        testing_cat,
-        n_active_infected_day_of_flight =
-            sprintf("%d (95%% UI: %d, %d)",
-                    round(mean),
-                    round(p025),
-                    round(p975)),
-        rel_reduction = 
-            sprintf("%0.2f (95%% UI: %0.2f, %0.2f)",
-                    round((mean - baseline_mean) / baseline_mean, 2),
-                    round((p025 - baseline_p025) / baseline_p025, 2),
-                    round((p975 - baseline_p975) / baseline_p975, 2))
-    ) %>%
-    arrange(testing_cat) %>%
-    datatable(
-        rownames = FALSE,
-        colnames = c(
-            "Testing Strategy",
-            "Number of active infections\non day of flight",
-            "Relative reduction"
-        )
+  transmute(
+    testing_cat,
+    metric_cat,
+    print = case_when(
+      metric == "n_active_infection" ~ sprintf("%i (95%% UI: %i, %i)",
+                                               round(mean),
+                                               round(p025),
+                                               round(p975)),
+      TRUE ~ sprintf(
+        "%0.2f (95%% UI: %0.2f, %0.2f)",
+        round(mean, 2),
+        round(p025, 2),
+        round(p975, 2)
+      )
     )
+  ) %>% 
+  spread(metric_cat, print) %>%
+  arrange(testing_cat) %>%
+  datatable(
+    rownames = FALSE,
+    colnames = c(
+      "Testing Strategy",
+      "Number of active infections\non day of flight",
+      "Relative reduction"
+    )
+  )
 ```
 
 ## Impact of higher asymptomatic fraction on number of active infections on day of flight
