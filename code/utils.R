@@ -18,7 +18,7 @@ options(dplyr.summarise.inform = FALSE)
 ## fairly long. See ./code/testing_scenarios for each file. There is a
 ## convenience wrapper called run_and_save_simulation() saved in the 
 ## ./code/testing_scenarios/run_and_save_simulation.R file. 
-source(here("code", "testing_scenarios", "run_and_save_simulation.R"))
+source(here::here("code", "testing_scenarios", "run_and_save_simulation.R"))
 
 ## Randomness helpers ----
 
@@ -1445,7 +1445,7 @@ collect_and_munge_simulations <- function(scenario_name) {
 
 categorize_prop_subclin <- function(all_results) {
     all_results %>%
-        mutate(prop_subclin_cat = factor(
+        dplyr::mutate(prop_subclin_cat = factor(
             prop_subclin,
             levels = c(.3, .4),
             labels = c("30%", "40%"),
@@ -1455,7 +1455,7 @@ categorize_prop_subclin <- function(all_results) {
 
 categorize_sens_type <- function(all_results) {
     all_results %>%
-        mutate(sens_cat = factor(
+        dplyr::mutate(sens_cat = factor(
             sens_type,
             levels = c("upper",
                        "median"),
