@@ -1,5 +1,5 @@
 ---
-title: "Table S1. Point prevalence at equilibrium"
+title: "Table S1. Point prevalence at equilibrium and number of recovered persons after burn-in"
 author: "Mathew Kiang"
 date: "1/29/2021"
 output: html_document
@@ -18,27 +18,46 @@ library(knitr)
 source(here("code", "utils.R"))
 ```
 
-Below, we list mean (95% UI) of the daily prevalence of test-positive infections in our simulation at equilibrium. 
+Below, we list mean (95% UI) of the daily prevalence of test-positive infections in our simulation at equilibrium and the number of susceptible persons after burn-in at different daily incidence rates.
 
 ```{r}
-results_df <- readRDS(here("data", "summarized_results.RDS")) %>% 
-    filter(testing_type == "no_testing",
-           symptom_adherence == 0, 
-           prop_subclin == .3, 
-           metric == "n_infected_all",
-           risk_multiplier == 2,
-           time_step == min(time_step))
-
-results_df %>% 
-    transmute(prob_inf_cat,
-                print_version = sprintf("%s (95%% UI: %i, %i)",
-                                      formatC(round(mean), big.mark = ","),
-                                      round(p025), 
-                                      round(p975)),
-              # mean = round(mean),
-              # median,
-              # p025,
-              # p975,
-            ) %>% 
+readRDS(here("data_raw", "raw_simulations_no_testing.RDS")) %>% 
+    filter(
+        testing_type == "no_testing",
+        is.na(sens_type),
+        prop_subclin == .3,
+        symptom_screening,
+        risk_multiplier == 2,
+        is.na(rapid_test_multiplier),
+        if_threshold == 0,
+        time_step == min(time_step)
+    ) %>%
+    mutate(n_recovered = 100000 - n_susceptible - n_infected_all) %>%
+    group_by(prob_inf_cat) %>%
+    summarize(
+        n_recovered_mean = mean(n_recovered),
+        n_infected_all_mean = mean(n_infected_all),
+        n_recovered_p025 = quantile(n_recovered, .025),
+        n_infected_all_p025 = quantile(n_infected_all, .025),
+        n_recovered_p975 = quantile(n_recovered, .975),
+        n_infected_all_p975 = quantile(n_infected_all, .975)
+    ) %>%
+    ungroup() %>%
+    transmute(
+        prob_inf_cat,
+        n_infected_all = sprintf(
+            "%i (95%% UI: %i, %i)",
+            round(n_infected_all_mean),
+            round(n_infected_all_p025),
+            round(n_infected_all_p975)
+        ),
+        n_recovered = sprintf(
+            "%i (95%% UI: %i, %i)",
+            round(n_recovered_mean),
+            round(n_recovered_p025),
+            round(n_recovered_p975)
+        )
+    ) %>%
+    arrange(prob_inf_cat) %>%
     knitr::kable()
 ```
