@@ -20,15 +20,7 @@ inf_df <- readRDS(here::here("data", "summarized_results.RDS")) %>%
         sens_type != "median" | is.na(sens_type),
         prop_subclin == .3,
         symptom_adherence %in% c(0, .8),
-        quarantine_adherence %in% c(0, .8)#,
-        # testing_type %in% c(
-        #     "no_testing",
-        #     "pcr_three_days_before",
-        #     "pcr_three_days_before_5_day_quarantine_pcr",
-        #     "rapid_test_same_day",
-        #     "rapid_same_day_5_day_quarantine_pcr",
-        #     "pcr_five_days_after"
-        # )
+        quarantine_adherence %in% c(0, .8)
     ) %>%
     shift_time_steps() %>%
     categorize_metric() %>%
@@ -67,8 +59,7 @@ inf_df <- dplyr::bind_rows(
 )
 
 ## Testing statistics
-test_df <-
-    readRDS(dplyr::filter("data", "summarized_testing_results.RDS"))
+test_df <- readRDS(here::here("data", "summarized_testing_results.RDS"))
 
 test_df <- test_df %>%
     dplyr::filter(
@@ -146,7 +137,7 @@ dof_df <- readRDS(here::here("data", "summarized_results.RDS")) %>%
         )
     )
 
-dof_df <- dplyr::filter(
+dof_df <- dplyr::bind_rows(
     ## No testing no symptom screening
     dof_df %>%
         dplyr::filter(testing_type == "no_testing" &
@@ -177,10 +168,10 @@ dof_df <- dplyr::filter(
 )
 
 ## All main outcomes
-all_df <- dplyr::filter(dof_df,
-                        inf_df,
-                        test_df) %>%
-    dplyr::arrange(testing_cat, metric_cat, ) %>%
+all_df <- dplyr::bind_rows(dof_df,
+                           inf_df,
+                           test_df) %>% 
+    dplyr::arrange(testing_cat, metric_cat) %>%
     dplyr::mutate(print = dplyr::case_when(
         metric %in% c(
             "cume_n_infection_daily",
@@ -205,7 +196,5 @@ all_df <- dplyr::filter(dof_df,
     )) %>%
     dplyr::select(testing_cat, metric, metric_cat, print, dplyr::everything())
 
-readr::write_csv(all_df,
-                 here::here("output", "99_main_manuscript_numbers.csv"))
-saveRDS(all_df,
-        here::here("output", "99_main_manuscript_numbers.RDS"))
+readr::write_csv(all_df, here::here("output", "99_main_manuscript_numbers.csv"))
+saveRDS(all_df, here::here("output", "99_main_manuscript_numbers.RDS"))

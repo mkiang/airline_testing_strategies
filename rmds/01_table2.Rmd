@@ -177,31 +177,6 @@ all_df <- bind_rows(
     test_df
 )
 
-all_df %>%
-    select(testing_cat, metric, mean, p025, p975) %>%
-    pivot_wider(
-        id_cols = testing_cat,
-        names_from = metric,
-        values_from = c(mean, p025, p975)
-    ) %>% select(
-        testing_cat,
-        mean_infectious_days = mean_cume_n_infection_daily,
-        p025_infectious_days = p025_cume_n_infection_daily,
-        p975_infectious_days = p975_cume_n_infection_daily,
-        mean_rel_infectious_days = mean_rel_cume_n_infection_daily,
-        p025_rel_infectious_days = p025_rel_cume_n_infection_daily,
-        p975_rel_infectious_days = p975_rel_cume_n_infection_daily,
-        mean_infectious_dof = mean_n_active_infection,
-        p025_infectious_dof = p025_n_active_infection,
-        p975_infectious_dof = p975_n_active_infection,
-        mean_rel_infectious_dof = mean_rel_n_active_infection,
-        p025_rel_infectious_dof = p025_rel_n_active_infection,
-        p975_rel_infectious_dof = p975_rel_n_active_infection,
-        mean_ratio_false_true,
-        p025_ratio_false_true,
-        p975_ratio_false_true
-    )
-
 print_df <- all_df %>%
     select(testing_cat, metric, mean, p025, p975) %>%
     arrange(testing_cat, metric) %>%
