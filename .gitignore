@@ -7,6 +7,7 @@ lit/**
 manuscript/**
 .bash_history
 performance_profiling/**
+intermediate_files.zip
 # Random mac stuff
 *.DS_Store
 Icon?
@@ -59,3 +60,4 @@ rmds/99_walkthrough_single_simulation.html
 rmds/99_walkthrough_single_simulation.Rmd
 plots/fig3_active_inf_day_of_travel_gsw.jpg
 plots/fig3_active_inf_day_of_travel_gsw.pdf
+plots/LID plots.zip
