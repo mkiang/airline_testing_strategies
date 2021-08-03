@@ -65,3 +65,4 @@ foreach::foreach(i = sample(1:NROW(param_grid))) %dopar% {
 
 ## Close connections
 doParallel::stopImplicitCluster()
+closeAllConnections()
