@@ -1443,6 +1443,72 @@ collect_and_munge_simulations <- function(scenario_name) {
     temp_x
 }
 
+collect_and_munge_post_flight_simulations <- function(scenario_name) {
+    temp_x <- collect_results(scenario_name) %>%
+        dplyr::filter(time_step >= 71,
+                      !is.na(if_threshold)) %>%
+        shift_time_steps(day_of_flight = 70) %>%
+        add_cume_infections() %>%
+        categorize_testing_types() %>%
+        categorize_prob_inf() %>%
+        categorize_sens_type() %>%
+        categorize_prop_subclin() %>% 
+        categorize_symptom_screening() %>%
+        categorize_rt_multiplier() %>%
+        categorize_risk_multiplier() %>%
+        dplyr::mutate(sim_id = sprintf("%03d.%02d", round, rep)) %>%
+        dplyr::select(
+            testing_type,
+            testing_cat,
+            prob_inf,
+            prob_inf_cat,
+            sens_type,
+            sens_cat,
+            prop_subclin,
+            prop_subclin_cat,
+            symptom_screening,
+            symptom_cat,
+            risk_multiplier,
+            risk_multi_cat,
+            rapid_test_multiplier,
+            rapid_test_cat,
+            if_threshold,
+            time_step,
+            round,
+            rep,
+            sim_id,
+            dplyr::everything()
+        ) %>%
+        dplyr::arrange(
+            testing_type,
+            testing_cat,
+            prob_inf,
+            prob_inf_cat,
+            prop_subclin,
+            prop_subclin_cat,
+            sens_type,
+            symptom_screening,
+            symptom_cat,
+            risk_multiplier,
+            risk_multi_cat,
+            rapid_test_multiplier,
+            rapid_test_cat,
+            if_threshold,
+            round,
+            rep,
+            time_step
+        )
+    
+    if (!tibble::has_name(temp_x, "n_test_false_pos") &
+        !tibble::has_name(temp_x, "n_test_true_pos")) {
+        temp_x <- temp_x %>%
+            dplyr::mutate(n_test_false_pos = NA,
+                          n_test_true_pos = NA)
+    }
+    
+    temp_x
+}
+
 categorize_prop_subclin <- function(all_results) {
     all_results %>%
         dplyr::mutate(prop_subclin_cat = factor(

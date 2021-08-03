@@ -61,3 +61,4 @@ readRDS(here("data_raw", "raw_simulations_no_testing.RDS")) %>%
     arrange(prob_inf_cat) %>%
     knitr::kable()
 ```
+
