@@ -66,7 +66,7 @@ levels(plot_df$testing_cat)[which(levels(plot_df$testing_cat) == "PCR 3 days bef
 levels(plot_df$testing_cat)[which(levels(plot_df$testing_cat) == "Same-day Rapid Test + 5-day quarantine")] <-
     "Same-day Rapid Test +\n5-day quarantine"
 
-p1 <- dplyr::filter(
+p1 <- ggplot2::ggplot(
     plot_df,
     ggplot2::aes(
         x = relative_time,

@@ -59,8 +59,7 @@ p1 <- ggplot2::ggplot(
     ggplot2::scale_y_continuous(
         "Mean (95% UI) ratio of False/True positive results",
         expand = c(0, 0),
-        breaks = c(0,
-                   # 1 / 200,
+        breaks = c(1 / 300,
                    1 / 100,
                    1 / 50,
                    1 / 25,
@@ -70,11 +69,14 @@ p1 <- ggplot2::ggplot(
                    1,
                    2,
                    5,
-                   10,
-                   25,
-                   50,
-                   100,
-                   200),
+                   10 #,
+                   # 25,
+                   # 50,
+                   # 100,
+                   # 200
+                   ),
+        labels = function(x) sprintf("%0.2f", round(x, 2)), 
+        limits = c(1/300, 10), 
         trans = "log"
     ) +
     ggplot2::scale_color_brewer("Testing strategy",

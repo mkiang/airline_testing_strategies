@@ -60,7 +60,7 @@ plot_df_upper <- dplyr::bind_rows(
                 quarantine_adherence == .8
         )
 ) %>%
-    dplyr::filter(pcr_sens = "upper")
+    dplyr::mutate(pcr_sens = "upper")
 
 plot_df <- readRDS(here::here("data", "summarized_results.RDS")) %>%
     dplyr::filter(
@@ -114,7 +114,7 @@ plot_df_median <- dplyr::bind_rows(
                 quarantine_adherence == .8
         )
 )  %>%
-    dplyr::filter(pcr_sens = "median") %>%
+    dplyr::mutate(pcr_sens = "median") %>%
     dplyr::bind_rows(plot_df_upper)
 
 ## Add a line break to RT + PCR

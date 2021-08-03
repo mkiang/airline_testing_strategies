@@ -78,7 +78,7 @@ for (i in 1:NROW(holder)) {
     
     d_cume_inf <- plot_df %>%
         dplyr::filter(testing_type == "no_testing", prob_inf == d_inf) %>%
-        dplyr::filter(
+        dplyr::select(
             destination_prob_inf = prob_inf,
             destination_prob_inf_cat = prob_inf_cat,
             destination_inf = mean

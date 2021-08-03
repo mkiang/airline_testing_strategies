@@ -61,7 +61,7 @@ plot_df <- dplyr::bind_rows(
         )
 )
 
-plot_df <- dplyr::filter(
+plot_df <- dplyr::bind_rows(
     plot_df %>%
         dplyr::filter(
             testing_type %in% c("pcr_five_days_after", "no_testing") &
