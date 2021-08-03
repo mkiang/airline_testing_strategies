@@ -25,7 +25,9 @@ source(here("code", "utils.R"))
 
 ## Constants ----
 PROB_INF <- config::get()$primary_prob_inf / 1000000
+```
 
+```{r error=FALSE, message=FALSE, warning=FALSE}
 ## End of travel period infection stats
 inf_df <- readRDS(here("data", "summarized_results.RDS")) %>%
     filter(
@@ -239,6 +241,95 @@ print_df <- all_df %>%
         rel_n_active_infection,
         ratio_false_true
     ) 
+
+print_df %>%
+  kable()
+```
+
+## Post-travel infectious days only
+```{r error=FALSE, message=FALSE, warning=FALSE}
+## End of travel period infection stats
+inf_df <- readRDS(here("data", "summarized_results_postflight.RDS")) %>%
+    filter(
+        time_step == 84, 
+        if_threshold == 0,
+        prob_inf == PROB_INF,
+        risk_multiplier == 2,
+        testing_type != "perfect_testing",
+        rapid_test_multiplier == .9 |
+            is.na(rapid_test_multiplier),
+        sens_type != "median" | is.na(sens_type),
+        prop_subclin == .3,
+        symptom_adherence %in% c(0, .8),
+        quarantine_adherence %in% c(0, .8),
+        testing_type %in% c(
+            "no_testing",
+            "pcr_three_days_before",
+            "pcr_three_days_before_5_day_quarantine_pcr",
+            "rapid_test_same_day",
+            "rapid_same_day_5_day_quarantine_pcr",
+            "pcr_five_days_after"
+        )
+    ) %>%
+    shift_time_steps() %>%
+    categorize_metric() %>%
+    filter(metric %in% c("cume_n_infection_daily",
+                         "rel_cume_n_infection_daily"))
+
+## Subset to the main analyses ----
+inf_df <- bind_rows(
+    ## No testing no symptom screening
+    inf_df %>%
+        filter(testing_type == "no_testing" &
+                   symptom_adherence == 0),
+    ## No quarantine 80% symptom screening adherence
+    inf_df %>%
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before",
+                "rapid_test_same_day",
+                "pcr_five_days_after"
+            ) & 
+                symptom_adherence == .8
+        ),
+    ## With 80% quarantine and 80% symptom screening adherence
+    inf_df %>% 
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before_5_day_quarantine_pcr",
+                "rapid_same_day_5_day_quarantine_pcr"
+            ) & 
+                symptom_adherence == .8 & 
+                quarantine_adherence == .8
+        )
+) 
+
+print_df <- inf_df %>%
+    select(testing_cat, metric, mean, p025, p975) %>%
+    arrange(testing_cat, metric) %>%
+    transmute(testing_cat,
+              metric,
+              print = case_when(
+                  metric %in% c("cume_n_infection_daily", "n_active_infection") ~
+                      sprintf("%i (%i, %i)",
+                              round(mean),
+                              round(p025),
+                              round(p975)),
+                  TRUE ~ sprintf(
+                      "%0.2f (%0.2f, %0.2f)",
+                      round(mean, 2),
+                      round(p025, 2),
+                      round(p975, 2)
+                  )
+              )) %>%
+    pivot_wider(id_cols = testing_cat,
+                names_from = metric,
+                values_from = print) %>%
+    select(
+        testing_cat,
+        cume_n_infection_daily,
+        rel_cume_n_infection_daily
+    )
 
 print_df %>%
   kable()
