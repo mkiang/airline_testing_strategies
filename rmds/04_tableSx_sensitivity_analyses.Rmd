@@ -236,3 +236,90 @@ plot_df_median %>%
     )
 
 ```
+
+## Number of new infections per day 
+```{r}
+## Constants ----
+PROB_INF <- config::get()$primary_prob_inf / 1000000
+
+## End of travel period infection stats
+inf_df <- readRDS(here("data", "summarized_results.RDS")) %>%
+    filter(
+        if_threshold == 0,
+        prob_inf == PROB_INF,
+        risk_multiplier == 2,
+        testing_type != "perfect_testing",
+        rapid_test_multiplier == .9 |
+            is.na(rapid_test_multiplier),
+        sens_type != "median" | is.na(sens_type),
+        prop_subclin == .3,
+        symptom_adherence %in% c(0, .8),
+        quarantine_adherence %in% c(0, .8),
+        testing_type %in% c(
+            "no_testing",
+            "pcr_three_days_before",
+            "pcr_three_days_before_5_day_quarantine_pcr",
+            "rapid_test_same_day",
+            "rapid_same_day_5_day_quarantine_pcr",
+            "pcr_five_days_after"
+        )
+    ) %>%
+    shift_time_steps() %>%
+    categorize_metric() %>% 
+  filter(metric %in% c("n_active_infection"))
+
+## Subset to the main analyses ----
+inf_df <- bind_rows(
+    ## No testing no symptom screening
+    inf_df %>%
+        filter(testing_type == "no_testing" &
+                   symptom_adherence == 0),
+    ## No quarantine 80% symptom screening adherence
+    inf_df %>%
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before",
+                "rapid_test_same_day",
+                "pcr_five_days_after"
+            ) & 
+                symptom_adherence == .8
+        ),
+    ## With 80% quarantine and 80% symptom screening adherence
+    inf_df %>% 
+        filter(
+            testing_type %in% c(
+                "pcr_three_days_before_5_day_quarantine_pcr",
+                "rapid_same_day_5_day_quarantine_pcr"
+            ) & 
+                symptom_adherence == .8 & 
+                quarantine_adherence == .8
+        )
+) 
+
+print_df <- inf_df %>%
+    select(testing_cat, relative_time, metric, mean, p025, p975) %>%
+    arrange(testing_cat, relative_time, metric) %>%
+    transmute(testing_cat,
+              relative_time, 
+              metric,
+              print = case_when(
+                  metric %in% c("n_active_infection") ~
+                      sprintf("%i (%i, %i)",
+                              round(mean),
+                              round(p025),
+                              round(p975)),
+                  TRUE ~ sprintf(
+                      "%0.2f (%0.2f, %0.2f)",
+                      round(mean, 2),
+                      round(p025, 2),
+                      round(p975, 2)
+                  )
+              )) %>%
+    pivot_wider(id_cols = relative_time,
+                names_from = testing_cat,
+                values_from = print)
+
+print_df %>% 
+  knitr::kable()
+```
+
