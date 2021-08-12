@@ -61,3 +61,7 @@ rmds/99_walkthrough_single_simulation.Rmd
 plots/fig3_active_inf_day_of_travel_gsw.jpg
 plots/fig3_active_inf_day_of_travel_gsw.pdf
 plots/LID plots.zip
+hawaii/**
+code/scratchpad**
+rmds/example**
+plots/**_OLD**
