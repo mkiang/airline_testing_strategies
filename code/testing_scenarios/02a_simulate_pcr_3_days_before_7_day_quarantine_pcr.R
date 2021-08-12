@@ -163,6 +163,7 @@ simulate_pcr_before_7_day_quarantine_pcr <- function(testing_type,
             ## 4. Post-flight iterations ----
             test_days <- day_of_flight + 7
             sim_pop <- clear_old_tests(sim_pop)
+            sim_pop$DayInObs <- 1
             for (k in (day_of_flight + 1):(day_of_flight + n_outcome_day)) {
                 ## Test and approximately equal number of people on each of
                 ## the test days
