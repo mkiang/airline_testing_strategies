@@ -20,6 +20,7 @@ source(here::here("code", "testing_scenarios", "02d_simulate_pcr_5_days_before_5
 source(here::here("code", "testing_scenarios", "02e_simulate_pcr_7_days_before_5_day_quarantine_pcr.R"))
 source(here::here("code", "testing_scenarios", "04a_simulate_rapid_antigen_same_day_7_day_quarantine_pcr.R"))
 source(here::here("code", "testing_scenarios", "04b_simulate_rapid_antigen_same_day_14_day_quarantine_pcr.R"))
+source(here::here("code", "testing_scenarios", "05a_simulate_5_day_quarantine_pcr_five_days_after.R"))
 
 #' Wrapper function for selecting testing scenarios
 #' 
@@ -63,6 +64,8 @@ run_and_save_simulation <- function(testing_type,
                               "rapid_test_same_day",
                               "rapid_same_day_5_day_quarantine_pcr",
                               "pcr_five_days_after",
+                              
+                              "5_day_quarantine_pcr_five_days_after", 
                               
                               "pcr_two_days_before",
                               "pcr_five_days_before",
@@ -200,6 +203,25 @@ run_and_save_simulation <- function(testing_type,
     
     if (testing_type == "pcr_five_days_after") {
         simulate_pcr_five_days_after(
+            testing_type,
+            prob_inf,
+            sens_type,
+            risk_multiplier,
+            rapid_test_multiplier,
+            symptom_screening,
+            round,
+            n_reps,
+            prop_subclin,
+            subclin_infectious,
+            n_burnin,
+            day_of_flight,
+            n_outcome_day,
+            days_quarantine
+        )
+    }
+    
+    if (testing_type == "5_day_quarantine_pcr_five_days_after") {
+        simulate_5_day_quarantine_pcr_five_days_after(
             testing_type,
             prob_inf,
             sens_type,

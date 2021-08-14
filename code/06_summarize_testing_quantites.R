@@ -11,6 +11,10 @@ library(foreach)
 library(doParallel)
 source(here::here("code", "utils.R"))
 
+### Constants / Unpack config file ----
+cfig <- config::get(config = "dev")
+n_cores <- cfig$n_cores
+
 ## Different levels of adherence to symptom screening
 adherence_level <- seq(0, 1, .2)
 
@@ -30,11 +34,12 @@ testing_dict <- list(
     rapid_same_day_5_day_quarantine_pcr = c(70, 75),
     rapid_same_day_7_day_quarantine_pcr = c(70, 77),
     rapid_same_day_14_day_quarantine_pcr = c(70, 84),
-    pcr_five_days_after = 75
+    pcr_five_days_after = 75,
+    "5_day_quarantine_pcr_five_days_after" = 75
 )
 
 ## Calculate testing quantities ----
-doParallel::registerDoParallel()
+doParallel::registerDoParallel(cores = n_cores)
 testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
     testing_type <- names(testing_dict)[i]
     time_steps <- testing_dict[[testing_type]]
@@ -247,6 +252,7 @@ testing_results <- foreach::foreach(i = 1:NROW(testing_dict)) %dopar% {
         )
 }
 doParallel::stopImplicitCluster()
+closeAllConnections()
 
 testing_results <- dplyr::bind_rows(testing_results)
 saveRDS(testing_results,

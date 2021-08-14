@@ -304,7 +304,9 @@ quarantine_comparisons <- dplyr::bind_rows(
     tibble::add_case(base_case = "pcr_seven_days_before",
              comparison_case = "pcr_seven_days_before_5_day_quarantine_pcr") %>%
     tibble::add_case(base_case = "pcr_two_days_before",
-             comparison_case = "pcr_two_days_before_5_day_quarantine_pcr")
+             comparison_case = "pcr_two_days_before_5_day_quarantine_pcr") %>%
+    tibble::add_case(base_case = "pcr_five_days_after",
+                     comparison_case = "5_day_quarantine_pcr_five_days_after")
 
 doParallel::registerDoParallel()
 results_quarantine <-

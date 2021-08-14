@@ -454,8 +454,8 @@ print_df &lt;- all_df %&gt;%
         ratio_false_true
     )</code></pre>
 </div>
-<div id="table-2" class="section level2">
-<h2>Table 2</h2>
+<div id="table-1" class="section level2">
+<h2>Table 1</h2>
 <pre class="r"><code>print_df &lt;- all_df %&gt;%
     select(testing_cat, metric, mean, p025, p975) %&gt;%
     arrange(testing_cat, metric) %&gt;%
@@ -559,8 +559,8 @@ print_df %&gt;%
 </tbody>
 </table>
 </div>
-<div id="post-travel-infectious-days-only" class="section level2">
-<h2>Post-travel infectious days only</h2>
+<div id="table-s2-post-travel-infectious-days-only" class="section level2">
+<h2>Table S2 Post-travel infectious days only</h2>
 <pre class="r"><code>## End of travel period infection stats
 inf_df &lt;- readRDS(here(&quot;data&quot;, &quot;summarized_results_postflight.RDS&quot;)) %&gt;%
     filter(
@@ -684,6 +684,211 @@ print_df %&gt;%
 <td align="left">PCR 5 days after</td>
 <td align="left">2823 (2055, 4880)</td>
 <td align="left">0.54 (0.44, 0.62)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="table-s4" class="section level2">
+<h2>Table S4</h2>
+<pre class="r"><code>## End of travel period infection stats
+inf_df &lt;- readRDS(here(&quot;data&quot;, &quot;summarized_results.RDS&quot;)) %&gt;%
+    filter(
+        time_step == 84, 
+        if_threshold == 0,
+        prob_inf == PROB_INF,
+        risk_multiplier == 2,
+        testing_type != &quot;perfect_testing&quot;,
+        rapid_test_multiplier == .9 |
+            is.na(rapid_test_multiplier),
+        sens_type != &quot;median&quot; | is.na(sens_type),
+        prop_subclin == .3,
+        symptom_adherence %in% c(0, .8),
+        quarantine_adherence %in% c(0, .8),
+        testing_type %in% c(
+            &quot;no_testing&quot;,
+            &quot;pcr_three_days_before&quot;,
+            &quot;pcr_three_days_before_5_day_quarantine_pcr&quot;,
+            &quot;rapid_test_same_day&quot;,
+            &quot;rapid_same_day_5_day_quarantine_pcr&quot;,
+            &quot;pcr_five_days_after&quot;,
+            &quot;5_day_quarantine_pcr_five_days_after&quot;
+        )
+    ) %&gt;%
+    shift_time_steps() %&gt;%
+    categorize_metric() %&gt;%
+    filter(metric %in% c(&quot;cume_n_infection_daily&quot;,
+                         &quot;rel_cume_n_infection_daily&quot;))
+
+## Subset to the main analyses ----
+inf_df &lt;- bind_rows(
+    ## No testing no symptom screening
+    inf_df %&gt;%
+        filter(testing_type == &quot;no_testing&quot; &amp;
+                   symptom_adherence == 0),
+    ## No quarantine 80% symptom screening adherence
+    inf_df %&gt;%
+        filter(
+            testing_type %in% c(
+                &quot;pcr_three_days_before&quot;,
+                &quot;rapid_test_same_day&quot;,
+                &quot;pcr_five_days_after&quot;
+            ) &amp; 
+                symptom_adherence == .8
+        ),
+    ## With 80% quarantine and 80% symptom screening adherence
+    inf_df %&gt;% 
+        filter(
+            testing_type %in% c(
+                &quot;pcr_three_days_before_5_day_quarantine_pcr&quot;,
+                &quot;rapid_same_day_5_day_quarantine_pcr&quot;,
+                &quot;5_day_quarantine_pcr_five_days_after&quot;
+            ) &amp; 
+                symptom_adherence == .8 &amp; 
+                quarantine_adherence == .8
+        )
+) 
+
+## Testing statistics 
+test_df &lt;- readRDS(here(&quot;data&quot;, &quot;summarized_testing_results.RDS&quot;))
+
+test_df &lt;- test_df %&gt;%
+    filter(
+        risk_multiplier == 2,
+        testing_type %in% c(
+            &quot;no_testing&quot;,
+            &quot;pcr_three_days_before&quot;,
+            &quot;pcr_three_days_before_5_day_quarantine_pcr&quot;,
+            &quot;rapid_test_same_day&quot;,
+            &quot;rapid_same_day_5_day_quarantine_pcr&quot;,
+            &quot;pcr_five_days_after&quot;,
+                &quot;5_day_quarantine_pcr_five_days_after&quot;
+        ), 
+        metric %in% c(&quot;ratio_false_true&quot;),
+        rapid_test_multiplier == .9 | is.na(rapid_test_multiplier),
+        prob_inf == PROB_INF,
+        prop_subclin == .3, 
+        sens_type != &quot;median&quot; | is.na(sens_type),
+        if_threshold == 0,
+        symptom_adherence %in% c(0, .8)
+    ) %&gt;%
+    categorize_metric()
+
+test_df &lt;- bind_rows(
+    ## No testing no symptom screening
+    test_df %&gt;%
+        filter(testing_type == &quot;no_testing&quot; &amp;
+                   symptom_adherence == 0),
+    test_df %&gt;%
+        filter(testing_type != &quot;no_testing&quot; &amp;
+                   symptom_adherence == .8)
+) 
+
+## Day of flight statistics
+dof_df &lt;- readRDS(here(&quot;data&quot;, &quot;summarized_results.RDS&quot;)) %&gt;%
+    filter(
+        time_step == 70, 
+        if_threshold == 0,
+        prob_inf == PROB_INF,
+        risk_multiplier == 2,
+        testing_type != &quot;perfect_testing&quot;,
+        rapid_test_multiplier == .9 |
+            is.na(rapid_test_multiplier),
+        sens_type != &quot;median&quot; | is.na(sens_type),
+        prop_subclin == .3,
+        symptom_adherence %in% c(0, .8),
+        quarantine_adherence %in% c(0, .8),
+        testing_type %in% c(
+            &quot;no_testing&quot;,
+            &quot;pcr_three_days_before&quot;,
+            &quot;pcr_three_days_before_5_day_quarantine_pcr&quot;,
+            &quot;rapid_test_same_day&quot;,
+            &quot;rapid_same_day_5_day_quarantine_pcr&quot;,
+            &quot;pcr_five_days_after&quot;,
+            &quot;5_day_quarantine_pcr_five_days_after&quot;
+        )
+    ) %&gt;%
+    shift_time_steps() %&gt;%
+    categorize_metric() %&gt;%
+    filter(metric %in% c(&quot;n_active_infection&quot;, &quot;rel_n_active_infection&quot;))
+
+dof_df &lt;- bind_rows(
+    ## No testing no symptom screening
+    dof_df %&gt;%
+        filter(testing_type == &quot;no_testing&quot; &amp;
+                   symptom_adherence == 0),
+    ## No quarantine 80% symptom screening adherence
+    dof_df %&gt;%
+        filter(
+            testing_type %in% c(
+                &quot;pcr_three_days_before&quot;,
+                &quot;rapid_test_same_day&quot;,
+                &quot;pcr_five_days_after&quot;
+            ) &amp; 
+                symptom_adherence == .8
+        ),
+    ## With 80% quarantine and 80% symptom screening adherence
+    dof_df %&gt;% 
+        filter(
+            testing_type %in% c(
+                &quot;pcr_three_days_before_5_day_quarantine_pcr&quot;,
+                &quot;rapid_same_day_5_day_quarantine_pcr&quot;,
+                &quot;5_day_quarantine_pcr_five_days_after&quot;
+            ) &amp; 
+                symptom_adherence == .8 &amp; 
+                quarantine_adherence == .8
+        )
+) 
+
+## All main outcomes
+all_df &lt;- bind_rows(
+    dof_df,
+    inf_df,
+    test_df
+) %&gt;% 
+  filter(testing_type == &quot;5_day_quarantine_pcr_five_days_after&quot;)
+
+print_df &lt;- all_df %&gt;%
+    select(testing_cat, metric, mean, p025, p975) %&gt;%
+    arrange(testing_cat, metric) %&gt;%
+    transmute(testing_cat,
+              metric,
+              print = case_when(
+                  metric %in% c(&quot;cume_n_infection_daily&quot;, &quot;n_active_infection&quot;) ~
+                      sprintf(&quot;%i (%i, %i)&quot;,
+                              round(mean),
+                              round(p025),
+                              round(p975)),
+                  TRUE ~ sprintf(
+                      &quot;%0.2f (%0.2f, %0.2f)&quot;,
+                      round(mean, 2),
+                      round(p025, 2),
+                      round(p975, 2)
+                  )
+              )) %&gt;%
+    pivot_wider(id_cols = testing_cat,
+                names_from = metric,
+                values_from = print) %&gt;%
+    select(
+        testing_cat,
+        cume_n_infection_daily,
+        rel_cume_n_infection_daily
+    )
+
+print_df %&gt;%
+  kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">testing_cat</th>
+<th align="left">cume_n_infection_daily</th>
+<th align="left">rel_cume_n_infection_daily</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">2601 (2041, 3854)</td>
+<td align="left">0.69 (0.65, 0.72)</td>
 </tr>
 </tbody>
 </table>

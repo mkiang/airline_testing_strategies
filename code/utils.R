@@ -489,7 +489,8 @@ return_sensitivity_parameter_grid <- function(new_only = TRUE) {
                 "pcr_three_days_before_14_day_quarantine_pcr",
                 "pcr_two_days_before_5_day_quarantine_pcr",
                 "pcr_five_days_before_5_day_quarantine_pcr",
-                "pcr_seven_days_before_5_day_quarantine_pcr"
+                "pcr_seven_days_before_5_day_quarantine_pcr",
+                "5_day_quarantine_pcr_five_days_after"
             ),
             prob_inf = prob_infs,
             sens_type = sens_type,
