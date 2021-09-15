@@ -23,8 +23,8 @@ The full citation is:
 > Greenhouse B, Rutherford GW, Bibbins-Domingo K, Havlir D, Basu S, and
 > Lo NC. Routine asymptomatic testing strategies for airline travel
 > during the COVID-19 pandemic: a simulation study. *The Lancet
-> Infectious Diseases* (March 2020). doi:
-> [10.1016/S1473-3099(21)00134-1](https://doi.org/10.1016/%20S1473-3099(21)00134-1)
+> Infectious Diseases* (March 2021). doi:
+> [10.1016/S1473-3099(21)00134-1](https://doi.org/10.1016/S1473-3099(21)00134-1)
 
 ### Abstract
 
@@ -64,14 +64,14 @@ pre-travel PCR test reduced the number of infectious days from 8357 to
 5401 (3917–8677), a reduction of 36% (29–41) compared with the base
 case, and identified 569 (88% \[76–92\]) of 649 actively infectious
 travellers on the day of flight; the addition of post-travel quarantine
-and PCR reduced the number of infectious days to 2520 days (1849–4158),
-a reduction of 70% (64–75) compared with the base case. The rapid
-antigen test on the day of travel reduced the number of infectious days
-to 5674 (4126–9081), a reduction of 32% (26–38) compared with the base
-case, and identified 560 (86% \[83–89\]) actively infectious travellers;
-the addition of post-travel quarantine and PCR reduced the number of
-infectious days to 3124 (2356–495), a reduction of 63% (58–66) compared
-with the base case. The post-travel PCR alone reduced the number of
+and PCR reduced the number of infectious days to 1474 (1087–2342), a
+reduction of 82% (80–84) compared with the base case. The rapid antigen
+test on the day of travel reduced the number of infectious days to 5674
+(4126–9081), a reduction of 32% (26–38) compared with the base case, and
+identified 560 (86% \[83–89\]) actively infectious travellers; the
+addition of post-travel quarantine and PCR reduced the number of
+infectious days to 2518 (1935–3821), a reduction of 70% (67–72) compared
+with the base case. The post- travel PCR alone reduced the number of
 infectious days to 4851 (3714–7679), a reduction of 42% (35–49) compared
 with the base case.
 
@@ -86,6 +86,32 @@ to low incidence setting.
 
 Please report issues via email or the [issues
 page](https://github.com/mkiang/airline_testing_strategies/issues).
+
+### Changes reflecting comments from others (and our reply)
+
+We thank Dr. Mohammad Shahid and Dr. Lee Altenberg for their letters
+\[[1](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(21)00357-1/fulltext),
+[2](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(21)00454-0/fulltext)\]
+and interest in our paper.
+
+As outlined [in our
+reply](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(21)00562-4/fulltext),
+Dr. Lee Altenberg suggested additional analyses looking at (a) *only*
+post-travel infectious days and (b) the number of infections per day.
+The results from these analyses are now presented in the updated
+Supplemental Materials as Tables S2 and S3, respectively. In addition,
+Dr. Altenberg suggested a correction to the accounting of quarantine
+days in our paper. We fully agree and have corrected the numbers
+accordingly in the main manuscript. This change affects the scenarios
+with quarantine, and improves their effectiveness — highlighting the
+importance of both testing and quarantine of airline passengers. Both
+[the
+correction](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(21)00614-9/fulltext)
+and [the corrected
+manuscript](http://www.thelancet.com/journals/laninf/article/PIIS1473-3099(21)00134-1/fulltext)
+are available online. The code and [replication
+data](https://osf.io/87kga/) have been been updated to reflect these
+changes.
 
 ## Structure
 
@@ -138,10 +164,11 @@ some tasks may be dependent on the output of previous tasks.
 
 -   `utils.R`: Contains almost all helper functions and functions
     necessary to run the simulations or create the plots. Most functions
-    within `utils.R` uses the
+    within `utils.R` use the
     [`roxygen2`](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html)
     documentation template. See this documentation for expected input,
-    output, and notes about each function.
+    output, and notes about each function. Minor or self-explanatory
+    functions may not include `roxygen2` docs.
 -   `01_create_simulated_populations.R`: Creates and performs the
     burn-in for all simulated passenger cohorts. In addition, each
     simulation state is saved with the random seed used to create the
@@ -164,7 +191,7 @@ some tasks may be dependent on the output of previous tasks.
     created in `04`, summarized them, and then saves the results in
     `./data`. This file saves the time-varying quantities of interest
     and our primary end points.
--   `06_summarize_testing_quantites.R`: rocesses the raw files created
+-   `06_summarize_testing_quantites.R`: Processes the raw files created
     in `04`, summarized them, and then saves the results in `./data`.
     This file saves the time-invariant quantities (e.g., testing
     results).
